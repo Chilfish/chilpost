@@ -35,6 +35,7 @@
     "@unocss/reset": "^0.54.1",
     "@unocss/transformer-directives": "^0.54.1",
     "@vitejs/plugin-vue": "^4.2.3",
+    "autoprefixer": "^10.4.14",
     "sass": "^1.64.2",
     "stylelint": "^15.10.2",
     "stylelint-config-recommended-vue": "^1.5.0",

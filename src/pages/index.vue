@@ -1,17 +1,30 @@
 <script setup lang="ts">
 import { useDark, useToggle } from '@vueuse/core'
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+const path = ref(route.path.replace('/', ''))
+
+watch(
+  () => route.path,
+  (newPath) => {
+    path.value = newPath.replace('/', '')
+  },
+)
+
+const showHeader = computed(() => !path.value.includes('@'))
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
 
 const darkStyle = computed(() => isDark.value
   ? {
-      navBg: '#151515CC',
+      navBg: '#242424CC',
       icon: 'i-carbon-sun',
     }
   : {
-      navBg: '#E7E7E7CC',
+      navBg: '#FFFFFFCC',
       icon: 'i-carbon-moon',
     },
 )
@@ -19,7 +32,13 @@ const darkStyle = computed(() => isDark.value
 
 <template>
   <header :style="{ backgroundColor: darkStyle.navBg }">
-    <h2>Explore</h2>
+    <h2 v-if="showHeader">
+      {{ path }}
+    </h2>
+
+    <label>
+      <input type="search" placeholder="Search">
+    </label>
 
     <span :class="darkStyle.icon" @click="toggleDark()" />
   </header>
@@ -28,7 +47,7 @@ const darkStyle = computed(() => isDark.value
     <RouterView />
   </main>
 
-  <nav :style="{ backgroundColor: darkStyle.navBg }">
+  <nav>
     <div>
       <img class="logo" src="/favicon.ico">
       <h1>Chill Post</h1>
@@ -61,6 +80,8 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @include border(bottom);
 }
 
 main {
@@ -118,6 +139,8 @@ nav a {
     gap: 0.5rem;
     padding: 1rem;
 
+    @include border(right);
+
     div {
       width: 100%;
       height: 3rem;
@@ -128,6 +151,9 @@ nav a {
 
     h1 {
       font-size: 1.2rem;
+      background: linear-gradient(-45deg, #5481b8 30%, #88abd0);
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     img.logo {
@@ -156,8 +182,7 @@ nav a {
   header,
   main {
     margin-left: $aside-width;
-    width: -webkit-fill-available;
-    width: -moz-available;
+    width: stretch;
   }
 }
 </style>

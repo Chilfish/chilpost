@@ -19,8 +19,10 @@ $lgd: 1024px;
 
 html {
   background-color: #fff;
-  color: rgba(0, 0, 0, 0.87);
+  color: #000000de;
   scrollbar-width: thin;
+
+  --border-color: #E5E7EB;
 
   &::-webkit-resizer,
   & ::-webkit-scrollbar-thumb {
@@ -35,7 +37,9 @@ html {
 
   &.dark {
     background-color: #242424;
-    color: rgba(255, 255, 255, 0.87);
+    color: #ffffffde;
+
+    --border-color: #2f3336;
   }
 }
 
@@ -48,6 +52,14 @@ body {
 
 #app {
   @apply w-screen flex flex-col items-center position-relative
+}
+
+@mixin border($pos) {
+  $border-width: 1px;
+  $border-color: var(--border-color);
+
+  border-#{$pos}-width: $border-width;
+  border-#{$pos}-color: $border-color;
 }
 
 h1,

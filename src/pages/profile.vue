@@ -5,8 +5,5 @@ const username = useRoute().params.username
 </script>
 
 <template>
-  <div>
-    <h1>Profile</h1>
-    <p>Username: {{ username }}</p>
-  </div>
+  <p>Username: {{ username }}</p>
 </template>

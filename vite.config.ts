@@ -3,6 +3,7 @@ import { defineConfig } from 'vite'
 import UnoCSS from 'unocss/vite'
 import vue from '@vitejs/plugin-vue'
 import Components from 'unplugin-vue-components/vite'
+import autoprefixer from 'autoprefixer'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -19,4 +20,11 @@ export default defineConfig({
     UnoCSS(),
     Components(), // auto import components
   ],
+  css: {
+    postcss: {
+      plugins: [autoprefixer({
+        overrideBrowserslist: ['last 2 versions', 'not dead', '> 0.2%'],
+      })],
+    },
+  },
 })
