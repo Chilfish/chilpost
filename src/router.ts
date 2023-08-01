@@ -5,6 +5,10 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     redirect: '/explore',
+  },
+  {
+    path: '/',
+    component: () => import('@pg/index.vue'),
     children: [
       {
         path: 'explore',
