@@ -1,8 +1,8 @@
 .user-box {
   display: flex;
+  gap: 1rem;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
 
   .nick-name {
     font-size: 1.2rem;
@@ -28,10 +28,4 @@
 .content {
   margin: 1rem 0;
   font-size: 1.1rem;
-}
-
-.post-meta {
-  .time {
-    
-  }
 }

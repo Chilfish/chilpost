@@ -4,8 +4,8 @@ section > a {
   display: flex;
   padding: 0.5rem;
   margin-bottom: 0.5rem;
-  border-radius: 8px;
   cursor: pointer;
+  border-radius: 8px;
 
   &:hover {
     background: var(--hover-1);
@@ -15,8 +15,8 @@ section > a {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    line-height: 1.5rem;
     margin-left: 1rem;
+    line-height: 1.5rem;
   }
 }
 

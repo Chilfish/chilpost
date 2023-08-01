@@ -1,8 +1,8 @@
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 14px;
   font-weight: 400;
   line-height: 1.5;
-  font-size: 14px;
   color-scheme: light dark;
   font-synthesis: none;
   text-rendering: optimizelegibility;
@@ -96,16 +96,16 @@ span.icon {
 .loading {
   --un-icon: url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="24" height="24" viewBox="0 0 24 24"%3E%3Cpath fill="none" stroke="currentColor" stroke-dasharray="15" stroke-dashoffset="15" stroke-linecap="round" stroke-width="2" d="M12 3C16.9706 3 21 7.02944 21 12"%3E%3Canimate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15%3B0"%2F%3E%3CanimateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12%3B360 12 12"%2F%3E%3C%2Fpath%3E%3C%2Fsvg%3E');
 
-  mask: var(--un-icon) no-repeat;
-  mask-size: 100% 100%;
-  background-color: currentcolor;
-  color: inherit;
   width: 1.2em;
   height: 1.2em;
+  color: inherit;
+  background-color: currentcolor;
+  mask: var(--un-icon) no-repeat;
+  mask-size: 100% 100%;
 }
 
 div.loading-box {
-  margin: 1rem;
   display: flex;
   justify-content: center;
+  margin: 1rem;
 }

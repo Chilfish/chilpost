@@ -33,25 +33,25 @@ const { state: post, isLoading } = useAsyncState(service.getById(postId), null)
 
 <style lang="scss" scoped>
 nav {
-  height: 3rem;
-  width: 100%;
   display: flex;
-  align-items: center;
   gap: 1rem;
+  align-items: center;
+  width: 100%;
+  height: 3rem;
   padding: 0.5rem 1rem;
 
   a {
-    height: 100%;
     width: 2rem;
+    height: 100%;
     padding: 0.5rem;
   }
 }
 
 main {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
   padding:0.5rem 1.2rem;
-  display: flex;
-  flex-direction: column;
 }
 </style>
