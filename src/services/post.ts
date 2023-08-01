@@ -11,8 +11,9 @@ export class PostService {
     return this.posts
   }
 
-  public async getById(id: string): Promise<Post | undefined> {
-    return this.posts.find(post => post.id === id)
+  public async getById(id: string): Promise<Post | null> {
+    await delay(500)
+    return this.posts.find(post => post.id === id) ?? null
   }
 
   public async createPost(post: Post): Promise<Post> {

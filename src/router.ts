@@ -20,6 +20,10 @@ const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
+  {
+    path: '/:username/:id',
+    component: () => import('@pg/post.vue'),
+  },
 ]
 
 const router = createRouter({

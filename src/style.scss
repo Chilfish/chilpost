@@ -10,9 +10,9 @@
   text-size-adjust: 100%;
 
   --border-color: #e5e7eb;
-  --background-color: #f9fafb;
+  --background-color: #fff;
   --blur-bg: #fffc;
-  --color: #000000de;
+  --color: #000;
   --hover: #e7e7e8;
   --hover-1: #f7f7f7;
   --text-2: #536471;
@@ -101,4 +101,10 @@ span.icon {
   color: inherit;
   width: 1.2em;
   height: 1.2em;
+}
+
+div.loading-box {
+  margin: 1rem;
+  display: flex;
+  justify-content: center;
 }

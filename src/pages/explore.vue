@@ -5,18 +5,21 @@ import type { TPostService } from '~/services/post'
 
 const service = inject('postService') as TPostService
 
-const { state, isLoading, isReady } = useAsyncState(service.getPosts(), null)
+const { state: posts, isLoading, isReady } = useAsyncState(service.getPosts(), null)
 </script>
 
 <template>
-  <span v-if="isLoading" class="icon loading" />
+  <div v-if="isLoading" class="loading-box">
+    <span class="icon loading" />
+  </div>
   <template v-else-if="isReady">
-    <PostItem v-for="post in state" :key="post.id" :post="post" />
+    <PostItem
+      v-for="post in posts"
+      :key="post.id"
+      :post="post"
+    />
   </template>
 </template>
 
 <style lang="scss" scoped>
-span.loading {
-  margin-top: 1rem;
-}
 </style>
