@@ -35,7 +35,7 @@ a.avatar {
   display: flex;
   gap: 0.3rem;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 
   & > div {
     display: flex;
@@ -45,7 +45,7 @@ a.avatar {
 
   span {
     display: inline-block;
-    max-width: 12rem;
+    max-width: 10rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -70,6 +70,10 @@ a.avatar {
   .date:hover {
     text-decoration: underline;
     cursor: pointer;
+  }
+
+  .menu {
+    margin-left: auto;
   }
 }
 

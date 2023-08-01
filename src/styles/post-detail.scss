@@ -1,0 +1,37 @@
+.user-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+  .nick-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  .menu {
+    margin-left: auto;
+  }
+}
+
+.name,
+.time {
+  font-size: 0.9rem;
+  color: var(--text-2);
+}
+
+.name-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  margin: 1rem 0;
+  font-size: 1.1rem;
+}
+
+.post-meta {
+  .time {
+    
+  }
+}

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import dayjs from 'dayjs'
 import type { Post } from '~/types'
-import { useImg } from '~/utils'
+import { timeDiff, useImg } from '~/utils'
 
 const props = defineProps<{
   post: Post
@@ -9,23 +9,6 @@ const props = defineProps<{
 const post = props.post
 
 const avatarUrl = useImg(post.owner.avatar)
-
-function formatTime() {
-  const now = Date.now()
-  const time = dayjs(now).diff(post.createdAt, 'minute')
-
-  const isSameYear = dayjs(now).isSame(post.createdAt, 'year')
-
-  if (time < 1)
-    return 'just now'
-  if (time < 60)
-    return `${time}m`
-  if (time < 60 * 24)
-    return `${Math.floor(time / 60)}h`
-  if (time < 60 * 24 * 365 && isSameYear)
-    return dayjs(post.createdAt).format('MM-DD')
-  return dayjs(post.createdAt).format('YY-MM-DD')
-}
 </script>
 
 <template>
@@ -39,27 +22,26 @@ function formatTime() {
       </RouterLink>
       <div class="section-main">
         <div class="post-meta">
-          <div>
-            <RouterLink
-              class="name-box"
-              :to="`/@${post.owner.name}`"
-            >
-              <span class="nick-name">
-                {{ post.owner.nick_name }}
-              </span>
-              <span class="name">
-                @{{ post.owner.name }}
-              </span>
-            </RouterLink>
-            <span>·</span>
-            <RouterLink
-              class="date"
-              :title="dayjs(post.createdAt).format()"
-              :to="`/${post.owner.name}/${post.id}`"
-            >
-              {{ formatTime() }}
-            </RouterLink>
-          </div>
+          <RouterLink
+            class="name-box"
+            :to="`/@${post.owner.name}`"
+          >
+            <span class="nick-name">
+              {{ post.owner.nick_name }}
+            </span>
+            <span class="name">
+              @{{ post.owner.name }}
+            </span>
+          </RouterLink>
+          <span>·</span>
+          <RouterLink
+            class="date"
+            :title="dayjs(post.createdAt).format()"
+            :to="`/${post.owner.name}/${post.id}`"
+          >
+            {{ timeDiff(post.createdAt) }}
+          </RouterLink>
+
           <span class="icon menu i-carbon-overflow-menu-horizontal" />
         </div>
 
