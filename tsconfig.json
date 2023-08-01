@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "baseUrl": ".",
+    "module": "ESNext",
+    "target": "esnext",
+    "lib": [
+      "DOM",
+      "ESNext"
+    ],
+    "strict": true,
+    "jsx": "preserve",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "noUnusedLocals": true,
+    "strictNullChecks": true,
+    "allowJs": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": [
+      "vite/client"
+    ],
+    "paths": {
+      "~/*": ["src/*"],
+      "@cp/*": ["src/components/*"],
+      "@pg/*": ["src/pages/*"]
+    }
+  },
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
+}
