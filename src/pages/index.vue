@@ -20,7 +20,7 @@ const toggleDark = useToggle(isDark)
 
 const darkStyle = computed(() => isDark.value
   ? {
-      navBg: '#242424CC',
+      navBg: '#26262670',
       icon: 'i-carbon-sun',
     }
   : {
@@ -37,10 +37,11 @@ const darkStyle = computed(() => isDark.value
     </h2>
 
     <label>
+      <span class="i-carbon-search icon" />
       <input type="search" placeholder="Search">
     </label>
 
-    <span :class="darkStyle.icon" @click="toggleDark()" />
+    <span class="icon" :class="darkStyle.icon" @click="toggleDark()" />
   </header>
 
   <main>
@@ -53,12 +54,12 @@ const darkStyle = computed(() => isDark.value
       <h1>Chill Post</h1>
     </div>
     <router-link to="/">
-      <span class="i-carbon-home" />
+      <span class="i-carbon-home icon" />
       <p>Explore</p>
     </router-link>
 
     <router-link to="/@Chilfish">
-      <span class="i-carbon-user" />
+      <span class="i-carbon-user icon" />
       <p>Profile</p>
     </router-link>
   </nav>
@@ -80,12 +81,38 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
 
   @include border(bottom);
-}
 
-main {
-  width: 100%;
+  label {
+    background: var(--hover);
+    border-radius: 12px;
+    padding: 0.5rem;
+    padding-left: 2.3rem;
+    font-size: 0.9rem;
+    width: 80%;
+    position: relative;
+
+    span {
+      position: absolute;
+      top: 50%;
+      left: 0.5rem;
+      transform: translateY(-50%);
+    }
+  }
+
+  input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+
+    &::-webkit-search-cancel-button {
+      margin-left: 0.5rem;
+    }
+  }
 }
 
 nav {
@@ -110,20 +137,15 @@ nav {
 nav a {
   width: 30%;
   height: 100%;
-  text-align: center;
   line-height: 3rem;
   font-size: 1.1rem;
   font-weight: bold;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   border-radius: 12px;
-
-  span {
-    display: inline-block;
-    width: 100%;
-    height: 80%;
-  }
+  padding-left: 0.2rem;
 
   p {
     display: none;
@@ -166,6 +188,11 @@ nav a {
   nav a {
     height: 3rem;
     width: 100%;
+    justify-content: start;
+
+    &:hover {
+      background: var(--hover);
+    }
 
     span {
       width: 2rem;

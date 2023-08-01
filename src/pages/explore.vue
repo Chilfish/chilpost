@@ -23,6 +23,10 @@ ul {
 li {
   margin: 1rem 0;
   width: 100%;
+
+  &:hover {
+    background: var(--hover-1);
+  }
 }
 
 // img {

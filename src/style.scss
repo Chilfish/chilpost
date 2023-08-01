@@ -8,6 +8,12 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-size-adjust: 100%;
+
+  --border-color: #e5e7eb;
+  --background-color: #f9fafb;
+  --color: #000000de;
+  --hover: #E7E7E8;
+  --hover-1: #F7F7F7;
 }
 
 $smd: 640px;
@@ -18,11 +24,9 @@ $lgd: 1024px;
 }
 
 html {
-  background-color: #fff;
-  color: #000000de;
   scrollbar-width: thin;
-
-  --border-color: #E5E7EB;
+  background-color: var(--background-color);
+  color: var(--color);
 
   &::-webkit-resizer,
   & ::-webkit-scrollbar-thumb {
@@ -36,10 +40,11 @@ html {
   }
 
   &.dark {
-    background-color: #242424;
-    color: #ffffffde;
-
+    --background-color: #000;
+    --color: #fff;
     --border-color: #2f3336;
+    --hover: #181818;
+    --hover-1: #0f0f0f;
   }
 }
 
@@ -51,7 +56,7 @@ body {
 }
 
 #app {
-  @apply w-screen flex flex-col items-center position-relative
+  @apply w-screen flex flex-col items-center position-relative;
 }
 
 @mixin border($pos) {
@@ -66,13 +71,19 @@ h1,
 h2,
 h3,
 h4 {
-  @apply my-xl text-center text-2xl font-bold
+  @apply my-xl text-center text-2xl font-bold;
 }
 
 h1 {
-  @apply text-3xl
+  @apply text-3xl;
 }
 
 h2 {
-  @apply text-2xl
+  @apply text-2xl;
+}
+
+span.icon {
+  display: inline-block;
+  max-width: 1.5rem;
+  max-height: 1.5rem;
 }
