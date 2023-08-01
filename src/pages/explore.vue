@@ -13,16 +13,16 @@ import { posts } from '~/mock'
 
 <style lang="scss" scoped>
 ul {
-  padding: 0 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 0 1rem;
 }
 
 li {
-  margin: 1rem 0;
   width: 100%;
+  margin: 1rem 0;
 
   &:hover {
     background: var(--hover-1);

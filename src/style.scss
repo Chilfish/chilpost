@@ -1,7 +1,7 @@
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
   font-weight: 400;
+  line-height: 1.5;
   color-scheme: light dark;
   font-synthesis: none;
   text-rendering: optimizelegibility;
@@ -11,9 +11,10 @@
 
   --border-color: #e5e7eb;
   --background-color: #f9fafb;
+  --blur-bg: #fffc;
   --color: #000000de;
-  --hover: #E7E7E8;
-  --hover-1: #F7F7F7;
+  --hover: #e7e7e8;
+  --hover-1: #f7f7f7;
 }
 
 $smd: 640px;
@@ -24,9 +25,9 @@ $lgd: 1024px;
 }
 
 html {
-  scrollbar-width: thin;
-  background-color: var(--background-color);
   color: var(--color);
+  background-color: var(--background-color);
+  scrollbar-width: thin;
 
   &::-webkit-resizer,
   & ::-webkit-scrollbar-thumb {
@@ -41,6 +42,7 @@ html {
 
   &.dark {
     --background-color: #000;
+    --blur-bg: #26262670;
     --color: #fff;
     --border-color: #2f3336;
     --hover: #181818;
@@ -49,10 +51,10 @@ html {
 }
 
 body {
-  margin: 0;
   display: flex;
   min-width: 320px;
   min-height: 100vh;
+  margin: 0;
 }
 
 #app {
