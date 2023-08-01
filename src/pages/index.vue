@@ -19,10 +19,7 @@ const darkStyle = computed(() => isDark.value
 
 <template>
   <header :style="{ backgroundColor: darkStyle.navBg }">
-    <div>
-      <img class="logo" src="/favicon.ico">
-      <span>Chill Post</span>
-    </div>
+    <h2>Explore</h2>
 
     <span :class="darkStyle.icon" @click="toggleDark()" />
   </header>
@@ -31,23 +28,25 @@ const darkStyle = computed(() => isDark.value
     <RouterView />
   </main>
 
-  <footer>
-    <nav :style="{ backgroundColor: darkStyle.navBg }">
-      <router-link to="/">
-        <span class="i-carbon-home" />
-        <p>Explore</p>
-      </router-link>
+  <nav :style="{ backgroundColor: darkStyle.navBg }">
+    <div>
+      <img class="logo" src="/favicon.ico">
+      <h1>Chill Post</h1>
+    </div>
+    <router-link to="/">
+      <span class="i-carbon-home" />
+      <p>Explore</p>
+    </router-link>
 
-      <router-link to="/@Chilfish">
-        <span class="i-carbon-user" />
-        <p>Profile</p>
-      </router-link>
-    </nav>
-  </footer>
+    <router-link to="/@Chilfish">
+      <span class="i-carbon-user" />
+      <p>Profile</p>
+    </router-link>
+  </nav>
 </template>
 
 <style lang="scss" scoped>
-@import '../style.scss';
+@import '../style';
 
 $aside-width: 14rem;
 
@@ -62,27 +61,13 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  div {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  img.logo {
-    padding: 0.3rem;
-    margin-right: 1rem;
-    height: 100%;
-    border-radius: 12px;
-  }
 }
 
 main {
   width: 100%;
 }
 
-footer {
+nav {
   position: fixed;
   bottom: 0;
   left: 0;
@@ -90,68 +75,81 @@ footer {
   height: 3rem;
   backdrop-filter: blur(24px);
   z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5rem;
+  padding: 0.5rem 1rem;
 
-  nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 100%;
+  div {
+    display: none;
+  }
+}
+
+nav a {
+  width: 30%;
+  height: 100%;
+  text-align: center;
+  line-height: 3rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 12px;
+
+  span {
+    display: inline-block;
+    width: 100%;
+    height: 80%;
   }
 
-  a {
-    width: 30rem;
-    height: 100%;
-    padding: 0.5rem;
-    text-align: center;
-    line-height: 3rem;
-    font-size: 1.1rem;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    border-radius: 12px;
-
-    &:hover {
-      background: #454545;
-    }
-
-    span {
-      display: inline-block;
-      width: 100%;
-      height: 80%;
-    }
-
-    p {
-      display: none;
-    }
+  p {
+    display: none;
   }
 }
 
 @media (min-width: $smd) {
-  footer {
+  nav {
     width: $aside-width;
     height: 100%;
+    flex-direction: column;
+    justify-content: start;
+    gap: 0.5rem;
+    padding: 1rem;
 
-    nav {
-      flex-direction: column;
-      justify-content: start;
-      padding: 0.5rem;
+    div {
+      width: 100%;
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
     }
 
-    a {
-      margin-top: 0.5rem;
-      height: 3rem;
-      width: 100%;
+    h1 {
+      font-size: 1.2rem;
+    }
 
-      span {
-        width: 2rem;
-        height: 1.5rem;
-      }
+    img.logo {
+      padding: 0.3rem;
+      height: 100%;
+      border-radius: 12px;
+    }
+  }
 
-      p {
-        font-size: 1rem;
-        margin-left: 0.5rem;
-        display: inline-block;
-      }
+  nav a {
+    height: 3rem;
+    width: 100%;
+
+    span {
+      width: 2rem;
+      height: 1.5rem;
+    }
+
+    p {
+      font-size: 1rem;
+      margin-left: 0.5rem;
+      display: inline-block;
     }
   }
 
