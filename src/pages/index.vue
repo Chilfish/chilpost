@@ -18,31 +18,40 @@ const darkStyle = computed(() => isDark.value
 </script>
 
 <template>
-  <nav :style="{ backgroundColor: darkStyle.navBg }">
+  <header :style="{ backgroundColor: darkStyle.navBg }">
     <div>
       <img class="logo" src="/favicon.ico">
       <span>Chill Post</span>
     </div>
 
     <span :class="darkStyle.icon" @click="toggleDark()" />
-  </nav>
-  <RouterView />
+  </header>
+
+  <main>
+    <RouterView />
+  </main>
+
   <footer>
     <nav :style="{ backgroundColor: darkStyle.navBg }">
-      <router-link
-        class="i-carbon-home"
-        to="/"
-      />
-      <router-link
-        class="i-carbon-user"
-        to="/@Chilfish"
-      />
+      <router-link to="/">
+        <span class="i-carbon-home" />
+        <p>Explore</p>
+      </router-link>
+
+      <router-link to="/@Chilfish">
+        <span class="i-carbon-user" />
+        <p>Profile</p>
+      </router-link>
     </nav>
   </footer>
 </template>
 
 <style lang="scss" scoped>
-nav {
+@import '../style.scss';
+
+$aside-width: 14rem;
+
+header {
   width: 100%;
   height: 3rem;
   padding: 0 1rem;
@@ -69,9 +78,14 @@ nav {
   }
 }
 
+main {
+  width: 100%;
+}
+
 footer {
   position: fixed;
   bottom: 0;
+  left: 0;
   width: 100%;
   height: 3rem;
   backdrop-filter: blur(24px);
@@ -81,15 +95,71 @@ footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    height: 100%;
   }
 
   a {
     width: 30rem;
-    height: 60%;
+    height: 100%;
+    padding: 0.5rem;
     text-align: center;
     line-height: 3rem;
     font-size: 1.1rem;
     font-weight: bold;
+    display: flex;
+    align-items: center;
+    border-radius: 12px;
+
+    &:hover {
+      background: #454545;
+    }
+
+    span {
+      display: inline-block;
+      width: 100%;
+      height: 80%;
+    }
+
+    p {
+      display: none;
+    }
+  }
+}
+
+@media (min-width: $smd) {
+  footer {
+    width: $aside-width;
+    height: 100%;
+
+    nav {
+      flex-direction: column;
+      justify-content: start;
+      padding: 0.5rem;
+    }
+
+    a {
+      margin-top: 0.5rem;
+      height: 3rem;
+      width: 100%;
+
+      span {
+        width: 2rem;
+        height: 1.5rem;
+      }
+
+      p {
+        font-size: 1rem;
+        margin-left: 0.5rem;
+        display: inline-block;
+      }
+    }
+  }
+
+  header,
+  main {
+    margin-left: $aside-width;
+    width: -webkit-fill-available;
+    width: -moz-available;
   }
 }
 </style>
