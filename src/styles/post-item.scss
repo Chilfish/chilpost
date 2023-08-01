@@ -1,0 +1,70 @@
+@import '../style';
+
+section {
+  display: flex;
+  padding: 0 0.8rem;
+  margin-top: 1rem;
+  border-radius: 8px;
+
+  &:hover {
+    background: var(--hover-1);
+  }
+
+  &>div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    line-height: 1.5rem;
+  }
+}
+
+img.avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-right: 1rem;
+  border-radius: 50%;
+}
+
+.post-meta {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+  justify-content: space-between;
+
+  & > div {
+    display: flex;
+    gap: 0.3rem;
+    width: 100%;
+  }
+
+  span {
+    display: inline-block;
+    max-width: 6rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .nick-name {
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
+  .name, .date {
+    font-size: 0.9rem;
+    color: var(--text-2);
+  }
+
+  .date:hover {
+      text-decoration: underline;
+      cursor: pointer;
+  }
+}
+
+@media (min-width: $smd){
+  .post-meta {
+    span {
+      max-width: 20rem;
+    }
+  }
+}

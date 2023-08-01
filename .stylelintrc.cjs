@@ -16,6 +16,7 @@ module.exports = {
     'no-duplicate-selectors': null,
     'no-empty-source': null,
     'selector-class-pattern': null,
+    'media-query-no-invalid': null,
     'selector-pseudo-class-no-unknown': [
       true,
       { ignorePseudoClasses: ['global', 'deep'] },

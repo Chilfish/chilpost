@@ -2,7 +2,6 @@
 import { useDark, useScroll, useToggle } from '@vueuse/core'
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import '../styles/index.scss'
 
 const route = useRoute()
 const path = ref(route.path.replace('/', ''))
@@ -70,3 +69,7 @@ watch(
     </router-link>
   </nav>
 </template>
+
+<style lang="scss" scoped>
+@import '../styles/index'
+</style>
