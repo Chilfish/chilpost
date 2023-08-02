@@ -19,7 +19,7 @@ const isDark = useDark()
 const toggleDark = useToggle(isDark)
 
 const darkIcon = computed(() =>
-  isDark.value ? 'i-carbon-sun' : 'i-carbon-moon',
+  isDark.value ? 'i-tabler-sun' : 'i-tabler-moon',
 )
 
 const { y } = useScroll(document)
@@ -53,23 +53,9 @@ watch(
     <RouterView />
   </main>
 
-  <nav>
-    <div>
-      <img class="logo" src="/favicon.ico">
-      <h1>Chill Post</h1>
-    </div>
-    <router-link to="/">
-      <span class="icon i-tabler-home-2" />
-      <p>Explore</p>
-    </router-link>
-
-    <router-link to="/@Chilfish">
-      <span class="icon i-tabler-user" />
-      <p>Profile</p>
-    </router-link>
-  </nav>
+  <Nav />
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/index'
+@import '../styles/index';
 </style>

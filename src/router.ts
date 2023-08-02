@@ -21,7 +21,7 @@ const routes: Array<RouteRecordRaw> = [
     ],
   },
   {
-    path: '/:username/:id',
+    path: '/@:username/:id',
     component: () => import('@pg/post.vue'),
   },
 ]

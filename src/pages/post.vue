@@ -11,12 +11,18 @@ const { state: post, isLoading } = useAsyncState(service.getById(postId), null)
 </script>
 
 <template>
-  <nav>
-    <RouterLink to="/">
-      <span class="icon i-tabler-arrow-left" />
-    </RouterLink>
+  <header>
+    <button
+      class="back"
+      @click="$router.back()"
+    >
+      <span class="box">
+        <span class="icon i-tabler-arrow-left" />
+      </span>
+    </button>
     <h3>Post Detail</h3>
-  </nav>
+  </header>
+
   <main>
     <div v-if="isLoading" class="loading-box">
       <span class="icon loading" />
@@ -29,22 +35,20 @@ const { state: post, isLoading } = useAsyncState(service.getById(postId), null)
       <PostDetail v-else :post="post" />
     </template>
   </main>
+
+  <Nav />
 </template>
 
 <style lang="scss" scoped>
-nav {
+@import "../styles/variables";
+
+header {
   display: flex;
   gap: 1rem;
   align-items: center;
   width: 100%;
-  height: 3rem;
+  height: $header-height;
   padding: 0.5rem 1rem;
-
-  a {
-    width: 2rem;
-    height: 100%;
-    padding: 0.5rem;
-  }
 }
 
 main {
@@ -52,6 +56,14 @@ main {
   flex-direction: column;
   width: 100%;
   height: 100%;
-  padding:0.5rem 1.2rem;
+  padding: 0.5rem 1.2rem;
+}
+
+@media (min-width: $smd) {
+  header,
+  main {
+    width: stretch;
+    margin-left: $aside-width;
+  }
 }
 </style>

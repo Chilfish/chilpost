@@ -13,7 +13,7 @@ const avatarUrl = useImg(post.owner.avatar)
 
 <template>
   <section>
-    <RouterLink :to="`${post.owner.name}/${post.id}`">
+    <RouterLink :to="`@${post.owner.name}/${post.id}`">
       <RouterLink
         class="avatar"
         :to="`/@${post.owner.name}`"
@@ -37,7 +37,7 @@ const avatarUrl = useImg(post.owner.avatar)
           <RouterLink
             class="date"
             :title="dayjs(post.createdAt).format()"
-            :to="`/${post.owner.name}/${post.id}`"
+            :to="`/@${post.owner.name}/${post.id}`"
           >
             {{ timeDiff(post.createdAt) }}
           </RouterLink>

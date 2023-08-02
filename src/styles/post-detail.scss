@@ -1,5 +1,21 @@
 @import "./variables";
 
+main {
+  padding: 0.5rem;
+  margin: $header-height 0;
+}
+
+.post-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 1rem;
+  color: var(--text-2);
+
+  @include border(bottom);
+}
+
 .user-box {
   display: flex;
   gap: 1rem;

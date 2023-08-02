@@ -39,9 +39,7 @@
 .post-action {
   display: flex;
   justify-content: space-between;
-  padding: 0 10px;
-  margin-top: 10px;
-  font-size: 14px;
+  margin-top: 1rem;
   color: #666;
 
   .count {
@@ -51,7 +49,7 @@
 
 @media (min-width: $smd) {
   .post-action {
-    padding-right: 20rem;
+    padding-right: 25rem;
   }
 }
 </style>

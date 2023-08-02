@@ -7,8 +7,12 @@ $color-map: (
   ".repost": #00ba7c,
   ".like": #f91880,
   ".share": $theme-color,
-  ".menu": $theme-color
+  ".menu": $theme-color,
+  ".back": $theme-color,
 );
+$aside-width: 14rem;
+$header-height: 4rem;
+$footer-height: 3.5rem;
 
 @mixin action-btn($map: $color-map) {
   @each $key, $value in $map {

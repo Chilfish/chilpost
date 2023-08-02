@@ -41,6 +41,8 @@ const avatarUrl = useImg(props.post.owner.avatar)
     <div class="time">
       {{ (new Date(post.createdAt)).toLocaleString() }}
     </div>
+
+    <PostAction />
   </div>
 </template>
 
