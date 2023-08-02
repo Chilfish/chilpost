@@ -60,5 +60,5 @@ const avatarUrl = useImg(post.owner.avatar)
 </template>
 
 <style lang="scss">
-@import '../styles/post-item';
+@import '~/styles/post-item';
 </style>

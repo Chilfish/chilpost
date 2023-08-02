@@ -17,7 +17,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import "../styles/variables";
+@import "~/styles/variables";
 
 header {
   display: flex;

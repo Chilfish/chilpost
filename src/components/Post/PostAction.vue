@@ -34,7 +34,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import "../styles/variables";
+@import "~/styles/variables";
 
 .post-action {
   display: flex;
