@@ -1,45 +1,31 @@
 <script setup lang="ts">
-import { useDark, useScroll, useToggle } from '@vueuse/core'
-import { computed, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
-
-const route = useRoute()
-const path = ref(route.path.replace('/', ''))
-
-watch(
-  () => route.path,
-  (newPath) => {
-    path.value = newPath.replace('/', '')
-  },
-)
-
-const showHeader = computed(() => !path.value.includes('@'))
+import { useAsyncState, useDark, useScroll, useToggle } from '@vueuse/core'
+import { computed, inject, ref, watch } from 'vue'
+import type { PostService } from '~/services/postService'
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
-
 const darkIcon = computed(() =>
   isDark.value ? 'i-tabler-sun' : 'i-tabler-moon',
 )
 
 const { y } = useScroll(document)
 const isScrollingDown = ref(false)
-
 watch(
   () => y.value,
   (newY, oldY) => {
     isScrollingDown.value = newY > oldY
   },
 )
+
+const service = inject('postService') as PostService
+
+const { state: posts, isLoading, isReady } = useAsyncState(service.getPosts(), null)
 </script>
 
 <template>
-  <header
-    :class="isScrollingDown ? 'scroll-up' : ''"
-  >
-    <h2 v-if="showHeader">
-      {{ path }}
-    </h2>
+  <header :class="isScrollingDown ? 'scroll-up' : ''">
+    <h2>Explore</h2>
 
     <label>
       <span class="icon i-tabler-search" />
@@ -50,10 +36,17 @@ watch(
   </header>
 
   <main>
-    <RouterView />
+    <div v-if="isLoading" class="loading-box">
+      <span class="icon loading" />
+    </div>
+    <template v-else-if="isReady">
+      <PostItem
+        v-for="post in posts"
+        :key="post.id"
+        :post="post"
+      />
+    </template>
   </main>
-
-  <Nav />
 </template>
 
 <style lang="scss" scoped>

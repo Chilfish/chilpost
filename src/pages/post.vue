@@ -6,22 +6,14 @@ import type { PostService } from '~/services/postService'
 
 const service = inject('postService') as PostService
 
-const postId = useRoute().params.id as string
+const postId = useRoute().params.postId as string
 const { state: post, isLoading } = useAsyncState(service.getById(postId), null)
 </script>
 
 <template>
-  <header>
-    <button
-      class="back"
-      @click="$router.back()"
-    >
-      <span class="box">
-        <span class="icon i-tabler-arrow-left" />
-      </span>
-    </button>
-    <h3>Post Detail</h3>
-  </header>
+  <Header>
+    <h3>Post Details</h3>
+  </Header>
 
   <main>
     <div v-if="isLoading" class="loading-box">
@@ -35,21 +27,10 @@ const { state: post, isLoading } = useAsyncState(service.getById(postId), null)
       <PostDetail v-else :post="post" />
     </template>
   </main>
-
-  <Nav />
 </template>
 
 <style lang="scss" scoped>
 @import "../styles/variables";
-
-header {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  width: 100%;
-  height: $header-height;
-  padding: 0.5rem 1rem;
-}
 
 main {
   display: flex;
@@ -57,13 +38,5 @@ main {
   width: 100%;
   height: 100%;
   padding: 0.5rem 1.2rem;
-}
-
-@media (min-width: $smd) {
-  header,
-  main {
-    width: stretch;
-    margin-left: $aside-width;
-  }
 }
 </style>

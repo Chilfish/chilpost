@@ -5,24 +5,20 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     redirect: '/explore',
-  },
-  {
-    path: '/',
-    component: () => import('@pg/index.vue'),
     children: [
       {
         path: 'explore',
-        component: () => import('@pg/explore.vue'),
-      },
-      {
-        path: '@:username',
-        component: () => import('@pg/profile.vue'),
+        component: () => import('@pg/index.vue'),
       },
     ],
   },
   {
-    path: '/@:username/:id',
+    path: '/@:username/:postId',
     component: () => import('@pg/post.vue'),
+  },
+  {
+    path: '/@:username',
+    component: () => import('@pg/profile.vue'),
   },
 ]
 
