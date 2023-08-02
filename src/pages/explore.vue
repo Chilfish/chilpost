@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { useAsyncState } from '@vueuse/core'
 import { inject } from 'vue'
-import type { TPostService } from '~/services/post'
+import type { PostService } from '~/services/postService'
 
-const service = inject('postService') as TPostService
+const service = inject('postService') as PostService
 
 const { state: posts, isLoading, isReady } = useAsyncState(service.getPosts(), null)
 </script>

@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
-import { PostService } from './services/post'
+import { PostService } from './services/postService'
 import App from '~/App.vue'
 import router from '~/router'
 
@@ -11,9 +11,8 @@ import './style.scss'
 
 const app = createApp(App)
 
-app.provide('postService', new PostService())
-
 app
   .use(router)
   .use(createPinia())
+  .provide('postService', new PostService())
   .mount('#app')

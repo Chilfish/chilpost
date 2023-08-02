@@ -2,9 +2,9 @@
 import { useRoute } from 'vue-router'
 import { useAsyncState } from '@vueuse/core'
 import { inject } from 'vue'
-import type { TPostService } from '~/services/post'
+import type { PostService } from '~/services/postService'
 
-const service = inject('postService') as TPostService
+const service = inject('postService') as PostService
 
 const postId = useRoute().params.id as string
 const { state: post, isLoading } = useAsyncState(service.getById(postId), null)
