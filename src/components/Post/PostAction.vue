@@ -22,31 +22,21 @@ const likeStyle = computed(() =>
 
 <template>
   <div class="post-action">
-    <button
-      class="chat"
-      :title="`${status.comment_count}`"
-    >
+    <button class="chat" :title="`${status.comment_count}`">
       <span class="box">
         <span class="icon i-tabler-message-circle" />
       </span>
       <span class="count">{{ fmtNum(status.comment_count) }}</span>
     </button>
 
-    <button
-      class="repost"
-      :title="`${status.repost_count}`"
-    >
+    <button class="repost" :title="`${status.repost_count}`">
       <span class="box">
         <span class="icon i-tabler-repeat" />
       </span>
       <span class="count">{{ fmtNum(status.repost_count) }}</span>
     </button>
 
-    <button
-      :class="`like ${likeStyle.class}`"
-      :title="`${status.like_count}`"
-      @click="service.toggleLike(id)"
-    >
+    <button :class="`like ${likeStyle.class}`" :title="`${status.like_count}`" @click="service.toggleLike(id)">
       <span class="box">
         <span :class="`icon ${likeStyle.icon}`" />
       </span>
@@ -67,7 +57,7 @@ const likeStyle = computed(() =>
 
 .post-action {
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
   color: #666;
 
   .count {
@@ -75,13 +65,17 @@ const likeStyle = computed(() =>
   }
 }
 
-button.is_like {
-  color: map.get($color-map, '.like')
+button {
+  min-width: 6rem;
+
+  &.is_like {
+    color: map.get($color-map, '.like')
+  }
 }
 
-@media (min-width: $smd) {
-  .post-action {
-    padding-right: 25rem;
+@media (min-width: $sm) {
+  button {
+    min-width: 8rem;
   }
 }
 </style>

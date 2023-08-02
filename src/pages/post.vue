@@ -37,6 +37,7 @@ main {
   flex-direction: column;
   width: 100%;
   height: 100%;
-  padding: 0.5rem 1.2rem;
+  padding: 0.5rem 2rem;
+  margin: 0 auto;
 }
 </style>

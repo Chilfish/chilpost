@@ -27,4 +27,10 @@ header {
   height: $header-height;
   padding: 0.5rem 1rem;
 }
+
+@media (min-width: $lg) {
+  header {
+    margin-right: $aside-width;
+  }
+}
 </style>

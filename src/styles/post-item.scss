@@ -45,7 +45,7 @@ a.avatar {
 
   span {
     display: inline-block;
-    max-width: 10rem;
+    max-width: 9rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -78,7 +78,7 @@ a.avatar {
   }
 }
 
-@media (min-width: $smd) {
+@media (min-width: $sm) {
   .post-meta {
     span {
       max-width: 20rem;

@@ -33,7 +33,7 @@ nav {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: $footer-height;
+  height: $nav-footer-height;
   padding: 0.5rem 1rem;
   background-color: var(--blur-bg);
   backdrop-filter: blur(24px);
@@ -68,12 +68,12 @@ nav a {
   }
 }
 
-@media (min-width: $smd) {
+@media (min-width: $sm) {
   nav {
     flex-direction: column;
     gap: 0.5rem;
     justify-content: start;
-    width: $aside-width;
+    width: $nav-aside-width;
     height: 100%;
     padding: 1rem;
 

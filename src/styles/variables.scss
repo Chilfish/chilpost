@@ -10,9 +10,10 @@ $color-map: (
   ".menu": $theme-color,
   ".back": $theme-color,
 );
-$aside-width: 14rem;
+$nav-aside-width: 15rem;
+$nav-footer-height: 3.5rem;
 $header-height: 4rem;
-$footer-height: 3.5rem;
+$aside-width: 20rem;
 
 @mixin action-btn($map: $color-map) {
   @each $key, $value in $map {
@@ -51,7 +52,7 @@ $footer-height: 3.5rem;
 }
 
 // @media (min-width: $)
-$smd: 640px;
-$lgd: 1024px;
+$sm: 640px;
+$lg: 1024px;
 
 @include action-btn($color-map);
