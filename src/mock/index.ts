@@ -31,7 +31,7 @@ async function generateStatic(...mocks: { name: string; data: any[] }[]) {
   await fs.writeFile(mockDir, `${output}\n`)
 }
 
-export function genStaticDate() {
+export function genStaticData() {
   return generateStatic(
     { name: 'fakeUsers', data: fakeUsers },
     { name: 'fakePosts', data: fakePosts },

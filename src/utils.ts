@@ -33,5 +33,7 @@ export function fmtNum(num: number) {
     return num
   if (num < 10000)
     return `${Math.floor(num / 100) / 10}k`
-  return `${Math.floor(num / 1000)}k`
+  if (num < 100000)
+    return `${Math.floor(num / 1000)}k`
+  return '100k+'
 }

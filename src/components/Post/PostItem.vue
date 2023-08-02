@@ -49,9 +49,9 @@ const avatarUrl = useImg(post.owner.avatar)
           </button>
         </div>
 
-        <main>
+        <div class="content">
           <p>{{ post.content }}</p>
-        </main>
+        </div>
 
         <PostAction :id="post.id" :status="post.status" />
       </div>

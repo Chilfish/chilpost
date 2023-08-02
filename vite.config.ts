@@ -5,9 +5,9 @@ import vue from '@vitejs/plugin-vue'
 import Components from 'unplugin-vue-components/vite'
 import autoprefixer from 'autoprefixer'
 
-import { genStaticDate } from './src/mock'
+import { genStaticData } from './src/mock'
 
-genStaticDate() // generate static mock data to ts file
+genStaticData() // generate static mock data to ts file
 
 // https://vitejs.dev/config/
 export default defineConfig({

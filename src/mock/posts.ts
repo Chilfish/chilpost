@@ -7,7 +7,7 @@ export function generatePost(owner: User): Post {
   return {
     id: uuidv4(),
     owner,
-    content: fake.lorem.paragraphs(randomNum(1, 3)).split('.').join('.\n'),
+    content: fake.lorem.paragraphs(randomNum(1, 4)),
     createdAt: fake.date.past().toISOString(),
     updatedAt: fake.date.recent().toISOString(),
     status: {
