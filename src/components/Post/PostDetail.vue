@@ -42,7 +42,7 @@ const avatarUrl = useImg(props.post.owner.avatar)
       {{ (new Date(post.createdAt)).toLocaleString() }}
     </div>
 
-    <PostAction />
+    <PostAction :id="post.id" :status="post.status" />
   </div>
 </template>
 

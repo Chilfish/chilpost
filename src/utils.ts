@@ -25,3 +25,13 @@ export function timeDiff(time: string) {
     return dayjs(time).format('MM-DD')
   return dayjs(time).format('YY-MM-DD')
 }
+
+export function fmtNum(num: number) {
+  if (num < 1)
+    return ''
+  if (num < 1000)
+    return num
+  if (num < 10000)
+    return `${Math.floor(num / 100) / 10}k`
+  return `${Math.floor(num / 1000)}k`
+}

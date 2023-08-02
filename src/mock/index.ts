@@ -1,11 +1,14 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import dayjs from 'dayjs'
+import { fakerDE as fake } from '@faker-js/faker'
 import { generatePost } from './posts'
 import { generateUser } from './users'
 
 const mockDir = path.resolve(path.resolve(), 'src/mock/mock.ts')
 await fs.writeFile(mockDir, '')
+
+export const randomNum = (min = 0, max = 5000) => fake.number.int({ min, max })
 
 export const fakeUsers = Array.from({ length: 10 }, () => generateUser())
 

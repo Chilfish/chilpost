@@ -53,7 +53,7 @@ const avatarUrl = useImg(post.owner.avatar)
           <p>{{ post.content }}</p>
         </main>
 
-        <PostAction />
+        <PostAction :id="post.id" :status="post.status" />
       </div>
     </RouterLink>
   </section>

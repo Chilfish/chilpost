@@ -6,16 +6,20 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 export class PostService {
   private postStore = usePostStore()
 
-  public async getPosts(): Promise<Post[]> {
+  public async getPosts() {
     return this.postStore.posts
   }
 
-  public async getById(id: string): Promise<Post | null> {
+  public async getById(id: string) {
     return this.postStore.getById(id)
   }
 
-  public async addPost(post: Post): Promise<Post> {
+  public async addPost(post: Post) {
     this.postStore.addPost(post)
     return post
+  }
+
+  public async toggleLike(id: string) {
+    return this.postStore.toggleLike(id)
   }
 }

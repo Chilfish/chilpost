@@ -8,12 +8,18 @@ export interface User {
   updatedAt: string
 }
 
+export interface PostStatus {
+  like_count: number
+  comment_count: number
+  repost_count: number
+  is_liked: boolean
+}
+
 export interface Post {
   id: string
   content: string
   createdAt: string
   updatedAt: string
   owner: User
-
-  // likes
+  status: PostStatus
 }
