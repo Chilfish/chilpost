@@ -13,7 +13,7 @@ const { state: post, isLoading } = useAsyncState(service.getById(postId), null)
 <template>
   <nav>
     <RouterLink to="/">
-      <span class="icon i-carbon-arrow-left" />
+      <span class="icon i-tabler-arrow-left" />
     </RouterLink>
     <h3>Post Detail</h3>
   </nav>

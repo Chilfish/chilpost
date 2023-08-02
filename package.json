@@ -29,7 +29,7 @@
   "devDependencies": {
     "@antfu/eslint-config": "^0.39.8",
     "@faker-js/faker": "^8.0.2",
-    "@iconify-json/carbon": "^1.1.18",
+    "@iconify-json/tabler": "^1.1.86",
     "@types/node": "^20.4.5",
     "@types/uuid": "^9.0.2",
     "@unocss/eslint-config": "^0.54.1",

@@ -1,0 +1,53 @@
+@use "sass:map";
+@use "sass:color";
+
+$theme-color: #6871f3;
+$color-map: (
+  ".chat": $theme-color,
+  ".repost": #00ba7c,
+  ".like": #f91880,
+  ".share": $theme-color,
+  ".menu": $theme-color
+);
+
+@mixin action-btn($map: $color-map) {
+  @each $key, $value in $map {
+    $color: map.get($map, $key);
+
+    button#{$key} {
+      display: flex;
+      align-items: center;
+
+      .box {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.8rem;
+        height: 1.8rem;
+        border-radius: 50%;
+      }
+
+      &:hover .box {
+        background-color: color.adjust($color, $alpha: -0.9);
+      }
+
+      &:hover {
+        color: $color;
+      }
+    }
+  }
+}
+
+@mixin border($pos) {
+  $border-width: 1px;
+  $border-color: var(--border-color);
+
+  border-#{$pos}-width: $border-width;
+  border-#{$pos}-color: $border-color;
+}
+
+// @media (min-width: $)
+$smd: 640px;
+$lgd: 1024px;
+
+@include action-btn($color-map);

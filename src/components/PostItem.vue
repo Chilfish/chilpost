@@ -42,12 +42,18 @@ const avatarUrl = useImg(post.owner.avatar)
             {{ timeDiff(post.createdAt) }}
           </RouterLink>
 
-          <span class="icon menu i-carbon-overflow-menu-horizontal" />
+          <button class="menu">
+            <span class="box">
+              <span class="icon i-tabler-dots" />
+            </span>
+          </button>
         </div>
 
         <main>
           <p>{{ post.content }}</p>
         </main>
+
+        <PostAction />
       </div>
     </RouterLink>
   </section>

@@ -1,4 +1,4 @@
-@import "../style";
+@import "./variables";
 
 section > a {
   display: flex;
@@ -67,7 +67,8 @@ a.avatar {
     color: var(--text-2);
   }
 
-  .date:hover {
+  .date:hover,
+  .nick-name:hover {
     text-decoration: underline;
     cursor: pointer;
   }

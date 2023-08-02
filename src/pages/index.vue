@@ -42,7 +42,7 @@ watch(
     </h2>
 
     <label>
-      <span class="icon i-carbon-search" />
+      <span class="icon i-tabler-search" />
       <input type="search" placeholder="Search">
     </label>
 
@@ -59,12 +59,12 @@ watch(
       <h1>Chill Post</h1>
     </div>
     <router-link to="/">
-      <span class="icon i-carbon-home" />
+      <span class="icon i-tabler-home-2" />
       <p>Explore</p>
     </router-link>
 
     <router-link to="/@Chilfish">
-      <span class="icon i-carbon-user" />
+      <span class="icon i-tabler-user" />
       <p>Profile</p>
     </router-link>
   </nav>

@@ -13,17 +13,11 @@ const avatarUrl = useImg(props.post.owner.avatar)
 
 <template>
   <div class="user-box">
-    <RouterLink
-      class="avatar"
-      :to="`/@${post.owner.name}`"
-    >
+    <RouterLink class="avatar" :to="`/@${post.owner.name}`">
       <img :src="avatarUrl" alt="avatar">
     </RouterLink>
 
-    <RouterLink
-      class="name-box"
-      :to="`/@${post.owner.name}`"
-    >
+    <RouterLink class="name-box" :to="`/@${post.owner.name}`">
       <span class="nick-name">
         {{ post.owner.nick_name }}
       </span>
@@ -32,7 +26,11 @@ const avatarUrl = useImg(props.post.owner.avatar)
       </span>
     </RouterLink>
 
-    <span class="icon menu i-carbon-overflow-menu-horizontal" />
+    <button class="menu">
+      <span class="box">
+        <span class="icon i-tabler-dots" />
+      </span>
+    </button>
   </div>
 
   <div class="content">

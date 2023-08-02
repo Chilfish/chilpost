@@ -1,7 +1,8 @@
-@import "../style";
+@import "./variables";
 
 $aside-width: 14rem;
-$header-height: 3rem;
+$header-height: 4rem;
+$footer-height: 3.5rem;
 
 header {
   position: fixed;
@@ -28,7 +29,7 @@ header {
   label {
     position: relative;
     width: 80%;
-    padding: 0.5rem;
+    padding: 0.7rem;
     padding-left: 2.3rem;
     font-size: 0.9rem;
     background: var(--hover);
@@ -70,7 +71,7 @@ nav {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: $header-height;
+  height: $footer-height;
   padding: 0.5rem 1rem;
   background-color: var(--blur-bg);
   backdrop-filter: blur(24px);
@@ -89,7 +90,7 @@ nav a {
   justify-content: center;
   width: 30%;
   height: 100%;
-  padding-left: 0.2rem;
+  padding: 0.2rem;
   font-size: 1.1rem;
   font-weight: bold;
   line-height: 3rem;
@@ -97,6 +98,11 @@ nav a {
 
   p {
     display: none;
+  }
+
+  span.icon {
+    width: 3rem;
+    height: 3rem;
   }
 }
 
