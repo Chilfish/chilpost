@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { fakePosts } from '~/mock'
+import { fakePosts } from '~/mock/mock'
 import type { Post } from '~/types'
 
 export const usePostStore = defineStore('post', () => {

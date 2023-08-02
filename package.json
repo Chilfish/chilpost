@@ -22,6 +22,7 @@
     "dayjs": "^1.11.9",
     "pinia": "^2.1.6",
     "uuid": "^9.0.0",
+    "vite-plugin-fs": "1.0.0-beta.6",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4"
   },
@@ -57,6 +58,9 @@
     ],
     "rules": {
       "no-console": "off"
-    }
+    },
+    "ignorePatterns": [
+      "src/mock/mock.ts"
+    ]
   }
 }
