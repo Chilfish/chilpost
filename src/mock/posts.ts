@@ -3,10 +3,10 @@ import { v4 as uuidv4 } from 'uuid'
 import { randomNum } from '.'
 import type { Id, Post } from '~/types'
 
-export function generatePost(owner: Id): Post {
+export function generatePost(owner_id: Id): Post {
   return {
     id: uuidv4(),
-    owner,
+    owner_id,
     content: fake.lorem.paragraphs(randomNum(1, 4)),
     createdAt: fake.date.past().toISOString(),
     updatedAt: fake.date.recent().toISOString(),

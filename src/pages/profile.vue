@@ -1,22 +1,34 @@
 <script setup lang="ts">
+import { useAsyncState } from '@vueuse/core'
 import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import { useUserStore } from '~/store/userStore'
 
 const route = useRoute()
-const username = ref(route.params.username)
+const username = ref(route.params.username as string)
 
 watch(
-  () => route.params.username,
+  () => route.params.username as string,
   (newUser) => {
     username.value = newUser
   },
 )
+
+const userStore = useUserStore()
+const { state: user, isLoading, isReady } = useAsyncState(userStore.getByName(username.value), null)
 </script>
 
 <template>
   <Header>
     <h3> {{ username }}</h3>
   </Header>
+
+  <div v-if="isLoading" class="loading-box">
+    <span class="icon loading" />
+  </div>
+  <template v-else-if="isReady">
+    <!-- <Profile :user="user" /> -->
+  </template>
 
   <div class="banner" />
 

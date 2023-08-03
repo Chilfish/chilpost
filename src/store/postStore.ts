@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { PostService } from '~/services/postService'
-import type { Id, Post } from '~/types'
+import type { Id, PostDetail } from '~/types'
 
 export const usePostStore = defineStore('post', () => {
-  const posts = ref([] as Post[])
+  const posts = ref([] as PostDetail[])
 
   const service = new PostService()
 
@@ -21,13 +21,7 @@ export const usePostStore = defineStore('post', () => {
     return post
   }
 
-  const getById = (id: Id): Post | null => posts.value.find(post => post.id === id) || null
-
-  const getByOwner = (owner: Id): Post[] => posts.value.filter(post => post.owner === owner)
-
-  const addPost = (post: Post) => {
-    posts.value.push(post)
-  }
+  const getById = (id: Id): PostDetail | null => posts.value.find(post => post.id === id) || null
 
   const toggleLike = async (id: Id) => {
     const post = getById(id)
@@ -46,8 +40,6 @@ export const usePostStore = defineStore('post', () => {
     fetchById,
 
     getById,
-    getByOwner,
-    addPost,
     toggleLike,
   }
 })

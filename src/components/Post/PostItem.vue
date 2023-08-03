@@ -1,44 +1,40 @@
 <script setup lang="ts">
 import dayjs from 'dayjs'
 import { timeDiff } from '~/utils'
-import type { Post } from '~/types'
-import { useUserStore } from '~/store/userStore'
+import type { PostDetail } from '~/types'
 
-const props = defineProps<{
-  post: Post
+defineProps<{
+  post: PostDetail
 }>()
-
-const useUsers = useUserStore()
-const owner = useUsers.getById(props.post.owner)
 </script>
 
 <template>
   <section>
-    <RouterLink :to="`@${owner?.name}/${post.id}`">
+    <RouterLink :to="`@${post.owner.name}/${post.id}`">
       <RouterLink
         class="avatar"
-        :to="`/@${owner?.name}`"
+        :to="`/@${post.owner.name}`"
       >
-        <img :src="owner?.avatar" alt="avatar">
+        <img :src="post.owner.avatar" alt="avatar">
       </RouterLink>
       <div class="section-main">
         <div class="post-meta">
           <RouterLink
             class="name-box"
-            :to="`/@${owner?.name}`"
+            :to="`/@${post.owner.name}`"
           >
             <span class="nick-name">
-              {{ owner?.nick_name }}
+              {{ post.owner.nick_name }}
             </span>
             <span class="name">
-              @{{ owner?.name }}
+              @{{ post.owner.name }}
             </span>
           </RouterLink>
           <span>·</span>
           <RouterLink
             class="date"
             :title="dayjs(post.createdAt).format()"
-            :to="`/@${owner?.name}/${post.id}`"
+            :to="`/@${post.owner.name}/${post.id}`"
           >
             {{ timeDiff(post.createdAt) }}
           </RouterLink>

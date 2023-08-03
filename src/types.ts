@@ -35,6 +35,10 @@ export interface Post {
   content: string
   createdAt: string
   updatedAt: string
-  owner: Id
+  owner_id: Id
   status: PostStatus
+}
+
+export interface PostDetail extends Post {
+  owner: User
 }
