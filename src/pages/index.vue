@@ -43,6 +43,7 @@ const { state: posts, isLoading, isReady } = useAsyncState(postStore.fetchPosts(
         v-for="post in posts"
         :key="post.id"
         :post="post"
+        :owner="post.owner"
       />
     </template>
   </main>

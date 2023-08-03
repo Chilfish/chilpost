@@ -10,7 +10,7 @@ export class UserService {
   }
 
   public async getByName(name: string): Promise<User | null> {
-    const user = this.users.find(user => user.name === name)
+    const user = this.users.find(user => user.name === name.toLowerCase())
     return user || null
   }
 

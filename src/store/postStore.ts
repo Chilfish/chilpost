@@ -21,6 +21,10 @@ export const usePostStore = defineStore('post', () => {
     return post
   }
 
+  function fetchByOwnerName(name: string) {
+    return service.fetchByOwnerName(name)
+  }
+
   const getById = (id: Id): PostDetail | null => posts.value.find(post => post.id === id) || null
 
   const toggleLike = async (id: Id) => {
@@ -38,6 +42,7 @@ export const usePostStore = defineStore('post', () => {
     posts,
     fetchPosts,
     fetchById,
+    fetchByOwnerName,
 
     getById,
     toggleLike,

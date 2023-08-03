@@ -6,9 +6,8 @@ export interface UserStatus {
   post_count: number
   is_following: boolean
 
-  followers: Id[]
-  following: Id[]
-  posts: Id[]
+  // followers: Id[]
+  // following: Id[]
 }
 
 export interface User {
@@ -20,7 +19,7 @@ export interface User {
   avatar: string
   createdAt: string
   updatedAt: string
-  // status: UserStatus
+  status: UserStatus
 }
 
 export interface PostStatus {
@@ -41,4 +40,9 @@ export interface Post {
 
 export interface PostDetail extends Post {
   owner: User
+}
+
+export interface PostsWithOwner {
+  owner: User
+  posts: Post[]
 }

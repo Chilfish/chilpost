@@ -1,4 +1,4 @@
-import type { PostDetail } from './../types'
+import type { PostDetail, PostsWithOwner } from './../types'
 import { fakePosts, fakeUsers } from '~/mock/mock'
 import type { Id, Post } from '~/types'
 import { delay } from '~/utils'
@@ -30,6 +30,20 @@ export class PostService {
     return {
       ...post,
       owner,
+    }
+  }
+
+  public async fetchByOwnerName(owner_name: string): Promise<PostsWithOwner> {
+    const owner = this.users.find(user => user.name === owner_name)
+    if (!owner)
+      throw new Error('Owner not found')
+
+    await delay(500)
+    const posts = this.posts.filter(post => post.owner_id === owner.id)
+
+    return {
+      owner,
+      posts,
     }
   }
 
