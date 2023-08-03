@@ -69,6 +69,7 @@ const likeStyle = computed(() =>
   display: flex;
   justify-content: flex-start;
   color: #666;
+  user-select: none;
 
   .count {
     margin-left: 5px;

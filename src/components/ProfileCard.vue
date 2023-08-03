@@ -80,6 +80,7 @@ const avatar = useImg(props.user.avatar)
   justify-content: center;
   padding-right: 1.5rem;
   margin: 1rem 0;
+  user-select: none;
 
   .buttons {
     display: flex;
@@ -125,8 +126,11 @@ const avatar = useImg(props.user.avatar)
     gap: 2rem;
     margin-top: 0.5rem;
     font-size: 0.9rem;
+    user-select: none;
 
-    .followers, .following, .posts {
+    .followers,
+    .following,
+    .posts {
       color: var(--text-2);
     }
   }

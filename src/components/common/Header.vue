@@ -29,6 +29,7 @@ header {
   width: stretch;
   height: $header-height;
   padding: 0.5rem 1rem;
+  user-select: none;
 }
 
 @media (min-width: $sm) {

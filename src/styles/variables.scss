@@ -51,6 +51,11 @@ $aside-width: 20rem;
   border-#{$pos}-color: $border-color;
 }
 
+@mixin blur($radius) {
+  background-color: var(--blur-bg);
+  backdrop-filter: blur($radius);
+}
+
 // @media (min-width: $)
 $sm: 640px;
 $lg: 1024px;

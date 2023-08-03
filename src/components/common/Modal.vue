@@ -26,6 +26,9 @@ const newPostStore = useNewPostStore()
   justify-content: center;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+
+  @include blur(8px);
+
+  background-color: #676767cc;
 }
 </style>

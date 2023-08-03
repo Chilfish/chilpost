@@ -1,3 +1,5 @@
+@import "./styles/variables";
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-size: var(--font-size);
@@ -80,6 +82,7 @@ span.icon {
   display: inline-block;
   max-width: 1.8rem;
   max-height: 1.8rem;
+  user-select: none;
 }
 
 .loading {
@@ -97,6 +100,7 @@ div.loading-box {
   display: flex;
   justify-content: center;
   margin: 1rem;
+  user-select: none;
 }
 
 .no-data {
@@ -104,6 +108,7 @@ div.loading-box {
   font-size: 1.2rem;
   color: var(--text-2);
   text-align: center;
+  user-select: none;
 }
 
 div.content p {
@@ -111,6 +116,5 @@ div.content p {
 }
 
 .blur-bg {
-  background-color: var(--blur-bg);
-  backdrop-filter: blur(24px);
+  @include blur(24px);
 }
