@@ -12,7 +12,7 @@
 
   --border-color: #e5e7eb;
   --background-color: #fff;
-  --blur-bg: #ffffffcc;
+  --blur-bg: #fffc;
   --color: #000;
   --hover: #e7e7e8;
   --hover-1: #f7f7f7;
@@ -62,19 +62,14 @@ body {
   @apply w-screen flex flex-col items-center position-relative;
 }
 
-h1,
-h2,
-h3,
-h4 {
-  @apply my-xl text-center text-2xl font-bold;
-}
-
-h1 {
-  @apply text-3xl;
-}
-
 h2 {
-  @apply text-2xl;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+h3 {
+  font-size: 1.1rem;
+  font-weight: bold;
 }
 
 span.icon {
@@ -102,4 +97,9 @@ div.loading-box {
 
 div.content p {
   white-space: pre-line;
+}
+
+.blur-bg {
+  background-color: var(--blur-bg);
+  backdrop-filter: blur(24px);
 }

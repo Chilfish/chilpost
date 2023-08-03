@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <header>
+  <header class="blur-bg">
     <button
       class="back"
       @click="$router.back()"
@@ -20,12 +20,21 @@
 @import "~/styles/variables";
 
 header {
+  position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
   gap: 1rem;
   align-items: center;
   width: stretch;
   height: $header-height;
   padding: 0.5rem 1rem;
+}
+
+@media (min-width: $sm) {
+  header {
+    padding-left: $nav-aside-width + 1rem;
+  }
 }
 
 @media (min-width: $lg) {

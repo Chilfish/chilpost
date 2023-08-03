@@ -37,7 +37,8 @@ main {
   flex-direction: column;
   width: 100%;
   height: 100%;
-  padding: 0.5rem 2rem;
-  margin: 0 auto;
+  padding: 0.5rem 1rem;
+  margin: auto;
+  margin-top: $header-height;
 }
 </style>

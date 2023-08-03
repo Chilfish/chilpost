@@ -1,13 +1,8 @@
 <script setup lang="ts">
-import { useAsyncState, useDark, useScroll, useToggle } from '@vueuse/core'
-import { computed, inject, ref, watch } from 'vue'
+import { useAsyncState, useScroll } from '@vueuse/core'
+import { inject, ref, watch } from 'vue'
 import type { PostService } from '~/services/postService'
-
-const isDark = useDark()
-const toggleDark = useToggle(isDark)
-const darkIcon = computed(() =>
-  isDark.value ? 'i-tabler-sun' : 'i-tabler-moon',
-)
+import type { DarkStore } from '~/store/darkStore'
 
 const { y } = useScroll(document)
 const isScrollingDown = ref(false)
@@ -18,13 +13,17 @@ watch(
   },
 )
 
+const dark = inject('darkStore') as DarkStore
 const service = inject('postService') as PostService
 
 const { state: posts, isLoading, isReady } = useAsyncState(service.getPosts(), null)
 </script>
 
 <template>
-  <header :class="isScrollingDown ? 'scroll-up' : ''">
+  <header
+    :class="isScrollingDown ? 'scroll-up' : ''"
+    class="blur-bg"
+  >
     <h2>Explore</h2>
 
     <label>
@@ -32,7 +31,7 @@ const { state: posts, isLoading, isReady } = useAsyncState(service.getPosts(), n
       <input type="search" placeholder="Search">
     </label>
 
-    <span class="icon" :class="darkIcon" @click="toggleDark()" />
+    <span class="icon" :class="dark.icon.value" @click="dark.toggle()" />
   </header>
 
   <main>
@@ -52,3 +51,4 @@ const { state: posts, isLoading, isReady } = useAsyncState(service.getPosts(), n
 <style lang="scss" scoped>
 @import '../styles/index';
 </style>
+~/store/darkStore

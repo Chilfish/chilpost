@@ -15,6 +15,6 @@ watch(
 
 <template>
   <Header>
-    <p> {{ username }}</p>
+    <h3> {{ username }}</h3>
   </Header>
 </template>

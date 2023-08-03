@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <nav>
+  <nav class="blur-bg">
     <div>
       <img class="logo" src="/favicon.ico">
       <h1>Chill Post</h1>
@@ -35,8 +35,6 @@ nav {
   width: 100%;
   height: $nav-footer-height;
   padding: 0.5rem 1rem;
-  background-color: var(--blur-bg);
-  backdrop-filter: blur(24px);
   transition: transform 0.3s ease-in-out;
   transform: translateY(0);
 

@@ -1,16 +1,25 @@
 <template>
+  <span class="i-tabler-moon i-tabler-sun" />
   <div id="main">
     <RouterView />
   </div>
   <Nav />
-  <aside />
+  <aside>
+    <h2>WIP</h2>
+  </aside>
 </template>
 
 <style lang="scss" scoped>
 @import './styles/variables';
 
+span {
+  display: none;
+}
+
 aside {
   display: none;
+  justify-content: center;
+  padding: 1rem;
   transition: all 0.3s ease-in-out;
 }
 
@@ -27,13 +36,13 @@ aside {
 
 @media (min-width: $lg) {
   aside {
-    display: flex;
-    width: $aside-width;
-    height: 100%;
     position: fixed;
     top: 0;
     right: 0;
     z-index: 100;
+    display: flex;
+    width: $aside-width;
+    height: 100%;
 
     @include border(left);
   }

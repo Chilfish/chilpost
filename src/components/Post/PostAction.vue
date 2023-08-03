@@ -57,7 +57,7 @@ const likeStyle = computed(() =>
 
 .post-action {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   color: #666;
 
   .count {

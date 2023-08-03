@@ -11,8 +11,6 @@ header {
   width: stretch;
   height: $header-height;
   padding: 0 1rem;
-  background-color: var(--nav-bg);
-  backdrop-filter: blur(24px);
   transition: transform 0.3s ease-in-out;
   transform: translateY(0);
 
