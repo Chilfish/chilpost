@@ -7,6 +7,7 @@ export function generateUser(): User {
 
   return {
     id: uuidv4(),
+    bio: fake.lorem.paragraphs(1),
     nick_name: nick_name.replace(/[_\.]/g, ' '),
     name: nick_name.toLowerCase(),
     email: fake.internet.email(),

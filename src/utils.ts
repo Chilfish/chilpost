@@ -1,12 +1,21 @@
 import dayjs from 'dayjs'
 import { useImage } from '@vueuse/core'
-import { computed } from 'vue'
+import { computed, ref, watchEffect } from 'vue'
 
-export function useImg(src: string, placeholder = '/placeholder.avatar.png') {
-  const { isLoading } = useImage({ src })
-  return computed(() =>
-    isLoading.value ? placeholder : src,
-  )
+// TODO fix it
+export function useImg(
+  src: string | null | undefined,
+  placeholder = '/placeholder.avatar.png',
+) {
+  const url = ref(src || placeholder)
+  const { isLoading } = useImage({ src: url.value })
+
+  watchEffect(() => {
+    console.log('src.value', src)
+    // url.value = src.value || placeholder
+  })
+
+  return computed(() => isLoading.value ? placeholder : url.value)
 }
 
 export function timeDiff(time: string) {

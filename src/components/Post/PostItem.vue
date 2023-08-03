@@ -1,43 +1,48 @@
 <script setup lang="ts">
 import dayjs from 'dayjs'
+import { inject } from 'vue'
+import { computedAsync } from '@vueuse/core'
+import { timeDiff } from '~/utils'
 import type { Post } from '~/types'
-import { timeDiff, useImg } from '~/utils'
+import type { UserService } from '~/services/userService'
 
 const props = defineProps<{
   post: Post
 }>()
 const post = props.post
 
-const avatarUrl = useImg(post.owner.avatar)
+const userService = inject('userService') as UserService
+
+const owner = computedAsync(async () => await userService.getById(post.owner))
 </script>
 
 <template>
   <section>
-    <RouterLink :to="`@${post.owner.name}/${post.id}`">
+    <RouterLink :to="`@${owner?.name}/${post.id}`">
       <RouterLink
         class="avatar"
-        :to="`/@${post.owner.name}`"
+        :to="`/@${owner?.name}`"
       >
-        <img :src="avatarUrl" alt="avatar">
+        <img :src="owner?.avatar" alt="avatar">
       </RouterLink>
       <div class="section-main">
         <div class="post-meta">
           <RouterLink
             class="name-box"
-            :to="`/@${post.owner.name}`"
+            :to="`/@${owner?.name}`"
           >
             <span class="nick-name">
-              {{ post.owner.nick_name }}
+              {{ owner?.nick_name }}
             </span>
             <span class="name">
-              @{{ post.owner.name }}
+              @{{ owner?.name }}
             </span>
           </RouterLink>
           <span>·</span>
           <RouterLink
             class="date"
             :title="dayjs(post.createdAt).format()"
-            :to="`/@${post.owner.name}/${post.id}`"
+            :to="`/@${owner?.name}/${post.id}`"
           >
             {{ timeDiff(post.createdAt) }}
           </RouterLink>

@@ -1,7 +1,5 @@
 import { usePostStore } from '~/store/postStore'
-import type { Post } from '~/types'
-
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+import type { Id, Post } from '~/types'
 
 export class PostService {
   private postStore = usePostStore()
@@ -10,8 +8,12 @@ export class PostService {
     return this.postStore.posts
   }
 
-  public async getById(id: string) {
+  public async getById(id: Id) {
     return this.postStore.getById(id)
+  }
+
+  public async getByOwner(owner: Id) {
+    return this.postStore.getByOwner(owner)
   }
 
   public async addPost(post: Post) {
@@ -19,7 +21,7 @@ export class PostService {
     return post
   }
 
-  public async toggleLike(id: string) {
+  public async toggleLike(id: Id) {
     return this.postStore.toggleLike(id)
   }
 }

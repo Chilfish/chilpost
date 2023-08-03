@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { computedAsync } from '@vueuse/core'
+import { inject } from 'vue'
+import type { UserService } from '~/services/userService'
 import type { Post } from '~/types'
-import { useImg } from '~/utils'
 
 const props = defineProps<{
   post: Post
@@ -8,21 +10,23 @@ const props = defineProps<{
 
 const post = props.post
 
-const avatarUrl = useImg(props.post.owner.avatar)
+const userService = inject('userService') as UserService
+
+const owner = computedAsync(async () => await userService.getById(post.owner))
 </script>
 
 <template>
   <div class="user-box">
-    <RouterLink class="avatar" :to="`/@${post.owner.name}`">
-      <img :src="avatarUrl" alt="avatar">
+    <RouterLink class="avatar" :to="`/@${owner?.name}`">
+      <img :src="owner?.avatar" alt="avatar">
     </RouterLink>
 
-    <RouterLink class="name-box" :to="`/@${post.owner.name}`">
+    <RouterLink class="name-box" :to="`/@${owner?.name}`">
       <span class="nick-name">
-        {{ post.owner.nick_name }}
+        {{ owner?.nick_name }}
       </span>
       <span class="name">
-        @{{ post.owner.name }}
+        @{{ owner?.name }}
       </span>
     </RouterLink>
 

@@ -5,10 +5,13 @@ import { generateUser } from './users'
 
 export const randomNum = (min = 0, max = 5000) => fake.number.int({ min, max })
 
-export const fakeUsers = Array.from({ length: 10 }, () => generateUser())
+const user_num = 10
+const post_num = 20
 
-export const fakePosts = Array.from({ length: 20 },
+export const fakeUsers = Array.from({ length: user_num }, () => generateUser())
+
+export const fakePosts = Array.from({ length: post_num },
   () => generatePost(
-    fakeUsers[randomNum(0, fakeUsers.length - 1)],
+    fakeUsers[randomNum(0, user_num - 1)].id,
   ),
 ).sort((a, b) => dayjs(b.createdAt).unix() - dayjs(a.createdAt).unix())

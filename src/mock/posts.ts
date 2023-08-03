@@ -1,9 +1,9 @@
 import { fakerDE as fake } from '@faker-js/faker'
 import { v4 as uuidv4 } from 'uuid'
 import { randomNum } from '.'
-import type { Post, User } from '~/types'
+import type { Id, Post } from '~/types'
 
-export function generatePost(owner: User): Post {
+export function generatePost(owner: Id): Post {
   return {
     id: uuidv4(),
     owner,
