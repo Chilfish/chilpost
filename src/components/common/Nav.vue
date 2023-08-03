@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import { useNewPostStore } from '~/store/newPostStore'
 
+const newPostStore = useNewPostStore()
 </script>
 
 <template>
@@ -18,7 +20,10 @@
       <p>Profile</p>
     </router-link>
 
-    <button class="send-post">
+    <button
+      class="send-post"
+      @click="newPostStore.toggleModal"
+    >
       <span class="icon i-tabler-plus" />
       <span class="text">Post</span>
     </button>

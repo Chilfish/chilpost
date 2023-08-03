@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import { useNewPostStore } from '~/store/newPostStore'
+
+const newPostStore = useNewPostStore()
+</script>
+
 <template>
   <span class="i-tabler-moon i-tabler-sun" />
   <div id="main">
@@ -7,6 +13,10 @@
   <aside>
     <h2>WIP</h2>
   </aside>
+
+  <Modal v-if="newPostStore.showModal">
+    <SendPost />
+  </Modal>
 </template>
 
 <style lang="scss" scoped>
