@@ -1,18 +1,13 @@
 <script setup lang="ts">
-import { computedAsync } from '@vueuse/core'
-import { inject } from 'vue'
-import type { UserService } from '~/services/userService'
 import type { Post } from '~/types'
+import { useUserStore } from '~/store/userStore'
 
 const props = defineProps<{
   post: Post
 }>()
 
-const post = props.post
-
-const userService = inject('userService') as UserService
-
-const owner = computedAsync(async () => await userService.getById(post.owner))
+const useUsers = useUserStore()
+const owner = useUsers.getById(props.post.owner)
 </script>
 
 <template>

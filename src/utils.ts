@@ -2,6 +2,8 @@ import dayjs from 'dayjs'
 import { useImage } from '@vueuse/core'
 import { computed, ref, watchEffect } from 'vue'
 
+export const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+
 // TODO fix it
 export function useImg(
   src: string | null | undefined,

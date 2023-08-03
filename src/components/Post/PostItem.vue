@@ -1,19 +1,15 @@
 <script setup lang="ts">
 import dayjs from 'dayjs'
-import { inject } from 'vue'
-import { computedAsync } from '@vueuse/core'
 import { timeDiff } from '~/utils'
 import type { Post } from '~/types'
-import type { UserService } from '~/services/userService'
+import { useUserStore } from '~/store/userStore'
 
 const props = defineProps<{
   post: Post
 }>()
-const post = props.post
 
-const userService = inject('userService') as UserService
-
-const owner = computedAsync(async () => await userService.getById(post.owner))
+const useUsers = useUserStore()
+const owner = useUsers.getById(props.post.owner)
 </script>
 
 <template>

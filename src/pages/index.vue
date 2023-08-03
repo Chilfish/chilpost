@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useAsyncState, useScroll } from '@vueuse/core'
 import { inject, ref, watch } from 'vue'
-import type { PostService } from '~/services/postService'
 import type { DarkStore } from '~/store/darkStore'
+import { usePostStore } from '~/store/postStore'
 
 const { y } = useScroll(document)
 const isScrollingDown = ref(false)
@@ -14,9 +14,9 @@ watch(
 )
 
 const dark = inject('darkStore') as DarkStore
-const service = inject('postService') as PostService
+const postStore = usePostStore()
 
-const { state: posts, isLoading, isReady } = useAsyncState(service.getPosts(), null)
+const { state: posts, isLoading, isReady } = useAsyncState(postStore.fetchPosts(), null)
 </script>
 
 <template>
