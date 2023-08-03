@@ -12,7 +12,7 @@ function submit() {
   if (!postValue.value)
     return
 
-  // postStore.addPost(postValue.value)
+  postStore.addPost(postValue.value)
   postValue.value = ''
   newPostStore.toggleModal()
 }
@@ -45,7 +45,7 @@ function submit() {
 @import '~/styles/variables';
 
 div#send-post {
-  position: absolute;
+  position: fixed;
   top: 10vh;
   z-index: 1000;
   display: flex;
