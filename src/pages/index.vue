@@ -51,4 +51,3 @@ const { state: posts, isLoading, isReady } = useAsyncState(service.getPosts(), n
 <style lang="scss" scoped>
 @import '../styles/index';
 </style>
-~/store/darkStore
