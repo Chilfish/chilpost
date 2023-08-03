@@ -26,7 +26,11 @@ const { state: post, isLoading } = useAsyncState(
       <div v-if="!post">
         Not Found {{ postId }}
       </div>
-      <PostDetail v-else :post="post" />
+      <PostDetail
+        v-else
+        :post="post"
+        :owner="post.owner"
+      />
     </template>
   </main>
 </template>

@@ -1,23 +1,16 @@
 import dayjs from 'dayjs'
 import { useImage } from '@vueuse/core'
-import { computed, ref, watchEffect } from 'vue'
+import { computed } from 'vue'
 
 export const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
-// TODO fix it
 export function useImg(
-  src: string | null | undefined,
+  src: string,
   placeholder = '/placeholder.avatar.png',
 ) {
-  const url = ref(src || placeholder)
-  const { isLoading } = useImage({ src: url.value })
+  const { isLoading } = useImage({ src })
 
-  watchEffect(() => {
-    console.log('src.value', src)
-    // url.value = src.value || placeholder
-  })
-
-  return computed(() => isLoading.value ? placeholder : url.value)
+  return computed(() => isLoading.value ? placeholder : src)
 }
 
 export function timeDiff(time: string) {

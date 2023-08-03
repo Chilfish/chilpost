@@ -1,23 +1,27 @@
 <script setup lang="ts">
 import dayjs from 'dayjs'
-import { timeDiff } from '~/utils'
+import { timeDiff, useImg } from '~/utils'
 import type { Post, User } from '~/types'
 
-defineProps<{
+const props = defineProps<{
   post: Post
   owner: User
 }>()
+
+const avatar = useImg(props.owner.avatar)
 </script>
 
 <template>
   <section>
-    <RouterLink :to="`@${owner.name}/${post.id}`">
-      <RouterLink
-        class="avatar"
-        :to="`/@${owner.name}`"
-      >
-        <img :src="owner.avatar" alt="avatar">
-      </RouterLink>
+    <div
+      @click="$router.push(`/@${owner.name}/${post.id}`)"
+    >
+      <div class="avatar">
+        <RouterLink :to="`/@${owner.name}`">
+          <img :src="avatar" alt="avatar">
+        </RouterLink>
+      </div>
+
       <div class="section-main">
         <div class="post-meta">
           <RouterLink
@@ -32,6 +36,7 @@ defineProps<{
             </span>
           </RouterLink>
           <span>·</span>
+
           <RouterLink
             class="date"
             :title="dayjs(post.createdAt).format()"
@@ -53,7 +58,7 @@ defineProps<{
 
         <PostAction :id="post.id" :status="post.status" />
       </div>
-    </RouterLink>
+    </div>
   </section>
 </template>
 

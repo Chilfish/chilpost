@@ -1,6 +1,6 @@
 @import "./variables";
 
-section > a {
+section > div {
   display: flex;
   padding: 0.5rem;
   margin-bottom: 0.5rem;
@@ -21,14 +21,13 @@ section > a {
   }
 }
 
-a.avatar {
-  display: block ruby;
-  width: 2.5rem;
-  height: 2.5rem;
+div.avatar {
+  flex-direction: column;
+  flex-shrink: 0;
 
   img {
-    width: 100%;
-    height: 100%;
+    width: 2.5rem;
+    height: 2.5rem;
     object-fit: cover;
     border-radius: 50%;
   }

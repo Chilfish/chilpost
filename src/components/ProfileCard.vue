@@ -1,16 +1,19 @@
 <script setup lang="ts">
 import type { User } from '~/types'
+import { useImg } from '~/utils'
 
-defineProps<{
+const props = defineProps<{
   user: User
 }>()
+
+const avatar = useImg(props.user.avatar)
 </script>
 
 <template>
   <div class="profile">
     <div class="actions">
       <div class="avatar">
-        <img :src="user.avatar">
+        <img :src="avatar">
       </div>
 
       <div class="buttons">
