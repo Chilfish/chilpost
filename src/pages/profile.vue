@@ -1,51 +1,65 @@
 <script setup lang="ts">
-import { useAsyncState } from '@vueuse/core'
-import { ref, watch } from 'vue'
+import { computedAsync } from '@vueuse/core'
+import { ref, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
 import { usePostStore } from '~/store/postStore'
 
+const postStore = usePostStore()
 const route = useRoute()
 const username = ref(route.params.username as string)
 
-watch(
-  () => route.params.username as string,
-  (newUser) => {
-    username.value = newUser
+watchEffect(
+  () => {
+    username.value = route.params.username as string
   },
 )
+const isLoading = ref(false)
 
-const postStore = usePostStore()
-const {
-  state,
+const data = computedAsync(
+  async () => await postStore.fetchByOwnerName(username.value),
+  null,
   isLoading,
-  isReady,
-} = useAsyncState(postStore.fetchByOwnerName(username.value), null)
+)
 </script>
 
 <template>
   <Header>
-    <h3> {{ state?.owner.nick_name }}</h3>
+    <h3> {{ data?.owner.nick_name }}</h3>
   </Header>
 
-  <div v-if="isLoading" class="loading-box">
+  <div class="banner" />
+
+  <div
+    v-if="isLoading"
+    class="loading-box"
+  >
     <span class="icon loading" />
   </div>
 
-  <template v-else-if="isReady">
-    <div class="banner" />
-    <div v-if="!state?.owner">
-      Not Found {{ username }}
+  <template v-else>
+    <div
+      v-if="!data"
+      class="no-data"
+    >
+      User Not Found @{{ username }}
     </div>
 
     <template v-else>
-      <ProfileCard :user="state?.owner" />
+      <ProfileCard :user="data.owner" />
       <main class="post-list">
         <PostItem
-          v-for="post in state?.posts"
+          v-for="post in data.posts"
           :key="post.id"
           :post="post"
-          :owner="state?.owner"
+          :owner="data?.owner"
         />
+
+        <div
+          v-if="!data.posts.length"
+          class="no-data"
+        >
+          No posts yet
+        </div>
       </main>
     </template>
   </template>

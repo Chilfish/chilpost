@@ -86,6 +86,7 @@ const avatar = useImg(props.user.avatar)
     gap: 1rem;
     align-items: center;
     margin-left: auto;
+    color: #fff;
   }
 
   button {
