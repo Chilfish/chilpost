@@ -5,7 +5,7 @@ import vue from '@vitejs/plugin-vue'
 import Components from 'unplugin-vue-components/vite'
 import autoprefixer from 'autoprefixer'
 
-import { genStaticData } from './src/mock'
+import { genStaticData } from './src/mock/genMock'
 
 genStaticData() // generate static mock data to ts file
 
@@ -30,8 +30,5 @@ export default defineConfig({
         overrideBrowserslist: ['last 2 versions', 'not dead', '> 0.2%'],
       })],
     },
-  },
-  optimizeDeps: {
-    include: ['node:fs'],
   },
 })
