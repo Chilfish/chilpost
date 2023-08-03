@@ -1,12 +1,32 @@
+<script setup lang="ts">
+import { useAsyncState } from '@vueuse/core'
+import { usePostStore } from './store/postStore'
+import { useNewPostStore } from '~/store/newPostStore'
+
+const newPostStore = useNewPostStore()
+const postStore = usePostStore()
+
+const { isLoading } = useAsyncState(postStore.fetchPosts(), null)
+</script>
+
 <template>
   <span class="i-tabler-moon i-tabler-sun" />
-  <div id="main">
+
+  <div v-if="isLoading" class="loading-box">
+    <span class="icon loading" />
+  </div>
+
+  <div v-else id="main">
     <RouterView />
   </div>
   <Nav />
   <aside>
     <h2>WIP</h2>
   </aside>
+
+  <Modal v-if="newPostStore.showModal">
+    <SendPost />
+  </Modal>
 </template>
 
 <style lang="scss" scoped>

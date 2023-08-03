@@ -34,8 +34,14 @@ export const usePostStore = defineStore('post', () => {
 
     post.status.is_liked = !post.status.is_liked
     post.status.like_count += post.status.is_liked ? 1 : -1
-    await service.toggleLike(id)
+    // await service.toggleLike(id)
     return post
+  }
+
+  async function addPost(content: string) {
+    const newPost = await service.addPost(content)
+    posts.value.unshift(newPost)
+    return newPost
   }
 
   return {
@@ -43,7 +49,7 @@ export const usePostStore = defineStore('post', () => {
     fetchPosts,
     fetchById,
     fetchByOwnerName,
-
+    addPost,
     getById,
     toggleLike,
   }

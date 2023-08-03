@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useAsyncState, useScroll } from '@vueuse/core'
+import { useScroll } from '@vueuse/core'
 import { inject, ref, watch } from 'vue'
 import type { DarkStore } from '~/store/darkStore'
 import { usePostStore } from '~/store/postStore'
@@ -16,7 +16,7 @@ watch(
 const dark = inject('darkStore') as DarkStore
 const postStore = usePostStore()
 
-const { state: posts, isLoading, isReady } = useAsyncState(postStore.fetchPosts(), null)
+const posts = postStore.posts
 </script>
 
 <template>
@@ -35,17 +35,12 @@ const { state: posts, isLoading, isReady } = useAsyncState(postStore.fetchPosts(
   </header>
 
   <main>
-    <div v-if="isLoading" class="loading-box">
-      <span class="icon loading" />
-    </div>
-    <template v-else-if="isReady">
-      <PostItem
-        v-for="post in posts"
-        :key="post.id"
-        :post="post"
-        :owner="post.owner"
-      />
-    </template>
+    <PostItem
+      v-for="post in posts"
+      :key="post.id"
+      :post="post"
+      :owner="post.owner"
+    />
   </main>
 </template>
 
