@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
 import { useAsyncState } from '@vueuse/core'
-import { inject } from 'vue'
-import type { PostService } from '~/services/postService'
-
-const service = inject('postService') as PostService
+import { usePostStore } from '~/store/postStore'
 
 const postId = useRoute().params.postId as string
-const { state: post, isLoading } = useAsyncState(service.getById(postId), null)
+
+const postStore = usePostStore()
+const { state: post, isLoading } = useAsyncState(
+  postStore.fetchById(postId),
+  null,
+)
 </script>
 
 <template>
@@ -24,7 +26,11 @@ const { state: post, isLoading } = useAsyncState(service.getById(postId), null)
       <div v-if="!post">
         Not Found {{ postId }}
       </div>
-      <PostDetail v-else :post="post" />
+      <PostDetail
+        v-else
+        :post="post"
+        :owner="post.owner"
+      />
     </template>
   </main>
 </template>

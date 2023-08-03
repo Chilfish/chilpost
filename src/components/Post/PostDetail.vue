@@ -1,28 +1,27 @@
 <script setup lang="ts">
-import type { Post } from '~/types'
+import type { Post, User } from '~/types'
 import { useImg } from '~/utils'
 
 const props = defineProps<{
   post: Post
+  owner: User
 }>()
 
-const post = props.post
-
-const avatarUrl = useImg(props.post.owner.avatar)
+const avatar = useImg(props.owner.avatar)
 </script>
 
 <template>
   <div class="user-box">
-    <RouterLink class="avatar" :to="`/@${post.owner.name}`">
-      <img :src="avatarUrl" alt="avatar">
+    <RouterLink class="avatar" :to="`/@${owner.name}`">
+      <img :src="avatar" alt="avatar">
     </RouterLink>
 
-    <RouterLink class="name-box" :to="`/@${post.owner.name}`">
+    <RouterLink class="name-box" :to="`/@${owner.name}`">
       <span class="nick-name">
-        {{ post.owner.nick_name }}
+        {{ owner.nick_name }}
       </span>
       <span class="name">
-        @{{ post.owner.name }}
+        @{{ owner.name }}
       </span>
     </RouterLink>
 

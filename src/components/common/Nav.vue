@@ -13,7 +13,7 @@
       <p>Explore</p>
     </router-link>
 
-    <router-link to="/@Chilfish">
+    <router-link to="/@chilfish">
       <span class="icon i-tabler-user" />
       <p>Profile</p>
     </router-link>
