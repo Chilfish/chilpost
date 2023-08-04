@@ -8,18 +8,20 @@ const postStore = usePostStore()
 const route = useRoute()
 const username = ref(route.params.username as string)
 
-const isLoading = ref(false)
+const isLoading = ref(true)
 const data = computedAsync(
   async () => await postStore.fetchByOwnerName(username.value),
   null,
-  isLoading,
 )
 
 watchEffect(() => {
   username.value = route.params.username as string
 
-  const owner = data.value?.owner
-  useTitle(`${owner?.nick_name}(@${owner?.name})`)
+  if (data.value) {
+    isLoading.value = false
+    const owner = data.value.owner
+    useTitle(`${owner.nick_name}(@${owner.name})`)
+  }
 })
 </script>
 
