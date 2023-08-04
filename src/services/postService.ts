@@ -1,48 +1,34 @@
 import { v4 as uuidv4 } from 'uuid'
-import type { PostDetail, PostsWithOwner } from './../types'
-import { fakePosts, fakeUsers } from '~/mock/mock'
-import type { Id, Post } from '~/types'
-import { delay } from '~/utils'
+import type { Id, Post, PostDetail, PostsWithOwner } from '~/types'
+import { fakeUsers } from '~/mock/mock'
 
 export class PostService {
-  private posts = fakePosts
+  private posts = [] as Post[]
   private users = fakeUsers
 
   private curUser = this.users.find(user => user.name === 'chilfish')! // fake
 
   public async fetchPosts(): Promise<PostDetail[]> {
-    await delay(500)
-    return this.posts.map((post) => {
-      const owner = this.users.find(user => user.id === post.owner_id)
-      if (!owner)
-        throw new Error('Owner not found')
-      return {
-        ...post,
-        owner,
-      }
-    })
+    const posts = await fetch('/api/post?all=true')
+      .then(res => res.json())
+    this.posts = posts
+
+    return posts
   }
 
   public async fetchById(id: Id): Promise<PostDetail | null> {
-    await delay(500)
-    const post = this.posts.find(post => post.id === id)
-    if (!post)
+    const post = await fetch(`/api/post?id=${id}`)
+      .then(res => res.json())
+    if (post.status === 404)
       return null
-    return this.toDetail(post)
+    return post
   }
 
   public async fetchByOwnerName(owner_name: string): Promise<PostsWithOwner> {
-    const owner = this.users.find(user => user.name === owner_name)
-    if (!owner)
-      throw new Error('Owner not found')
+    const post = await fetch(`/api/post?owner_name=${owner_name}`)
+      .then(res => res.json())
 
-    await delay(500)
-    const posts = this.posts.filter(post => post.owner_id === owner.id)
-
-    return {
-      owner,
-      posts,
-    }
+    return post
   }
 
   public toDetail(post: Post) {
