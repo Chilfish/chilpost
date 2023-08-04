@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue'
+import { computed, ref, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
 import { useNewPostStore } from '~/store/newPostStore'
 import { useUserStore } from '~/store/userStore'
 
 const newPostStore = useNewPostStore()
 const userStore = useUserStore()
-const curUserName = userStore.curUser.name
 
-const routes = [
+const routes = computed(() => [
   {
     to: '/',
     icon: 'i-tabler-home-2',
@@ -16,7 +15,7 @@ const routes = [
 
   },
   {
-    to: `/@${curUserName}`,
+    to: `/@${userStore.curUser.name}`,
     icon: 'i-tabler-user',
     text: 'Profile',
   },
@@ -25,7 +24,7 @@ const routes = [
     icon: 'i-tabler-settings',
     text: 'Settings',
   },
-]
+])
 
 const router = useRoute()
 
@@ -36,7 +35,7 @@ watchEffect(() => {
   showFAB.value = !!(router.meta.showFAB as boolean)
 
   const { username, postId } = router.params
-  if (username === curUserName && !postId)
+  if (username === userStore.curUser.name && !postId)
     showFAB.value = true
 })
 </script>

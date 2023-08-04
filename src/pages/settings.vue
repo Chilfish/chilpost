@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useAsyncState, useTitle } from '@vueuse/core'
-import { reactive, watch } from 'vue'
+import { ref, watch } from 'vue'
 import type { Rules } from 'async-validator'
 import { useAsyncValidator } from '@vueuse/integrations/useAsyncValidator'
 import { useUserStore } from '~/store/userStore'
@@ -8,7 +8,8 @@ import { useUserStore } from '~/store/userStore'
 useTitle('Settings')
 
 const userStore = useUserStore()
-const curUser = reactive(userStore.curUser)
+const { ...user } = userStore.curUser
+const curUser = ref(user) // deeply copy
 
 const maxBio = 160
 
@@ -41,7 +42,7 @@ const {
 } = useAsyncState(
   async () => {
     if (pass.value)
-      return userStore.saveSettings(curUser)
+      return userStore.saveSettings(curUser.value)
   },
   false,
   { immediate: false },

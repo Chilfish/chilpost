@@ -6,7 +6,7 @@ import type { Id, User } from '~/types'
 export const useUserStore = defineStore('user', () => {
   const users = ref([] as User[])
   const service = new UserService()
-  const curUser = service.curUser
+  const curUser = ref(service.curUser)
 
   async function getById(id: Id) {
     return await service.getById(id)
