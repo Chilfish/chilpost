@@ -1,12 +1,44 @@
 <script setup lang="ts">
+import { computed, ref, watch } from 'vue'
+import { vElementHover } from '@vueuse/components'
+import { useAsyncState } from '@vueuse/core'
+import { useUserStore } from '~/store/userStore'
 import type { User } from '~/types'
 import { useImg } from '~/utils'
 
 const props = defineProps<{
   user: User
 }>()
-
+const userStore = useUserStore()
 const avatar = useImg(props.user.avatar)
+
+const isHovered = ref(false)
+const isFollowing = ref(props.user.status.is_following)
+
+const foBtnText = computed(() => {
+  if (props.user.id === userStore.curUser.id)
+    return 'Edit Profile'
+
+  if (isFollowing.value) {
+    if (isHovered.value)
+      return 'Unfollow'
+
+    return 'Following'
+  }
+
+  return 'Follow'
+})
+
+const { state, isLoading, execute } = useAsyncState(
+  async () => userStore.follow(props.user.id),
+  false,
+  { immediate: false },
+)
+
+watch(state, () => {
+  if (state.value === true)
+    isFollowing.value = !isFollowing.value
+})
 </script>
 
 <template>
@@ -17,7 +49,18 @@ const avatar = useImg(props.user.avatar)
       </div>
 
       <div class="buttons">
-        <button> Follow </button>
+        <button
+          v-element-hover="(e) => isHovered = e "
+          :class="isFollowing && isHovered ? 'unfollow' : ''"
+          :disabled="isLoading"
+          @click="execute()"
+        >
+          <span
+            :style="{ display: isLoading ? 'inline' : 'none' }"
+            class="loading icon"
+          />
+          <span> {{ foBtnText }}</span>
+        </button>
       </div>
     </div>
 
@@ -51,88 +94,5 @@ const avatar = useImg(props.user.avatar)
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/variables';
-
-.profile {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 0 1rem;
-
-  .avatar {
-    width: 100px;
-    height: 100px;
-    margin-top: -50px;
-    background-color: var(--text-2);
-    border: 2px solid var(--background-color);
-    border-radius: 50%;
-
-    img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-    }
-  }
-}
-
-.actions {
-  display: flex;
-  justify-content: center;
-  padding-right: 1.5rem;
-  margin: 1rem 0;
-  user-select: none;
-
-  .buttons {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    margin-left: auto;
-    color: #fff;
-  }
-
-  button {
-    padding: 0.6rem 1.5rem;
-    background: $theme-color;
-    border-radius: 8px;
-    transition: all 0.2s ease-in-out;
-
-    &:hover {
-      opacity: 0.8;
-    }
-  }
-}
-
-.info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-
-  .nick_name {
-    font-size: 1.5rem;
-  }
-
-  .name {
-    margin-top: -0.8rem;
-    color: var(--text-2);
-  }
-
-  .bio {
-    font-size: 1rem;
-  }
-
-  .meta {
-    display: flex;
-    gap: 2rem;
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
-    user-select: none;
-
-    .followers,
-    .following,
-    .posts {
-      color: var(--text-2);
-    }
-  }
-}
+@import '~/styles/profile/profile-card';
 </style>
