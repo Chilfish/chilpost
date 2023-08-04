@@ -6,7 +6,7 @@ import type { Id, User } from '~/types'
 export const useUserStore = defineStore('user', () => {
   const users = ref([] as User[])
   const service = new UserService()
-  const curUser = service.curUser
+  const curUser = ref(service.curUser)
 
   async function getById(id: Id) {
     return await service.getById(id)
@@ -27,6 +27,17 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
+  async function saveSettings(user: User) {
+    try {
+      curUser.value = await service.saveSettings(user)
+      return true
+    }
+    catch (error) {
+      console.error(error)
+      return false
+    }
+  }
+
   return {
     users,
     curUser,
@@ -34,5 +45,6 @@ export const useUserStore = defineStore('user', () => {
     getByName,
 
     follow,
+    saveSettings,
   }
 })

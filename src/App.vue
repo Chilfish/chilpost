@@ -19,7 +19,9 @@ const { isLoading } = useAsyncState(postStore.fetchPosts(), null)
   <div v-else id="main">
     <RouterView />
   </div>
+
   <Nav />
+
   <aside>
     <h2>WIP</h2>
   </aside>
@@ -45,11 +47,14 @@ aside {
 
 #main {
   width: 100%;
+  margin-top: $header-height;
+  margin-bottom: $nav-footer-height;
 }
 
 @media (min-width: $sm) {
   #main {
     width: stretch;
+    margin-bottom: 0;
     margin-left: $nav-aside-width;
   }
 }

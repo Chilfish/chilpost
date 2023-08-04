@@ -1,4 +1,3 @@
-import { ref } from 'vue'
 import { delay } from '~/utils'
 import { fakeUsers } from '~/mock/mock'
 import type { Id, User } from '~/types'
@@ -6,7 +5,7 @@ import type { Id, User } from '~/types'
 export class UserService {
   private users = fakeUsers
 
-  curUser = ref(this.users.find(user => user.name === 'chilfish')!)
+  curUser = this.users.find(user => user.name === 'chilfish')!
 
   public async getById(id: Id): Promise<User | null> {
     const user = this.users.find(user => user.id === id)
@@ -22,20 +21,33 @@ export class UserService {
   public async follow(id: Id): Promise<User[]> {
     await delay(2100)
     const user = this.users.find(user => user.id === id)
-    if (!user || user.id === this.curUser.value.id)
+    if (!user || user.id === this.curUser.id)
       return this.users
 
     if (!user.status.is_following) {
       user.status.follower_count++
-      this.curUser.value.status.following_count++
+      this.curUser.status.following_count++
     }
     else {
       user.status.follower_count--
-      this.curUser.value.status.following_count--
+      this.curUser.status.following_count--
     }
 
     user.status.is_following = !user.status.is_following
 
     return this.users
+  }
+
+  public async saveSettings(user: User): Promise<User> {
+    await delay(2100)
+
+    const index = this.users.findIndex(u => u.id === user.id)
+    if (index === -1)
+      return this.curUser
+
+    this.users[index] = { ...user }
+    this.curUser = user
+
+    return user
   }
 }
