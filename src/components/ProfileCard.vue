@@ -15,8 +15,10 @@ const avatar = useImg(props.user.avatar)
 const isHovered = ref(false)
 const isFollowing = ref(props.user.status.is_following)
 
+const isMe = computed(() => props.user.id === userStore.curUser.id)
+
 const foBtnText = computed(() => {
-  if (props.user.id === userStore.curUser.id)
+  if (isMe.value)
     return 'Edit Profile'
 
   if (isFollowing.value) {
@@ -53,7 +55,8 @@ watch(state, () => {
           v-element-hover="(e) => isHovered = e "
           :class="isFollowing && isHovered ? 'unfollow' : ''"
           :disabled="isLoading"
-          @click="execute()"
+          @click="() =>
+            isMe ? $router.push('/settings') : execute()"
         >
           <span
             :style="{ display: isLoading ? 'inline' : 'none' }"

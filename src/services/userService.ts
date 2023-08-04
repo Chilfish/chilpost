@@ -22,7 +22,7 @@ export class UserService {
   public async follow(id: Id): Promise<User[]> {
     await delay(2100)
     const user = this.users.find(user => user.id === id)
-    if (!user)
+    if (!user || user.id === this.curUser.value.id)
       return this.users
 
     if (!user.status.is_following) {
