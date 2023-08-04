@@ -54,6 +54,5 @@ main {
   height: 100%;
   padding: 0.5rem 1rem;
   margin: auto;
-  margin-top: $header-height;
 }
 </style>
