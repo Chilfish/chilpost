@@ -13,10 +13,9 @@ form {
     display: flex;
     flex-direction: column;
     margin: 0 auto;
-    width: 100%;
-    margin-bottom: 1rem;
+    width: 100%; 
     padding: 0.5rem;
-    font-size: 1.3rem;
+    font-size: 1rem;
 
     label {
       font-size: 1.1rem;
@@ -33,6 +32,11 @@ form {
 
     textarea {
       border: 1px solid var(--gray);
+    }
+
+    .len-count {
+      margin-top: 0.5rem;
+      margin-left: auto;
     }
   }
 

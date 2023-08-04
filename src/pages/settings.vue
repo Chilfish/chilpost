@@ -1,19 +1,48 @@
 <script setup lang="ts">
 import { useAsyncState, useTitle } from '@vueuse/core'
-import { ref, watch } from 'vue'
+import { reactive, watch } from 'vue'
+import type { Rules } from 'async-validator'
+import { useAsyncValidator } from '@vueuse/integrations/useAsyncValidator'
 import { useUserStore } from '~/store/userStore'
-import type { User } from '~/types'
 
 useTitle('Settings')
 
 const userStore = useUserStore()
+const curUser = reactive(userStore.curUser)
 
-const curUser = ref<User>(userStore.curUser)
+const maxBio = 160
 
+const rules: Rules = {
+  name: [
+    { required: true, message: 'Username is required' },
+    { min: 3, max: 20, message: 'Username must be between 3 and 20 characters' },
+    {
+      pattern: /^[a-zA-Z0-9_]+$/,
+      message: 'Username must be alphanumeric',
+    },
+  ],
+  nick_name: [
+    { required: true, message: 'Nickname is required' },
+    { min: 3, max: 20, message: 'Nickname must be between 3 and 20 characters' },
+  ],
+  email: [
+    { required: true, message: 'Email is required' },
+    { type: 'email', message: 'Please enter a valid email address' },
+  ],
+  bio: [
+    { required: true, message: 'Bio is required' },
+    { min: 1, max: maxBio, message: `Bio must be between 1 and ${maxBio} characters` },
+  ],
+}
+
+const { pass, errorFields } = useAsyncValidator(curUser, rules)
 const {
   state, isLoading, execute: updateSettings,
 } = useAsyncState(
-  async () => userStore.saveSettings(curUser.value),
+  async () => {
+    if (pass.value)
+      return userStore.saveSettings(curUser)
+  },
   false,
   { immediate: false },
 )
@@ -31,13 +60,19 @@ watch(state, () => {
 
   <form>
     <div class="form-group">
-      <label for="username">Display Name</label>
+      <label for="nick_name">Display Name</label>
       <input
-        id="nickname"
+        id="nick_name"
         v-model="curUser.nick_name"
         type="text"
         placeholder="Nickname"
       >
+      <div
+        v-if="errorFields?.nick_name?.length"
+        text-red
+      >
+        {{ errorFields.nickname[0].message }}
+      </div>
     </div>
 
     <div class="form-group">
@@ -48,6 +83,12 @@ watch(state, () => {
         type="text"
         placeholder="Username"
       >
+      <div
+        v-if="errorFields?.name?.length"
+        text-red
+      >
+        {{ errorFields.name[0].message }}
+      </div>
     </div>
 
     <div class="form-group">
@@ -58,6 +99,12 @@ watch(state, () => {
         type="email"
         placeholder="Email"
       >
+      <div
+        v-if="errorFields?.email?.length"
+        text-red
+      >
+        {{ errorFields.email[0].message }}
+      </div>
     </div>
 
     <div class="form-group">
@@ -67,9 +114,19 @@ watch(state, () => {
         v-model="curUser.bio"
         placeholder="Bio"
       />
+      <div
+        v-if="errorFields?.bio?.length"
+        text-red
+      >
+        {{ errorFields.bio[0].message }}
+      </div>
+      <div class="len-count">
+        {{ curUser.bio.length }} / {{ maxBio }}
+      </div>
     </div>
 
     <Button
+      :disabled="!pass"
       text="Save"
       :is-loading="isLoading"
       @onClick="updateSettings"

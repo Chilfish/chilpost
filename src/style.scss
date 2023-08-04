@@ -69,7 +69,8 @@ body {
   margin: 0;
 }
 
-textarea {
+textarea,
+input {
   height: 100%;
   padding: 1rem;
   font-family: Roboto, sans-serif;
@@ -144,9 +145,9 @@ button[disabled=""] {
 }
 
 button.btn-primary {
-  width: 7rem;
+  width: 6rem;
   padding: 1rem 0.5rem;
-  font-size: 1.3rem;  
+  font-size: 1.3rem;
   font-weight: bold;
   background-color: $theme-color;
   color: #fff;
