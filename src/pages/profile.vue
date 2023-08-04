@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computedAsync } from '@vueuse/core'
-import { ref, watchEffect } from 'vue'
+import { useAsyncState, useTitle } from '@vueuse/core'
+import { ref, watch, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
 import { usePostStore } from '~/store/postStore'
 
@@ -13,13 +13,19 @@ watchEffect(
     username.value = route.params.username as string
   },
 )
-const isLoading = ref(false)
 
-const data = computedAsync(
+const {
+  state: data,
+  isLoading,
+} = useAsyncState(
   async () => await postStore.fetchByOwnerName(username.value),
   null,
-  isLoading,
 )
+
+watch(data, () => {
+  const owner = data.value?.owner
+  useTitle(`${owner?.nick_name}(@${owner?.name})`)
+})
 </script>
 
 <template>

@@ -1,15 +1,24 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
-import { useAsyncState } from '@vueuse/core'
+import { useAsyncState, useTitle } from '@vueuse/core'
+import { watch } from 'vue'
 import { usePostStore } from '~/store/postStore'
 
 const postId = useRoute().params.postId as string
 
 const postStore = usePostStore()
-const { state: post, isLoading } = useAsyncState(
+const {
+  state: post,
+  isLoading,
+} = useAsyncState(
   postStore.fetchById(postId),
   null,
 )
+
+watch(post, () => {
+  const title = `${post.value?.owner.nick_name}'s Post: ${post.value?.content.substring(0, 50)}`
+  useTitle(title)
+})
 </script>
 
 <template>
