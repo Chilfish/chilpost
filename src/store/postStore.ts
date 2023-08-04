@@ -16,8 +16,6 @@ export const usePostStore = defineStore('post', () => {
 
   const fetchById = async (id: Id) => {
     const post = await service.fetchById(id)
-    if (post)
-      posts.value.push(post)
     return post
   }
 

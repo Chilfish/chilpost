@@ -69,7 +69,7 @@ export class PostService {
         is_liked: false,
       },
     }
-    this.posts.push(newPost)
+    this.posts.unshift(newPost)
     return this.toDetail(newPost)
   }
 }
