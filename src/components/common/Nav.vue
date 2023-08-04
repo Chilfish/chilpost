@@ -1,7 +1,12 @@
 <script setup lang="ts">
+import { ref, watchEffect } from 'vue'
+import { useRoute } from 'vue-router'
 import { useNewPostStore } from '~/store/newPostStore'
+import { useUserStore } from '~/store/userStore'
 
 const newPostStore = useNewPostStore()
+const userStore = useUserStore()
+const curUserName = userStore.curUser.name
 
 const routes = [
   {
@@ -11,7 +16,7 @@ const routes = [
 
   },
   {
-    to: '/@chilfish',
+    to: `/@${curUserName}`,
     icon: 'i-tabler-user',
     text: 'Profile',
   },
@@ -21,6 +26,19 @@ const routes = [
     text: 'Settings',
   },
 ]
+
+const router = useRoute()
+
+const showFAB = ref(false) // from router meta
+
+// only show FAB when on home page or current user's profile page
+watchEffect(() => {
+  showFAB.value = !!(router.meta.showFAB as boolean)
+
+  const { username, postId } = router.params
+  if (username === curUserName && !postId)
+    showFAB.value = true
+})
 </script>
 
 <template>
@@ -36,10 +54,13 @@ const routes = [
       :to="route.to" class="nav-item"
     >
       <span class="icon" :class="route.icon" />
-      <p class="text">{{ route.text }}</p>
+      <p class="text">
+        {{ route.text }}
+      </p>
     </router-link>
 
     <button
+      :class="showFAB ? '' : 'hide'"
       class="send-post"
       @click="newPostStore.toggleModal"
     >

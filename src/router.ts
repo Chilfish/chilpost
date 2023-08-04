@@ -9,6 +9,9 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'explore',
         component: () => import('@pg/index.vue'),
+        meta: {
+          showFAB: true,
+        },
       },
       {
         path: 'settings',
