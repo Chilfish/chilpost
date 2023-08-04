@@ -12,8 +12,8 @@ defineEmits(['onClick'])
   <button
     :disabled="isLoading"
     :type="type || 'button'"
-    @click="$emit('onClick')"
     class="btn-primary"
+    @click="$emit('onClick')"
   >
     <span
       :style="{ display: isLoading ? 'inline' : 'none' }"
