@@ -66,5 +66,5 @@ const data = computedAsync(
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/profile';
+@import '../styles/profile/profile';
 </style>

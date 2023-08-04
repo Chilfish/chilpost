@@ -16,10 +16,23 @@ export const useUserStore = defineStore('user', () => {
     return service.getByName(name)
   }
 
+  async function follow(id: Id) {
+    try {
+      users.value = await service.follow(id)
+      return true
+    }
+    catch (error) {
+      console.error(error)
+      return false
+    }
+  }
+
   return {
     users,
     curUser,
     getById,
     getByName,
+
+    follow,
   }
 })

@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { vElementHover } from '@vueuse/components'
+import { useAsyncState } from '@vueuse/core'
 import { useUserStore } from '~/store/userStore'
 import type { User } from '~/types'
 import { useImg } from '~/utils'
@@ -12,14 +13,13 @@ const userStore = useUserStore()
 const avatar = useImg(props.user.avatar)
 
 const isHovered = ref(false)
-
-const following = computed(() => props.user.status.is_following)
+const isFollowing = ref(props.user.status.is_following)
 
 const foBtnText = computed(() => {
   if (props.user.id === userStore.curUser.id)
     return 'Edit Profile'
 
-  if (following.value) {
+  if (isFollowing.value) {
     if (isHovered.value)
       return 'Unfollow'
 
@@ -27,6 +27,17 @@ const foBtnText = computed(() => {
   }
 
   return 'Follow'
+})
+
+const { state, isLoading, execute } = useAsyncState(
+  async () => userStore.follow(props.user.id),
+  false,
+  { immediate: false },
+)
+
+watch(state, () => {
+  if (state.value === true)
+    isFollowing.value = !isFollowing.value
 })
 </script>
 
@@ -39,10 +50,16 @@ const foBtnText = computed(() => {
 
       <div class="buttons">
         <button
-          v-element-hover="(e) => { isHovered = e }"
-          :class="following && isHovered ? 'unfollow' : ''"
+          v-element-hover="(e) => isHovered = e "
+          :class="isFollowing && isHovered ? 'unfollow' : ''"
+          :disabled="isLoading"
+          @click="execute()"
         >
-          {{ foBtnText }}
+          <span
+            :style="{ display: isLoading ? 'inline' : 'none' }"
+            class="loading icon"
+          />
+          <span> {{ foBtnText }}</span>
         </button>
       </div>
     </div>
