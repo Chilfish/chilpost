@@ -21,20 +21,11 @@ function submit() {
 <template>
   <div id="send-post">
     <div>
-      <span
-        class="icon i-tabler-x"
-        @click="newPostStore.toggleModal"
-      />
+      <span class="icon i-tabler-x" @click="newPostStore.toggleModal" />
     </div>
     <form>
-      <textarea
-        v-model="postValue"
-        placeholder="Wassup?!"
-      />
-      <button
-        type="submit"
-        @click.prevent=" submit"
-      >
+      <textarea v-model="postValue" placeholder="Wassup?!" />
+      <button type="submit" @click.prevent="submit">
         Post
       </button>
     </form>
@@ -69,19 +60,6 @@ form {
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-
-  textarea {
-    height: 100%;
-    padding: 1rem;
-    font-family: Roboto, sans-serif;
-    font-weight: 300;
-    color: var(--text-color);
-    resize: none;
-    background-color: var(--background-color);
-    border: none;
-    border-radius: 8px;
-    outline: none;
-  }
 
   button {
     width: 5rem;

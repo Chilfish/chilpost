@@ -1,1 +1,42 @@
 @import "./variables";
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  width: 100%;
+  padding: 2rem;
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    font-size: 1.3rem;
+
+    label {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+
+    input {
+      width: 70%;
+      padding: 1rem;
+      border: 1px solid var(--gray);
+      border-radius: 0.5rem;
+    }
+
+    textarea {
+      border: 1px solid var(--gray);
+    }
+  }
+
+  button {
+    margin-right: auto;
+  }
+}

@@ -38,4 +38,17 @@ export class UserService {
 
     return this.users
   }
+
+  public async saveSettings(user: User): Promise<User> {
+    await delay(2100)
+
+    this.users.forEach((user, i, users) => {
+      if (user.id === this.curUser.value.id)
+        users[i] = this.curUser.value
+    })
+
+    this.curUser.value = user
+
+    return user
+  }
 }
