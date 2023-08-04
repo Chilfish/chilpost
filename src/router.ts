@@ -10,6 +10,10 @@ const routes: Array<RouteRecordRaw> = [
         path: 'explore',
         component: () => import('@pg/index.vue'),
       },
+      {
+        path: 'settings',
+        component: () => import('@pg/settings.vue'),
+      },
     ],
   },
   {

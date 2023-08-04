@@ -2,6 +2,25 @@
 import { useNewPostStore } from '~/store/newPostStore'
 
 const newPostStore = useNewPostStore()
+
+const routes = [
+  {
+    to: '/',
+    icon: 'i-tabler-home-2',
+    text: 'Explore',
+
+  },
+  {
+    to: '/@chilfish',
+    icon: 'i-tabler-user',
+    text: 'Profile',
+  },
+  {
+    to: '/settings',
+    icon: 'i-tabler-settings',
+    text: 'Settings',
+  },
+]
 </script>
 
 <template>
@@ -10,14 +29,14 @@ const newPostStore = useNewPostStore()
       <img class="logo" src="/favicon.ico">
       <h1>Chill Post</h1>
     </div>
-    <router-link to="/">
-      <span class="icon i-tabler-home-2" />
-      <p>Explore</p>
-    </router-link>
 
-    <router-link to="/@chilfish">
-      <span class="icon i-tabler-user" />
-      <p>Profile</p>
+    <router-link
+      v-for="route in routes"
+      :key="route.to"
+      :to="route.to" class="nav-item"
+    >
+      <span class="icon" :class="route.icon" />
+      <p class="text">{{ route.text }}</p>
     </router-link>
 
     <button
