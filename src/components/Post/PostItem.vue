@@ -17,7 +17,10 @@ const avatar = useImg(props.owner.avatar)
       @click="$router.push(`/@${owner.name}/${post.id}`)"
     >
       <div class="avatar">
-        <RouterLink :to="`/@${owner.name}`">
+        <RouterLink
+          :to="`/@${owner.name}`"
+          @click.stop
+        >
           <img :src="avatar" alt="avatar">
         </RouterLink>
       </div>
@@ -27,6 +30,7 @@ const avatar = useImg(props.owner.avatar)
           <RouterLink
             class="name-box"
             :to="`/@${owner.name}`"
+            @click.stop
           >
             <span class="nick-name">
               {{ owner.nick_name }}
@@ -41,11 +45,15 @@ const avatar = useImg(props.owner.avatar)
             class="date"
             :title="dayjs(post.createdAt).format()"
             :to="`/@${owner.name}/${post.id}`"
+            @click.stop
           >
             {{ timeDiff(post.createdAt) }}
           </RouterLink>
 
-          <button class="menu">
+          <button
+            class="menu"
+            @click.stop
+          >
             <span class="box">
               <span class="icon i-tabler-dots" />
             </span>
@@ -56,7 +64,11 @@ const avatar = useImg(props.owner.avatar)
           <p>{{ post.content }}</p>
         </div>
 
-        <PostAction :id="post.id" :status="post.status" />
+        <PostAction
+          :id="post.id"
+          :status="post.status"
+          @click.stop
+        />
       </div>
     </div>
   </section>

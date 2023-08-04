@@ -52,4 +52,8 @@ main {
 .content {
   margin: 1rem 0;
   font-size: 1.1rem;
+
+  p {
+    word-break: break-all;
+  }
 }

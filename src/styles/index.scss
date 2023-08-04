@@ -11,9 +11,9 @@ header {
   width: stretch;
   height: $header-height;
   padding: 0 1rem;
+  user-select: none;
   transition: transform 0.3s ease-in-out;
   transform: translateY(0);
-  user-select: none;
 
   &.scroll-up {
     transform: translateY(-100%);
@@ -73,7 +73,7 @@ main {
   }
 
   main {
-    padding: 0.5rem 2rem;
+    padding: 0.5rem 1rem;
   }
 }
 

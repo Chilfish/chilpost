@@ -2,14 +2,10 @@
 
 section > div {
   display: flex;
-  padding: 0.5rem;
+  padding: 0.5rem 1rem;
   margin-bottom: 0.5rem;
   cursor: pointer;
   border-radius: 8px;
-
-  &:hover {
-    background: var(--hover-1);
-  }
 
   div.section-main {
     display: flex;
@@ -30,6 +26,12 @@ div.avatar {
     height: 2.5rem;
     object-fit: cover;
     border-radius: 50%;
+  }
+}
+
+div.content {
+  p {
+    word-break: break-all;
   }
 }
 
@@ -81,6 +83,10 @@ div.avatar {
 }
 
 @media (min-width: $sm) {
+  section > div:hover {
+    background: var(--hover-1);
+  }
+
   .post-meta {
     span {
       max-width: 20rem;

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { fmtNum } from '~/utils'
 import type { PostStatus } from '~/types'
 import { usePostStore } from '~/store/postStore'
@@ -11,10 +11,9 @@ const props = defineProps<{
 
 const postStore = usePostStore()
 
-const { status, id } = props
-
+const status = ref(props.status)
 const likeStyle = computed(() =>
-  status.is_liked
+  status.value.is_liked
     ? { icon: 'is_like i-tabler-heart-filled', class: 'is_like' }
     : { icon: 'i-tabler-heart', class: '' },
 )
