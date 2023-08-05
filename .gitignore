@@ -24,6 +24,6 @@ dist-ssr
 .vercel
 
 components.d.ts
-api/_mock
+_mock.ts
 
 .vercel

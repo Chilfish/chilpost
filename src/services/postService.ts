@@ -1,11 +1,10 @@
-import { v4 as uuidv4 } from 'uuid'
-import type { Id, Post, PostDetail, PostsWithOwner, User } from '~/types'
+import { useUserStore } from '~/store/userStore'
+import type { Id, Post, PostDetail, PostsWithOwner } from '~/types'
 
 export class PostService {
   private posts = [] as Post[]
-  private users = [] as User[] // should not be here
 
-  private curUser = this.users.find(user => user.name === 'chilfish')! // fake
+  private curUser = useUserStore().curUser
 
   public async fetchPosts(): Promise<PostDetail[]> {
     const posts = await fetch('/api/post')
@@ -30,30 +29,19 @@ export class PostService {
     return post
   }
 
-  public toDetail(post: Post) {
-    const owner = this.users.find(user => user.id === post.owner_id)
-    if (!owner)
-      throw new Error('Owner not found')
-    return {
-      ...post,
-      owner,
-    }
-  }
-
   public async addPost(content: string): Promise<PostDetail> {
-    const newPost: Post = {
-      id: uuidv4(),
-      content,
-      owner_id: this.curUser.id,
-      createdAt: new Date().toISOString(),
-      status: {
-        like_count: 0,
-        comment_count: 0,
-        repost_count: 0,
-        is_liked: false,
+    const newPost = await fetch(`/api/post/new?ownerId=${this.curUser?.id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
+      body: JSON.stringify({ content }),
+    })
+      .then(res => res.json())
+
+    return {
+      ...newPost,
+      owner: this.curUser,
     }
-    this.posts.unshift(newPost)
-    return this.toDetail(newPost)
   }
 }

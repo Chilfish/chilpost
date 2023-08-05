@@ -4,7 +4,7 @@ import type { Id, User } from '~/types'
 export class UserService {
   private users = [] as User[]
 
-  curUser: User | null = null
+  curUser: User
 
   public async fetchCurUser() {
     const user = await fetch('/api/user/me')

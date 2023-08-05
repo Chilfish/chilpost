@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { users } from '../../src/mock/_mock'
+import { users } from '../_mock.js'
 
 export default function handler(
   req: VercelRequest,
