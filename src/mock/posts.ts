@@ -9,7 +9,6 @@ export function generatePost(owner_id: Id): Post {
     owner_id,
     content: fake.lorem.paragraphs(randomNum(1, 4)),
     createdAt: fake.date.past().toISOString(),
-    updatedAt: fake.date.recent().toISOString(),
     status: {
       like_count: randomNum(),
       comment_count: randomNum(),

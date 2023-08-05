@@ -1,10 +1,9 @@
 import { v4 as uuidv4 } from 'uuid'
-import type { Id, Post, PostDetail, PostsWithOwner } from '~/types'
-import { fakeUsers } from '~/mock/mock'
+import type { Id, Post, PostDetail, PostsWithOwner, User } from '~/types'
 
 export class PostService {
   private posts = [] as Post[]
-  private users = fakeUsers
+  private users = [] as User[] // should not be here
 
   private curUser = this.users.find(user => user.name === 'chilfish')! // fake
 
@@ -47,7 +46,6 @@ export class PostService {
       content,
       owner_id: this.curUser.id,
       createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
       status: {
         like_count: 0,
         comment_count: 0,

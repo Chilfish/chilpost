@@ -29,24 +29,25 @@ export default function handler(
     id,
     owner_name,
     all,
-  } = req.query
+  } = req.query as { id?: string; owner_name?: string; all?: boolean }
+
   if (all)
-    return res.status(200).json(posts)
+    return res.json(posts)
+
   if (owner_name) {
     try {
-      const post = byOwnerName(owner_name as string)
-      return res.status(200).json(post)
+      const post = byOwnerName(owner_name)
+      return res.json(post)
     }
     catch (err: any) {
       return res.status(404).json({ message: err.message })
     }
   }
 
-  let post: PostDetail | undefined
+  const post = id ? posts.find(post => post.id === id) : null
 
-  if (id)
-    post = posts.find(post => post.id === id)
   if (!post)
     return res.status(404).json({ message: 'Post not found' })
-  res.status(200).json(post)
+
+  return res.json(post)
 }

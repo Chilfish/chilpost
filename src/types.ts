@@ -18,7 +18,6 @@ export interface User {
   bio: string
   avatar: string
   createdAt: string
-  updatedAt: string
   status: UserStatus
 }
 
@@ -33,7 +32,6 @@ export interface Post {
   id: Id
   content: string
   createdAt: string
-  updatedAt: string
   owner_id: Id
   status: PostStatus
 }

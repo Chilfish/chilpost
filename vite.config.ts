@@ -5,7 +5,7 @@ import vue from '@vitejs/plugin-vue'
 import Components from 'unplugin-vue-components/vite'
 import autoprefixer from 'autoprefixer'
 
-import { genStaticData } from './src/mock/genMock'
+import { genStaticData } from './src/mock'
 
 genStaticData() // generate static mock data to ts file
 

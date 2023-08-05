@@ -1,11 +1,17 @@
 import { delay } from '~/utils'
-import { fakeUsers } from '~/mock/mock'
 import type { Id, User } from '~/types'
 
 export class UserService {
-  private users = fakeUsers
+  private users = [] as User[]
 
-  curUser = this.users.find(user => user.name === 'chilfish')!
+  curUser?: User
+
+  public async fetchCurUser() {
+    const user = await fetch('/api/user')
+      .then(res => res.json())
+    this.curUser = user
+    return user
+  }
 
   public async getById(id: Id): Promise<User | null> {
     const user = this.users.find(user => user.id === id)

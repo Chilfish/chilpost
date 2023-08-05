@@ -14,7 +14,6 @@ export function genUser(
     email: fake.internet.email(),
     avatar: fake.internet.avatar(),
     createdAt: fake.date.past().toISOString(),
-    updatedAt: fake.date.recent().toISOString(),
     status: {
       follower_count: randomNum(),
       following_count: randomNum(),
