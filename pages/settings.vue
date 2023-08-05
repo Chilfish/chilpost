@@ -1,11 +1,7 @@
 <script setup lang="ts">
-import { useAsyncState, useTitle } from '@vueuse/core'
-import { ref, watch } from 'vue'
-import type { Rules } from 'async-validator'
-import { useAsyncValidator } from '@vueuse/integrations/useAsyncValidator'
-import { useUserStore } from '~/store/userStore'
+import { useUserStore } from '~/stores/userStore'
 
-useTitle('Settings')
+// useTitle('Settings')
 
 const userStore = useUserStore()
 const { ...user } = userStore.curUser

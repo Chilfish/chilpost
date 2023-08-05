@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
 import { fmtNum } from '~/utils'
 import type { PostStatus } from '~/types'
-import { usePostStore } from '~/store/postStore'
+import { usePostStore } from '~/stores/postStore'
 
 const props = defineProps<{
   status: PostStatus
@@ -89,3 +88,4 @@ button {
   }
 }
 </style>
+utils/utils

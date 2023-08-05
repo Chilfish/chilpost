@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useNewPostStore } from '~/store/newPostStore'
+import { useNewPostStore } from 'stores/newPostStore'
 
 const newPostStore = useNewPostStore()
 </script>

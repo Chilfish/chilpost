@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
-import { useAsyncState, useTitle } from '@vueuse/core'
-import { watch } from 'vue'
-import { usePostStore } from '~/store/postStore'
+import { usePostStore } from '~/stores/postStore'
 
 const postId = useRoute().params.postId as string
 
@@ -17,7 +14,7 @@ const {
 
 watch(post, () => {
   const title = `${post.value?.owner.nick_name}'s Post: ${post.value?.content.substring(0, 50)}`
-  useTitle(title)
+  // useTitle(title)
 })
 </script>
 

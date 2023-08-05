@@ -1,10 +1,6 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
-import { vElementHover } from '@vueuse/components'
-import { useAsyncState } from '@vueuse/core'
-import { useUserStore } from '~/store/userStore'
+import { useUserStore } from '~/stores/userStore'
 import type { User } from '~/types'
-import { useImg } from '~/utils'
 
 const props = defineProps<{
   user: User
@@ -99,3 +95,4 @@ watch(state, () => {
 <style lang="scss" scoped>
 @import '~/styles/profile/profile-card';
 </style>
+utils/utils

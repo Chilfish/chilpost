@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import type { Post, User } from '~/types'
-import { useImg } from '~/utils'
+import type { Post, User } from 'types'
 
 const props = defineProps<{
   post: Post
@@ -48,3 +47,4 @@ const avatar = useImg(props.owner.avatar)
 <style lang="scss" scoped>
 @import '~/styles/post/post-detail';
 </style>
+utils/utils

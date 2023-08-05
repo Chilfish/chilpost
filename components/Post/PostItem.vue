@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import dayjs from 'dayjs'
-import { timeDiff, useImg } from '~/utils'
 import type { Post, User } from '~/types'
 
 const props = defineProps<{
@@ -81,3 +79,4 @@ const avatar = useImg(props.owner.avatar)
 <style lang="scss">
 @import '~/styles/post/post-item';
 </style>
+utils/utils

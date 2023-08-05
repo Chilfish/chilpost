@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
-import { darkStore } from './store/darkStore'
+import { darkStore } from '../stores/darkStore'
 import App from '~/App.vue'
 import router from '~/router'
 
@@ -14,5 +14,5 @@ const app = createApp(App)
 app
   .use(router)
   .use(createPinia())
-  .provide('darkStore', darkStore) // global dark mode store
+  .provide('darkStore', darkStore) // global dark mode stores
   .mount('#app')

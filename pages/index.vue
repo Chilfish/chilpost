@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { useScroll, useTitle } from '@vueuse/core'
-import { inject, ref, watch } from 'vue'
-import type { DarkStore } from '~/store/darkStore'
-import { usePostStore } from '~/store/postStore'
+import type { DarkStore } from '~/stores/darkStore'
+import { usePostStore } from '~/stores/postStore'
 
 const { y } = useScroll(document)
 const isScrollingDown = ref(false)
@@ -17,8 +15,6 @@ const dark = inject('darkStore') as DarkStore
 const postStore = usePostStore()
 
 const posts = postStore.posts
-
-useTitle('Explore Chilpost')
 </script>
 
 <template>

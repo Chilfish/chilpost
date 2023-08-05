@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { useAsyncState } from '@vueuse/core'
-import { usePostStore } from './store/postStore'
-import { useNewPostStore } from '~/store/newPostStore'
+import { useNewPostStore } from 'stores/newPostStore'
+import { usePostStore } from 'stores/postStore'
 
 const newPostStore = useNewPostStore()
 const postStore = usePostStore()

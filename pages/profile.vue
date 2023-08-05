@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import { computedAsync, useTitle } from '@vueuse/core'
-import { ref, watchEffect } from 'vue'
-import { useRoute } from 'vue-router'
-import { usePostStore } from '~/store/postStore'
+import { usePostStore } from '~/stores/postStore'
 
 const postStore = usePostStore()
 const route = useRoute()
@@ -20,7 +17,7 @@ watchEffect(() => {
   if (data.value) {
     isLoading.value = false
     const owner = data.value.owner
-    useTitle(`${owner.nick_name}(@${owner.name})`)
+    // useTitle(`${owner.nick_name}(@${owner.name})`)
   }
 })
 </script>

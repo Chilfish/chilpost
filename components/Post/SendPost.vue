@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useNewPostStore } from '~/store/newPostStore'
-import { usePostStore } from '~/store/postStore'
+import { useNewPostStore } from '~/stores/newPostStore'
+import { usePostStore } from '~/stores/postStore'
 
 const newPostStore = useNewPostStore()
 const postStore = usePostStore()

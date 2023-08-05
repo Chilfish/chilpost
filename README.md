@@ -9,7 +9,7 @@ pnpm i
 
 pnpm i -g vercel@latest
 
-vercel dev
+pnpm dev
 ```
 
 then open http://localhost:3000

@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { computed, ref, watchEffect } from 'vue'
-import { useRoute } from 'vue-router'
-import { useNewPostStore } from '~/store/newPostStore'
-import { useUserStore } from '~/store/userStore'
+import { useNewPostStore } from 'stores/newPostStore'
+import { useUserStore } from 'stores/userStore'
 
 const newPostStore = useNewPostStore()
 const userStore = useUserStore()
