@@ -1,3 +1,7 @@
+<script setup lang="ts">
+const modalStore = useModalStore()
+</script>
+
 <template>
   <div id="main">
     <slot />
@@ -8,6 +12,10 @@
   <aside>
     <h2>WIP</h2>
   </aside>
+
+  <CommonModal v-if="modalStore.showModal">
+    <PostSend />
+  </CommonModal>
 </template>
 
 <style lang="scss" scoped>

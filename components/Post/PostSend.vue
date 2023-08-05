@@ -29,21 +29,19 @@ function submit() {
 </template>
 
 <style lang="scss" scoped>
-@use '~/assets/variables';
+@use "~/assets/variables" as *;
 
 div#send-post {
-  position: fixed;
-  top: 10vh;
-  z-index: 1000;
   display: flex;
   flex-direction: column;
-  width: 90vw;
+  align-items: center;
+  justify-content: center;
   height: 20rem;
   max-height: 70vh;
-  padding: 1.5rem;
-  margin: 0 auto;
-  background-color: var(--background-color);
-  border-radius: 16px;
+
+  div {
+    width: 100%;
+  }
 
   .icon {
     color: var(--text-color);
@@ -55,6 +53,7 @@ form {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: 100%;
   height: 100%;
 
   button {
@@ -69,11 +68,4 @@ form {
     border-radius: 16px;
   }
 }
-
-@media (min-width: $sm) {
-  div#send-post {
-    width: 70vw;
-  }
-}
 </style>
-stores/modalStore

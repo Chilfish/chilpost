@@ -2,7 +2,10 @@
 import type { Rules } from 'async-validator'
 import { useAsyncValidator } from '@vueuse/integrations/useAsyncValidator'
 
-// useTitle('Settings')
+definePageMeta({
+  title: 'Settings',
+  description: 'Settings',
+})
 
 const userStore = useUserStore()
 const { ...user } = userStore.curUser

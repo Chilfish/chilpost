@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useTitle } from '@vueuse/core'
+
 const postStore = usePostStore()
 const route = useRoute()
 const username = ref(route.params.name as string)
@@ -15,7 +17,7 @@ watchEffect(() => {
   if (data.value) {
     isLoading.value = false
     const owner = data.value.owner
-    // useTitle(`${owner.nick_name}(@${owner.name})`)
+    useTitle(`${owner.nick_name}(@${owner.name})`)
   }
 })
 </script>

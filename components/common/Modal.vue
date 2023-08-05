@@ -8,7 +8,9 @@ const modalStore = useModalStore()
     class="modal"
     @click="modalStore.toggleModal"
   />
-  <slot />
+  <div class="slot">
+    <slot />
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -28,5 +30,24 @@ const modalStore = useModalStore()
   @include blur(8px);
 
   background-color: #676767cc;
+}
+
+div.slot {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  z-index: 1000;
+  width: 90vw;
+  padding: 1.5rem;
+  margin: 0 auto;
+  background-color: var(--background-color);
+  border-radius: 16px;
+  transform: translate(-50%, -50%);
+}
+
+@media (min-width: $sm) {
+  div.slot {
+    width: 60vw;
+  }
 }
 </style>

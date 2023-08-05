@@ -1,4 +1,10 @@
 <script setup lang="ts">
+definePageMeta({
+  title: 'Explore Chilpost',
+  description: 'Explore Chilpost',
+  showFAB: true,
+})
+
 const { y } = useScroll(document)
 const isScrollingDown = ref(false)
 watch(
