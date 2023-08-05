@@ -11,6 +11,7 @@ export const usePostStore = defineStore('post', () => {
   const fetchPosts = async () => {
     if (!posts.value.length)
       posts.value = await service.fetchPosts()
+    // console.log(posts.value)
     return posts.value
   }
 

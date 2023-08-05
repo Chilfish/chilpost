@@ -15,7 +15,7 @@ const routes = computed(() => [
 
   },
   {
-    to: `/@${userStore.curUser.name}`,
+    to: `/@${userStore.curUser?.name}`,
     icon: 'i-tabler-user',
     text: 'Profile',
   },
@@ -35,7 +35,7 @@ watchEffect(() => {
   showFAB.value = !!(router.meta.showFAB as boolean)
 
   const { username, postId } = router.params
-  if (username === userStore.curUser.name && !postId)
+  if (username === userStore.curUser?.name && !postId)
     showFAB.value = true
 })
 </script>

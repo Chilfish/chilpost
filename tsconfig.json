@@ -12,7 +12,7 @@
     "jsx": "preserve",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "moduleResolution": "Node",
+    "moduleResolution": "node",
     "noUnusedLocals": true,
     "strictNullChecks": true,
     "allowJs": true,

@@ -24,14 +24,9 @@ export const fakePosts = Array.from({ length: post_num },
 ).sort((a, b) => dayjs(b.createdAt).unix() - dayjs(a.createdAt).unix())
 
 const mockDir = path.resolve(path.resolve(), 'api/_mock.ts')
-await fs.writeFile(mockDir, '')
 
 // generate static mock data to ts file
 async function generateStatic(...mocks: { name: string; data: any[] }[]) {
-  const mock = await fs.readFile(mockDir, 'utf-8')
-  if (mock)
-    return
-
   const output = mocks
     .map(mock => `export const ${mock.name} = ${JSON.stringify(mock.data)};`)
     .join('\n')
@@ -41,7 +36,7 @@ async function generateStatic(...mocks: { name: string; data: any[] }[]) {
 
 export function genStaticData() {
   return generateStatic(
-    { name: 'fakeUsers', data: fakeUsers },
-    { name: 'fakePosts', data: fakePosts },
+    { name: 'users', data: fakeUsers },
+    { name: 'posts', data: fakePosts },
   )
 }
