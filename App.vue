@@ -2,6 +2,9 @@
 useHead({
   title: 'Chilpost',
 })
+
+const userStore = useUserStore()
+useAsyncState(userStore.fetchCurUser(), null)
 </script>
 
 <template>

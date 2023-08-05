@@ -1,20 +1,18 @@
 <script setup lang="ts">
-import { useNewPostStore } from 'stores/newPostStore'
-
-const newPostStore = useNewPostStore()
+const modalStore = useModalStore()
 </script>
 
 <template>
   <div
-    v-if="newPostStore.showModal"
+    v-if="modalStore.showModal"
     class="modal"
-    @click="newPostStore.toggleModal"
+    @click="modalStore.toggleModal"
   />
   <slot />
 </template>
 
 <style lang="scss" scoped>
-@use '~/assets/variables';
+@use '~/assets/variables' as *;
 
 .modal {
   position: fixed;

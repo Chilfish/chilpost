@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { usePostStore } from '~/stores/postStore'
-
 const postId = useRoute().params.postId as string
 
 const postStore = usePostStore()
@@ -19,9 +17,9 @@ watch(post, () => {
 </script>
 
 <template>
-  <Header>
+  <CommonHeader>
     <h3>Post Details</h3>
-  </Header>
+  </CommonHeader>
 
   <main>
     <div v-if="isLoading" class="loading-box">

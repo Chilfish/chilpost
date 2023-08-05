@@ -1,5 +1,3 @@
-import { defineStore } from 'pinia'
-import { ref } from 'vue'
 import { UserService } from '~/services/userService'
 import type { Id, User } from '~/types'
 
@@ -7,6 +5,10 @@ export const useUserStore = defineStore('user', () => {
   const users = ref([] as User[])
   const service = new UserService()
   const curUser = ref(service.curUser)
+
+  async function fetchCurUser() {
+    curUser.value = await service.fetchCurUser()
+  }
 
   async function getById(id: Id) {
     return await service.getById(id)
@@ -41,6 +43,7 @@ export const useUserStore = defineStore('user', () => {
   return {
     users,
     curUser,
+    fetchCurUser,
     getById,
     getByName,
 

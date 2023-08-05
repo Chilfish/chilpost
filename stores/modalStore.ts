@@ -1,7 +1,4 @@
-import { defineStore } from 'pinia'
-import { ref } from 'vue'
-
-export const useNewPostStore = defineStore('newPost', () => {
+export const useModalStore = defineStore('modal', () => {
   const showModal = ref(false)
 
   function toggleModal() {

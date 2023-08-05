@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import { useNewPostStore } from '~/stores/newPostStore'
-import { useUserStore } from '~/stores/userStore'
-
-const newPostStore = useNewPostStore()
+const modalStore = useModalStore()
 const userStore = useUserStore()
 
 const routes = computed(() => [
@@ -59,7 +56,7 @@ watchEffect(() => {
     <button
       :class="showFAB ? '' : 'hide'"
       class="send-post"
-      @click="newPostStore.toggleModal"
+      @click="modalStore.toggleModal"
     >
       <span class="icon i-tabler-plus" />
       <span class="text">Post</span>

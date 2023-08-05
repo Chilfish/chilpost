@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import { useNewPostStore } from '~/stores/newPostStore'
-import { usePostStore } from '~/stores/postStore'
-
-const newPostStore = useNewPostStore()
+const modalStore = useModalStore()
 const postStore = usePostStore()
 
 const postValue = ref('')
@@ -13,14 +10,14 @@ function submit() {
 
   postStore.addPost(postValue.value)
   postValue.value = ''
-  newPostStore.toggleModal()
+  modalStore.toggleModal()
 }
 </script>
 
 <template>
   <div id="send-post">
     <div>
-      <span class="icon i-tabler-x" @click="newPostStore.toggleModal" />
+      <span class="icon i-tabler-x" @click="modalStore.toggleModal" />
     </div>
     <form>
       <textarea v-model="postValue" placeholder="Wassup?!" />
@@ -79,3 +76,4 @@ form {
   }
 }
 </style>
+stores/modalStore

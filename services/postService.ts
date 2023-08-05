@@ -1,4 +1,3 @@
-import { useUserStore } from '~/stores/userStore'
 import type { Id, Post, PostDetail, PostsWithOwner } from '~/types'
 
 export class PostService {

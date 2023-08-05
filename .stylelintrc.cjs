@@ -35,6 +35,12 @@ module.exports = {
         // "unit-allowed-list": ["em", "rem", "s"]
       }
     }
+  ],
+  ignoreFiles: [
+    "dist/**/*",
+    "node_modules/**/*",
+    ".nuxt/**/*",
+    ".output/**/*",
   ]
 };
 

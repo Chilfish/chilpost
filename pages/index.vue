@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { usePostStore } from '~/stores/postStore'
-
 const { y } = useScroll(document)
 const isScrollingDown = ref(false)
 watch(
@@ -10,10 +8,13 @@ watch(
   },
 )
 
-const postStore = usePostStore()
-const { isLoading } = useAsyncState(postStore.fetchPosts(), null)
+const darkStore = useDarkStore()
 
-const posts = postStore.posts
+const postStore = usePostStore()
+const {
+  state: posts,
+  isLoading,
+} = useAsyncState(postStore.fetchPosts(), null)
 </script>
 
 <template>
@@ -28,10 +29,18 @@ const posts = postStore.posts
       <input type="search" placeholder="Search">
     </label>
 
-    <!-- <span class="icon" :class="dark.icon.value" @click="dark.toggle()" /> -->
+    <span
+      class="icon"
+      :class="darkStore.icon"
+      @click="darkStore.toggle()"
+    />
   </header>
 
-  <main>
+  <div v-if="isLoading" class="loading-box">
+    <span class="icon loading" />
+  </div>
+
+  <main v-else>
     <PostItem
       v-for="post in posts"
       :key="post.id"

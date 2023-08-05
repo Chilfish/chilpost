@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import { usePostStore } from '~/stores/postStore'
-
 const postStore = usePostStore()
 const route = useRoute()
-const username = ref(route.params.username as string)
+const username = ref(route.params.name as string)
 
 const isLoading = ref(true)
 const data = computedAsync(
@@ -12,7 +10,7 @@ const data = computedAsync(
 )
 
 watchEffect(() => {
-  username.value = route.params.username as string
+  username.value = route.params.name as string
 
   if (data.value) {
     isLoading.value = false
@@ -23,9 +21,9 @@ watchEffect(() => {
 </script>
 
 <template>
-  <Header>
+  <CommonHeader>
     <h3> {{ data?.owner.nick_name }}</h3>
-  </Header>
+  </CommonHeader>
 
   <div class="banner" />
 

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { useUserStore } from '~/stores/userStore'
+import type { Rules } from 'async-validator'
+import { useAsyncValidator } from '@vueuse/integrations/useAsyncValidator'
 
 // useTitle('Settings')
 
@@ -51,9 +52,9 @@ watch(state, () => {
 </script>
 
 <template>
-  <Header>
+  <CommonHeader>
     <h3>Settings</h3>
-  </Header>
+  </CommonHeader>
 
   <form>
     <div class="form-group">
@@ -122,7 +123,7 @@ watch(state, () => {
       </div>
     </div>
 
-    <Button
+    <CommonButton
       :disabled="!pass"
       text="Save"
       :is-loading="isLoading"

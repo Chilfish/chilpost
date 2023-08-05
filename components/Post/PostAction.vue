@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { fmtNum } from '~/utils'
 import type { PostStatus } from '~/types'
-import { usePostStore } from '~/stores/postStore'
 
 const props = defineProps<{
   status: PostStatus

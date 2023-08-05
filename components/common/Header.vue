@@ -17,7 +17,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use "~/assets/variables";
+@use "~/assets/variables"as *;
 
 header {
   position: fixed;
