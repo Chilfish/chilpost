@@ -45,7 +45,6 @@ const avatar = useImg(props.owner.avatar)
 
           <RouterLink
             class="date"
-            :title="dayjs(post.createdAt).format()"
             :to="`/@${owner.name}/${post.id}`"
             @click.stop
           >

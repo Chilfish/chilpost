@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { DarkStore } from '~/stores/darkStore'
 import { usePostStore } from '~/stores/postStore'
 
 const { y } = useScroll(document)
@@ -11,8 +10,8 @@ watch(
   },
 )
 
-const dark = inject('darkStore') as DarkStore
 const postStore = usePostStore()
+const { isLoading } = useAsyncState(postStore.fetchPosts(), null)
 
 const posts = postStore.posts
 </script>
@@ -29,7 +28,7 @@ const posts = postStore.posts
       <input type="search" placeholder="Search">
     </label>
 
-    <span class="icon" :class="dark.icon.value" @click="dark.toggle()" />
+    <!-- <span class="icon" :class="dark.icon.value" @click="dark.toggle()" /> -->
   </header>
 
   <main>
@@ -43,5 +42,5 @@ const posts = postStore.posts
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/index';
+// @import '../styles/index';
 </style>

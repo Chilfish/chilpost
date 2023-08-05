@@ -1,6 +1,5 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { posts, users } from '../_mock.js'
-import { toDetail } from '../_utils.js'
+import { posts, users } from '../_mock'
+import { toDetail } from '../_utils'
 import type { PostsWithOwner } from '~/types'
 
 interface QueryParams {
@@ -8,28 +7,22 @@ interface QueryParams {
   ownerName?: string
 }
 
-export default function handler(
-  req: VercelRequest,
-  res: VercelResponse,
-) {
+export default defineEventHandler((event) => {
   const {
     id,
     ownerName,
-  } = req.query as QueryParams
-
-  if (Object.keys(req.query).length < 1)
-    return res.status(400).json({ message: 'Missing query params' })
+  } = getQuery(event) as QueryParams
 
   try {
     if (id)
-      return res.json(byId(id))
+      return byId(id)
     if (ownerName)
-      return res.json(byOwnerName(ownerName))
+      return byOwnerName(ownerName)
   }
   catch (err: any) {
-    return res.status(404).json({ message: err.message })
+    return { message: err.message }
   }
-}
+})
 
 function byId(id: string) {
   const post = posts.find(post => post.id === id)

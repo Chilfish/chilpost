@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useNewPostStore } from 'stores/newPostStore'
-import { useUserStore } from 'stores/userStore'
+import { useNewPostStore } from '~/stores/newPostStore'
+import { useUserStore } from '~/stores/userStore'
 
 const newPostStore = useNewPostStore()
 const userStore = useUserStore()

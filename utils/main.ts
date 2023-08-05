@@ -3,7 +3,7 @@ import { createPinia } from 'pinia'
 
 import { darkStore } from '../stores/darkStore'
 import App from '~/App.vue'
-import router from '~/router'
+import router from 'utils/router'
 
 import '@unocss/reset/tailwind.css'
 import 'uno.css'
