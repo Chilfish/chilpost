@@ -17,7 +17,7 @@
     "lint": "eslint .",
     "slint": "stylelint \"./**/*.(vue|scss|css)\""
   },
-  "dependencies": {
+  "dependencies": { 
     "typescript": "^5.1.6"
   },
   "devDependencies": {
@@ -62,7 +62,9 @@
       "no-console": "off"
     },
     "ignorePatterns": [
-      "dist", ".output", ".nuxt"
+      "dist",
+      ".output",
+      ".nuxt"
     ]
   }
 }

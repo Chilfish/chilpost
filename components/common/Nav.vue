@@ -68,5 +68,5 @@ watchEffect(() => {
 </template>
 
 <style lang="scss" scoped>
-@import '~/styles/nav';
+@use '~/assets/nav';
 </style>

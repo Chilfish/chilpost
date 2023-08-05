@@ -42,7 +42,7 @@ watch(post, () => {
 </template>
 
 <style lang="scss" scoped>
-@import "../styles/variables";
+@use "~/assets/variables";
 
 main {
   display: flex;

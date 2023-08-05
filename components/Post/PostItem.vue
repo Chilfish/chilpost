@@ -76,6 +76,5 @@ const avatar = useImg(props.owner.avatar)
 </template>
 
 <style lang="scss">
-@import '~/styles/post/post-item';
+@use '~/assets/post/item';
 </style>
-utils/utils

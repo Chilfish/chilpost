@@ -93,6 +93,5 @@ watch(state, () => {
 </template>
 
 <style lang="scss" scoped>
-@import '~/styles/profile/profile-card';
+@use '~/assets/profile/card';
 </style>
-utils/utils

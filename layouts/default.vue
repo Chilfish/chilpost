@@ -11,7 +11,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import './styles/variables';
+@use '~/assets/variables' as *;
 
 span {
   display: none;

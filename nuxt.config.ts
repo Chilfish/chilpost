@@ -23,7 +23,18 @@ export default defineNuxtConfig({
 
   css: [
     '@unocss/reset/tailwind.css',
+    '~/assets/shared.scss',
   ],
+
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          // additionalData: '@use "@/assets/_colors.scss" as *;'
+        },
+      },
+    },
+  },
 
   nitro: {
     esbuild: {

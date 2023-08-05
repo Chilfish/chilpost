@@ -32,7 +32,7 @@ function submit() {
 </template>
 
 <style lang="scss" scoped>
-@import '~/styles/variables';
+@use '~/assets/variables';
 
 div#send-post {
   position: fixed;

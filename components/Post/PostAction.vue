@@ -61,7 +61,7 @@ const likeStyle = computed(() =>
 
 <style lang="scss" scoped>
 @use "sass:map";
-@import "~/styles/variables";
+@use "~/assets/variables" as *;
 
 .post-action {
   display: flex;
@@ -88,4 +88,3 @@ button {
   }
 }
 </style>
-utils/utils

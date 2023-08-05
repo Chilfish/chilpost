@@ -132,5 +132,5 @@ watch(state, () => {
 </template>
 
 <style lang="scss" scoped>
-@import "~/styles/settings";
+@use "~/assets/settings";
 </style>

@@ -42,5 +42,5 @@ const posts = postStore.posts
 </template>
 
 <style lang="scss" scoped>
-// @import '../styles/index';
+@use "~/assets/index";
 </style>

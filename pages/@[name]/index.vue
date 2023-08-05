@@ -66,5 +66,5 @@ watchEffect(() => {
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/profile/profile';
+@use '~/assets/profile/index';
 </style>
