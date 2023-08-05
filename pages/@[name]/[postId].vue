@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useTitle } from '@vueuse/core'
-
 const postId = useRoute().params.postId as string
 
 const postStore = usePostStore()
@@ -15,7 +13,9 @@ const {
 watch(post, () => {
   const title = `${post.value?.owner.nick_name}'s Post: ${post.value?.content.substring(0, 50)}`
 
-  useTitle(title)
+  useHead({
+    title,
+  })
 })
 </script>
 

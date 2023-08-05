@@ -12,8 +12,6 @@ useDarkStore() // init dark mode
 <template>
   <span class="i-tabler-moon i-tabler-sun hidden" />
   <NuxtLayout>
-    <client-only>
-      <NuxtPage />
-    </client-only>
+    <NuxtPage />
   </NuxtLayout>
 </template>

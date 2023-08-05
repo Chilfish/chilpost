@@ -83,8 +83,13 @@ input {
   outline: none;
 }
 
-#app {
-  @apply w-screen flex flex-col items-center position-relative;
+/* stylelint-disable-next-line selector-id-pattern */
+#__nuxt {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
 }
 
 h2 {

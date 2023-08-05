@@ -1,5 +1,5 @@
 import { users } from '../_mock.js'
 
-export default defineEventHandler((event) => {
+export default defineEventHandler(async (event) => {
   return users
 })

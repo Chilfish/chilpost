@@ -5,7 +5,7 @@ definePageMeta({
   showFAB: true,
 })
 
-const { y } = useScroll(document)
+const { y } = useWindowScroll()
 const isScrollingDown = ref(false)
 watch(
   () => y.value,
