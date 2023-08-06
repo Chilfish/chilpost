@@ -1,0 +1,13 @@
+@use "../variables" as *;
+
+.banner {
+  width: 100%;
+  height: 180px;
+  background-color: var(--text-2);
+}
+
+main.post-list {
+  padding: 1rem 0.5rem;
+
+  @include border(top);
+}

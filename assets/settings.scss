@@ -1,0 +1,46 @@
+@use "./variables"as *;
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 2rem;
+  margin: 0 auto;
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%; 
+    padding: 0.5rem;
+    margin: 0 auto;
+    font-size: 1rem;
+
+    label {
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+
+    input {
+      width: 70%;
+      padding: 1rem;
+      border: 1px solid var(--gray);
+      border-radius: 0.5rem;
+    }
+
+    textarea {
+      border: 1px solid var(--gray);
+    }
+
+    .len-count {
+      margin-top: 0.5rem;
+      margin-left: auto;
+    }
+  }
+
+  button {
+    margin-right: auto;
+  }
+}

@@ -1,0 +1,165 @@
+@use "./variables" as *;
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-size: var(--font-size);
+  font-weight: 400;
+  line-height: 1.5;
+  color-scheme: light dark;
+  font-synthesis: none;
+  text-rendering: optimizelegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-size-adjust: 100%;
+
+  --border-color: #e5e7eb;
+  --background-color: #fff;
+  --blur-bg: #fffc;
+  --color: #000;
+  --hover: #e7e7e8;
+  --hover-1: #f7f7f7;
+  --text-2: #536471;
+  --font-size: 0.9rem;
+  --gray: #e4e4e7;
+  --error: #f4212e;
+  --error-bg: #fee8ea;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  color: var(--color);
+  background-color: var(--background-color);
+
+  &.dark {
+    --background-color: #000;
+    --blur-bg: #26262600;
+    --color: #fff;
+    --border-color: #2f3336;
+    --hover: #181818;
+    --hover-1: #0f0f0f;
+    --text-2: #71767b;
+    --gray: #16181c;
+    --error-bg: #190305;
+  }
+}
+
+html,
+textarea {
+  scrollbar-width: thin;
+
+  &::-webkit-resizer,
+  & ::-webkit-scrollbar-thumb {
+    background: #aaa;
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+}
+
+body {
+  display: flex;
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+}
+
+textarea,
+input {
+  height: 100%;
+  padding: 1rem;
+  font-family: Roboto, sans-serif;
+  font-weight: 300;
+  color: var(--text-color);
+  resize: none;
+  background-color: var(--background-color);
+  border: none;
+  border-radius: 8px;
+  outline: none;
+}
+
+/* stylelint-disable-next-line selector-id-pattern */
+#__nuxt {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+}
+
+h2 {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+h3 {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+span.icon {
+  display: inline-block;
+  max-width: 1.8rem;
+  max-height: 1.8rem;
+  user-select: none;
+}
+
+.loading {
+  --un-icon: url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="24" height="24" viewBox="0 0 24 24"%3E%3Cpath fill="none" stroke="currentColor" stroke-dasharray="15" stroke-dashoffset="15" stroke-linecap="round" stroke-width="2" d="M12 3C16.9706 3 21 7.02944 21 12"%3E%3Canimate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15%3B0"%2F%3E%3CanimateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12%3B360 12 12"%2F%3E%3C%2Fpath%3E%3C%2Fsvg%3E');
+
+  width: 1.2em;
+  height: 1.2em;
+  color: inherit;
+  background-color: currentcolor;
+  mask: var(--un-icon) no-repeat;
+  mask-size: 100% 100%;
+}
+
+div.loading-box {
+  display: flex;
+  justify-content: center;
+  margin: 1rem;
+  user-select: none;
+}
+
+.no-data {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  color: var(--text-2);
+  text-align: center;
+  user-select: none;
+}
+
+div.content p {
+  white-space: pre-line;
+}
+
+.blur-bg {
+  @include blur(24px);
+}
+
+button[disabled=""] {
+  color: var(--text-2);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+button.btn-primary {
+  width: 6rem;
+  padding: 1rem 0.5rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: $theme-color;
+  border-radius: 12px;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
