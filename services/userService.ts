@@ -1,10 +1,8 @@
-import { delay } from '~/utils'
-import type { Id, User } from '~/types'
+import type { ApiResult, Id } from '~/types'
+import type { User } from '~/types/user'
 
 export class UserService {
-  private users = [] as User[]
-
-  curUser: User
+  curUser?: User
 
   public async fetchCurUser() {
     const user = await fetch('/api/user/me')
@@ -14,46 +12,31 @@ export class UserService {
   }
 
   public async getById(id: Id): Promise<User | null> {
-    const user = this.users.find(user => user.id === id)
-    return user || null
+    const { data } = await useFetch<User>(`/api/user/search?id=${id}`)
+    return data.value
   }
 
   public async getByName(name: string): Promise<User | null> {
-    const user = this.users.find(user => user.name === name.toLowerCase())
-    return user || null
+    const { data } = await useFetch<User>(`/api/user/search?name=${name}`)
+    return data.value
   }
 
   // mock, should do it in backend
-  public async follow(id: Id): Promise<User[]> {
-    await delay(2100)
-    const user = this.users.find(user => user.id === id)
-    if (!user || user.id === this.curUser?.id)
-      return this.users
-
-    // if (!user.status.is_following) {
-    //   user.status.follower_count++
-    //   this.curUser.status.following_count++
-    // }
-    // else {
-    //   user.status.follower_count--
-    //   this.curUser.status.following_count--
-    // }
-
-    user.status.is_following = !user.status.is_following
-
-    return this.users
+  public async follow(id: Id) {
+    const { data } = await useFetch<ApiResult>(`/api/user/follow?id=${id}&curId=${this.curUser?.id}`)
+    return data.value
   }
 
   public async saveSettings(user: User): Promise<User> {
-    await delay(2100)
+    // await delay(2100)
 
-    const index = this.users.findIndex(u => u.id === user.id)
-    if (index === -1)
-      return this.curUser!
+    // const index = this.users.findIndex(u => u.id === user.id)
+    // if (index === -1)
+    //   return this.curUser!
 
-    this.users[index] = { ...user }
-    this.curUser = user
+    // this.users[index] = { ...user }
+    // this.curUser = user
 
-    return user
+    // return user
   }
 }

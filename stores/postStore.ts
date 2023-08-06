@@ -1,5 +1,6 @@
+import type { Id } from '~/types'
 import { PostService } from '~/services/postService'
-import type { Id, PostDetail } from '~/types'
+import type { PostDetail } from '~/types/post'
 
 export const usePostStore = defineStore('post', () => {
   const posts = ref([] as PostDetail[])

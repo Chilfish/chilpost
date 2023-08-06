@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { User } from '~/types'
+import type { User } from '~/types/user'
 
 const props = defineProps<{
   user: User
@@ -10,7 +10,7 @@ const avatar = useImg(props.user.avatar)
 const isHovered = ref(false)
 const isFollowing = ref(props.user.status.is_following)
 
-const isMe = computed(() => props.user.id === userStore.curUser.id)
+const isMe = computed(() => props.user.id === userStore.curUser?.id)
 
 const foBtnText = computed(() => {
   if (isMe.value)
@@ -28,12 +28,12 @@ const foBtnText = computed(() => {
 
 const { state, isLoading, execute } = useAsyncState(
   async () => userStore.follow(props.user.id),
-  false,
+  null,
   { immediate: false },
 )
 
-watch(state, () => {
-  if (state.value === true)
+watchEffect(() => {
+  if (state.value?.result)
     isFollowing.value = !isFollowing.value
 })
 </script>
@@ -47,7 +47,7 @@ watch(state, () => {
 
       <div class="buttons">
         <button
-          v-element-hover="(e) => isHovered = e "
+          v-element-hover="(e: boolean) => isHovered = e "
           :class="isFollowing && isHovered ? 'unfollow' : ''"
           :disabled="isLoading"
           @click="() =>

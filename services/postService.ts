@@ -1,31 +1,28 @@
-import type { Id, Post, PostDetail, PostsWithOwner } from '~/types'
+import type { Id } from '~/types'
+import type { PostDetail, PostsWithOwner } from '~/types/post'
 
 export class PostService {
-  private posts = [] as Post[]
+  private posts = [] as PostDetail[]
 
   private curUser = useUserStore().curUser
 
-  public async fetchPosts(): Promise<PostDetail[]> {
-    const posts = await fetch('/api/post')
-      .then(res => res.json())
-    this.posts = posts
+  public async fetchPosts() {
+    const { data } = await useFetch<PostDetail[]>('/api/post')
+    this.posts = data?.value || []
 
-    return posts
+    return this.posts
   }
 
-  public async fetchById(id: Id): Promise<PostDetail | null> {
-    const post = await fetch(`/api/post/search?id=${id}`)
-      .then(res => res.json())
-    if (post.status === 404)
-      return null
-    return post
+  public async fetchById(id: Id) {
+    const { data } = await useFetch<PostDetail>(`/api/post/search?id=${id}`)
+
+    return data
   }
 
-  public async fetchByOwnerName(owner_name: string): Promise<PostsWithOwner> {
-    const post = await fetch(`/api/post/search?ownerName=${owner_name}`)
-      .then(res => res.json())
+  public async fetchByOwnerName(owner_name: string) {
+    const { data } = await useFetch<PostsWithOwner>(`/api/post/search?ownerName=${owner_name}`)
 
-    return post
+    return data
   }
 
   public async addPost(content: string): Promise<PostDetail> {

@@ -1,8 +1,8 @@
+import type { Id } from 'types'
+import type { User } from '~/types/user'
 import { UserService } from '~/services/userService'
-import type { Id, User } from '~/types'
 
 export const useUserStore = defineStore('user', () => {
-  const users = ref([] as User[])
   const service = new UserService()
   const curUser = ref(service.curUser)
 
@@ -19,14 +19,7 @@ export const useUserStore = defineStore('user', () => {
   }
 
   async function follow(id: Id) {
-    try {
-      users.value = await service.follow(id)
-      return true
-    }
-    catch (error) {
-      console.error(error)
-      return false
-    }
+    return service.follow(id)
   }
 
   async function saveSettings(user: User) {
