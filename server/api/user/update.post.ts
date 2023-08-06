@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
   await delay(500)
   const newUser = await readBody<User>(event)
   const index = users.findIndex(u => u.id === newUser.id)
-  console.log('update user', newUser, index)
+  // console.log('update user', newUser, index)
   if (index === -1)
     return { result: false, message: 'User not found' }
 

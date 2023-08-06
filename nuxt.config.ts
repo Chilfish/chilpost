@@ -3,6 +3,7 @@ import genStaticData from './server/utils/mock'
 export default defineNuxtConfig({
   modules: [
     '@unocss/nuxt',
+    '@nuxt/image',
     '@vueuse/nuxt',
     [
       '@pinia/nuxt',
@@ -54,7 +55,7 @@ export default defineNuxtConfig({
 
   routeRules: {
     '/': { redirect: '/explore' },
-    '/settings': { ssr: false },
+    // '/settings': { ssr: false },
   },
 
   nitro: {
@@ -73,7 +74,7 @@ export default defineNuxtConfig({
     head: {
       viewport: 'width=device-width,initial-scale=1',
       link: [
-        { rel: 'icon', href: '/favicon.ico', sizes: 'any' },
+        { rel: 'icon', href: '/favicon.png', sizes: 'any' },
       ],
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },

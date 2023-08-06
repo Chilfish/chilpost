@@ -17,13 +17,12 @@
     "lint": "eslint .",
     "slint": "stylelint \"./**/*.(vue|scss|css)\""
   },
-  "dependencies": {
-  },
   "devDependencies": {
     "@antfu/eslint-config": "^0.40.0",
     "@faker-js/faker": "^8.0.2",
     "@iconify-json/tabler": "^1.1.86",
     "@nuxt/devtools": "^0.7.4",
+    "@nuxt/image": "1.0.0-rc.1",
     "@pinia/nuxt": "^0.4.11",
     "@types/node": "^20.4.8",
     "@types/uuid": "^9.0.2",

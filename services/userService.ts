@@ -21,7 +21,6 @@ export class UserService {
     return data.value
   }
 
-  // mock, should do it in backend
   public async follow(id: Id) {
     const { data } = await useFetch<ApiResult>(`/api/user/follow?id=${id}&curId=${this.curUser?.id}`)
     return data.value

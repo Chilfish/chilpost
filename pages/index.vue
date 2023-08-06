@@ -43,10 +43,7 @@ const {
     />
   </header>
 
-  <div v-if="isLoading" class="loading-box">
-    <span class="icon loading" />
-  </div>
-
+  <CommonLoading :is-loading="isLoading" />
   <main>
     <PostItem
       v-for="post in posts"

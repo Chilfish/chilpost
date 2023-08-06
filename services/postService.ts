@@ -1,10 +1,9 @@
-import type { Id } from '~/types'
+import type { User } from 'types/user'
+import type { ApiResult, Id } from '~/types'
 import type { Post, PostDetail, PostsWithOwner } from '~/types/post'
 
 export class PostService {
   private posts = [] as PostDetail[]
-
-  private curUser = useUserStore().curUser
 
   public async fetchPosts() {
     const { data } = await useFetch<PostDetail[]>('/api/post')
@@ -14,23 +13,22 @@ export class PostService {
   }
 
   public async fetchById(id: Id) {
-    const { data } = await useFetch<PostDetail>(`/api/post/search?id=${id}`)
+    const { data } = await useFetch<ApiResult<PostDetail>>(`/api/post/search?id=${id}`)
 
     return data.value
   }
 
   public async fetchByOwnerName(owner_name: string) {
-    const { data } = await useFetch<PostsWithOwner>(`/api/post/search?ownerName=${owner_name}`)
+    const { data } = await useFetch<ApiResult<PostsWithOwner>>(`/api/post/search?ownerName=${owner_name}`)
 
     return data.value
   }
 
-  public async addPost(content: string): Promise<PostDetail> {
-    const curUser = this.curUser!
+  public async addPost(content: string, owner: User): Promise<PostDetail> {
     const { data } = await useFetch<Post>('/api/post/new', {
       method: 'POST',
       body: {
-        ownerId: curUser.id,
+        ownerId: owner.id,
         content,
       },
     })
@@ -40,7 +38,7 @@ export class PostService {
 
     return {
       ...data.value,
-      owner: curUser,
+      owner,
     }
   }
 }

@@ -8,8 +8,11 @@ definePageMeta({
 })
 
 const userStore = useUserStore()
-const { ...user } = userStore.curUser
-const curUser = ref(user) // deeply copy
+const {
+  state: curUser,
+  isLoading: isLoadingUser,
+  isReady: isReadyUser,
+} = useAsyncState(userStore.fetchCurUser(), null) // why doesn't App.vue fetch the current user?
 
 const maxBio = 160
 
@@ -43,7 +46,7 @@ const {
   execute: updateSettings,
 } = useAsyncState(
   async () => {
-    if (pass.value)
+    if (pass.value && curUser.value)
       return userStore.saveSettings(curUser.value)
   },
   null,
@@ -61,7 +64,9 @@ watch(state, () => {
     <h3>Settings</h3>
   </CommonHeader>
 
-  <form>
+  <CommonLoading v-if="isLoadingUser" />
+
+  <form v-else-if="isReadyUser && curUser">
     <div class="form-group">
       <label for="nick_name">Display Name</label>
       <input
@@ -74,7 +79,7 @@ watch(state, () => {
         v-if="errorFields?.nick_name?.length"
         text-red
       >
-        {{ errorFields.nickname[0].message }}
+        {{ errorFields.nick_name[0].message }}
       </div>
     </div>
 

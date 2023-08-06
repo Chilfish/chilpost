@@ -38,7 +38,7 @@ watchEffect(() => {
 <template>
   <nav class="blur-bg">
     <div>
-      <img class="logo" src="/favicon.ico">
+      <common-img class="logo" src="/favicon.png" />
       <h1>Chill Post</h1>
     </div>
 

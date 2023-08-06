@@ -3,15 +3,16 @@ const postId = useRoute().params.postId as string
 
 const postStore = usePostStore()
 const {
-  state: post,
+  state,
   isLoading,
 } = useAsyncState(
   postStore.fetchById(postId),
   null,
 )
 
-watch(post, () => {
-  const title = `${post.value?.owner.nick_name}'s Post: ${post.value?.content.substring(0, 50)}`
+watchEffect(() => {
+  const post = state.value?.data
+  const title = `${post?.owner.nick_name}'s Post: ${post?.content.substring(0, 50)}`
 
   useHead({
     title,
@@ -25,18 +26,19 @@ watch(post, () => {
   </CommonHeader>
 
   <main>
-    <div v-if="isLoading" class="loading-box">
-      <span class="icon loading" />
-    </div>
+    <CommonLoading v-if="isLoading" />
 
     <template v-else>
-      <div v-if="!post">
-        Not Found {{ postId }}
+      <div
+        v-if="!state?.result || !state?.data"
+        class="no-data"
+      >
+        Post Not Found {{ postId }}
       </div>
       <PostDetail
         v-else
-        :post="post"
-        :owner="post.owner"
+        :post="state.data"
+        :owner="state.data.owner"
       />
     </template>
   </main>

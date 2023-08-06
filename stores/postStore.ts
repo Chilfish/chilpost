@@ -1,3 +1,4 @@
+import type { User } from 'types/user'
 import type { Id } from '~/types'
 import { PostService } from '~/services/postService'
 import type { PostDetail } from '~/types/post'
@@ -7,13 +8,12 @@ export const usePostStore = defineStore('post', () => {
 
   const service = new PostService()
 
-  const fetchPosts = async () => {
-    if (!posts.value.length)
-      posts.value = await service.fetchPosts()
+  async function fetchPosts() {
+    posts.value = await service.fetchPosts()
     return posts.value
   }
 
-  const fetchById = async (id: Id) => {
+  async function fetchById(id: Id) {
     const post = await service.fetchById(id)
     return post
   }
@@ -22,8 +22,11 @@ export const usePostStore = defineStore('post', () => {
     return service.fetchByOwnerName(name)
   }
 
-  const getById = (id: Id): PostDetail | null => posts.value.find(post => post.id === id) || null
+  function getById(id: Id): PostDetail | null {
+    return posts.value.find(post => post.id === id) || null
+  }
 
+  // TODO
   const toggleLike = async (id: Id) => {
     const post = getById(id)
     if (!post)
@@ -35,8 +38,8 @@ export const usePostStore = defineStore('post', () => {
     return post
   }
 
-  async function addPost(content: string) {
-    const newPost = await service.addPost(content)
+  async function addPost(content: string, owner: User) {
+    const newPost = await service.addPost(content, owner)
     posts.value.unshift(newPost)
     return newPost
   }

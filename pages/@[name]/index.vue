@@ -4,7 +4,7 @@ const route = useRoute()
 const username = ref(route.params.name as string)
 
 const isLoading = ref(true)
-const data = computedAsync(
+const state = computedAsync(
   async () => await postStore.fetchByOwnerName(username.value),
   null,
 )
@@ -12,10 +12,10 @@ const data = computedAsync(
 watchEffect(() => {
   username.value = route.params.name as string
 
-  if (data.value) {
+  if (state.value) {
     isLoading.value = false
-    const owner = data.value.owner
-    const title = `${owner.nick_name}(@${owner.name})`
+    const owner = state.value.data?.owner
+    const title = `${owner?.nick_name}(@${owner?.name})`
     useHead({
       title,
     })
@@ -25,38 +25,33 @@ watchEffect(() => {
 
 <template>
   <CommonHeader>
-    <h3> {{ data?.owner.nick_name }}</h3>
+    <h3> {{ state?.data?.owner.nick_name }}</h3>
   </CommonHeader>
 
   <div class="banner" />
 
-  <div
-    v-if="isLoading"
-    class="loading-box"
-  >
-    <span class="icon loading" />
-  </div>
+  <CommonLoading v-if="isLoading" />
 
   <template v-else>
     <div
-      v-if="!data"
+      v-if="!state?.result"
       class="no-data"
     >
       User Not Found @{{ username }}
     </div>
 
-    <template v-else>
-      <ProfileCard :user="data.owner" />
+    <template v-else-if="state.data">
+      <ProfileCard :user="state.data.owner" />
       <main class="post-list">
         <PostItem
-          v-for="post in data.posts"
+          v-for="post in state.data.posts"
           :key="post.id"
           :post="post"
-          :owner="data?.owner"
+          :owner="state.data?.owner"
         />
 
         <div
-          v-if="!data.posts.length"
+          v-if="!state.data.posts.length"
           class="no-data"
         >
           No posts yet

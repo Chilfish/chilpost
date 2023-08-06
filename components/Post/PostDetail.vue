@@ -13,7 +13,10 @@ const avatar = useImg(props.owner.avatar)
 <template>
   <div class="user-box">
     <RouterLink class="avatar" :to="`/@${owner.name}`">
-      <img :src="avatar" alt="avatar">
+      <CommonImg
+        :src="avatar"
+        alt="avatar"
+      />
     </RouterLink>
 
     <RouterLink class="name-box" :to="`/@${owner.name}`">

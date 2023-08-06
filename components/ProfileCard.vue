@@ -42,7 +42,9 @@ watchEffect(() => {
   <div class="profile">
     <div class="actions">
       <div class="avatar">
-        <img :src="avatar">
+        <commonImg
+          :src="avatar"
+        />
       </div>
 
       <div class="buttons">

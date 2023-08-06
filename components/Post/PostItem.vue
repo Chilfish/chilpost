@@ -20,11 +20,10 @@ const avatar = useImg(props.owner.avatar)
           :to="`/@${owner.name}`"
           @click.stop
         >
-          <img
-            crossorigin="anonymous"
+          <CommonImg
             :src="avatar"
             alt="avatar"
-          >
+          />
         </RouterLink>
       </div>
 

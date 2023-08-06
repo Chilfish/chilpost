@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const modalStore = useModalStore()
 const postStore = usePostStore()
+const userStore = useUserStore()
 
 const postValue = ref('')
 
@@ -8,7 +9,7 @@ function submit() {
   if (!postValue.value)
     return
 
-  postStore.addPost(postValue.value)
+  postStore.addPost(postValue.value, userStore.curUser!)
   postValue.value = ''
   modalStore.toggleModal()
 }

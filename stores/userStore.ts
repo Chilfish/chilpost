@@ -8,6 +8,7 @@ export const useUserStore = defineStore('user', () => {
 
   async function fetchCurUser() {
     curUser.value = await service.fetchCurUser()
+    return curUser.value
   }
 
   async function getById(id: Id) {
@@ -27,7 +28,6 @@ export const useUserStore = defineStore('user', () => {
   }
 
   return {
-    users,
     curUser,
     fetchCurUser,
     getById,
