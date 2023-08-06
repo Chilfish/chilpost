@@ -54,6 +54,7 @@ export default defineNuxtConfig({
 
   routeRules: {
     '/': { redirect: '/explore' },
+    '/settings': { ssr: false },
   },
 
   nitro: {

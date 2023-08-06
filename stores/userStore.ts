@@ -23,14 +23,7 @@ export const useUserStore = defineStore('user', () => {
   }
 
   async function saveSettings(user: User) {
-    try {
-      curUser.value = await service.saveSettings(user)
-      return true
-    }
-    catch (error) {
-      console.error(error)
-      return false
-    }
+    return service.saveSettings(user)
   }
 
   return {

@@ -1,4 +1,4 @@
-import type { PostsWithOwner } from '~/types'
+import type { PostsWithOwner } from '~/types/post'
 
 interface QueryParams {
   id?: string

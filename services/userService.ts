@@ -27,16 +27,15 @@ export class UserService {
     return data.value
   }
 
-  public async saveSettings(user: User): Promise<User> {
-    // await delay(2100)
+  public async saveSettings(user: User) {
+    const { data } = await useFetch<ApiResult>('/api/user/update', {
+      method: 'POST',
+      body: user,
+    })
 
-    // const index = this.users.findIndex(u => u.id === user.id)
-    // if (index === -1)
-    //   return this.curUser!
+    if (data.value?.result)
+      this.curUser = user
 
-    // this.users[index] = { ...user }
-    // this.curUser = user
-
-    // return user
+    return data.value
   }
 }

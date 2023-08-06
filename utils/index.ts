@@ -1,5 +1,8 @@
 import dayjs from 'dayjs'
+import { v4 as uuidv4 } from 'uuid'
 import { useImage } from '@vueuse/core'
+
+export const uuid = () => uuidv4()
 
 export const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 

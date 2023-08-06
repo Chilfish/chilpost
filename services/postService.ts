@@ -1,5 +1,5 @@
 import type { Id } from '~/types'
-import type { PostDetail, PostsWithOwner } from '~/types/post'
+import type { Post, PostDetail, PostsWithOwner } from '~/types/post'
 
 export class PostService {
   private posts = [] as PostDetail[]
@@ -16,28 +16,31 @@ export class PostService {
   public async fetchById(id: Id) {
     const { data } = await useFetch<PostDetail>(`/api/post/search?id=${id}`)
 
-    return data
+    return data.value
   }
 
   public async fetchByOwnerName(owner_name: string) {
     const { data } = await useFetch<PostsWithOwner>(`/api/post/search?ownerName=${owner_name}`)
 
-    return data
+    return data.value
   }
 
   public async addPost(content: string): Promise<PostDetail> {
-    const newPost = await fetch(`/api/post/new?ownerId=${this.curUser?.id}`, {
+    const curUser = this.curUser!
+    const { data } = await useFetch<Post>('/api/post/new', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+      body: {
+        ownerId: curUser.id,
+        content,
       },
-      body: JSON.stringify({ content }),
     })
-      .then(res => res.json())
+
+    if (!data.value)
+      throw new Error('Failed to add post')
 
     return {
-      ...newPost,
-      owner: this.curUser,
+      ...data.value,
+      owner: curUser,
     }
   }
 }

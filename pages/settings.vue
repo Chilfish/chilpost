@@ -38,18 +38,20 @@ const rules: Rules = {
 
 const { pass, errorFields } = useAsyncValidator(curUser, rules)
 const {
-  state, isLoading, execute: updateSettings,
+  state,
+  isLoading,
+  execute: updateSettings,
 } = useAsyncState(
   async () => {
     if (pass.value)
       return userStore.saveSettings(curUser.value)
   },
-  false,
+  null,
   { immediate: false },
 )
 
 watch(state, () => {
-  if (state.value === true)
+  if (state.value?.result)
     console.log('Settings saved!')
 })
 </script>
