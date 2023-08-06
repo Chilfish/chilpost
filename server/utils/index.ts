@@ -1,4 +1,4 @@
-import { users } from './_mock' // due to typescript ES module, should use with .js extension
+import { users } from './_mock'
 import type { Post, PostDetail } from '~/types'
 
 export function toDetail(post: Post): PostDetail {

@@ -1,6 +1,5 @@
 import dayjs from 'dayjs'
 import { useImage } from '@vueuse/core'
-import { computed } from 'vue'
 
 export const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 

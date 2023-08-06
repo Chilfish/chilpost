@@ -3,6 +3,7 @@ definePageMeta({
   title: 'Explore Chilpost',
   description: 'Explore Chilpost',
   showFAB: true,
+  alias: '/explore',
 })
 
 const { y } = useWindowScroll()
@@ -46,7 +47,7 @@ const {
     <span class="icon loading" />
   </div>
 
-  <main v-else>
+  <main>
     <PostItem
       v-for="post in posts"
       :key="post.id"

@@ -1,5 +1,3 @@
-import { posts, users } from '../_mock'
-import { toDetail } from '../_utils'
 import type { PostsWithOwner } from '~/types'
 
 interface QueryParams {

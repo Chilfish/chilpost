@@ -1,5 +1,3 @@
-import { users } from '../_mock.js'
-
 export default defineEventHandler((event) => {
   const curUser = users.find(user => user.name === 'chilfish') // mock
   if (!curUser)

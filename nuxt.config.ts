@@ -14,7 +14,10 @@ export default defineNuxtConfig({
   ],
 
   imports: {
-    dirs: ['stores'],
+    dirs: [
+      'stores',
+      'server/utils',
+    ],
   },
 
   devtools: {
@@ -34,6 +37,21 @@ export default defineNuxtConfig({
         },
       },
     },
+  },
+
+  typescript: {
+    strict: true,
+  },
+
+  runtimeConfig: {
+    apiSecret: '',
+    public: {
+      apiBase: '',
+    },
+  },
+
+  routeRules: {
+    '/': { redirect: '/explore' },
   },
 
   nitro: {
