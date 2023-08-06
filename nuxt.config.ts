@@ -1,3 +1,5 @@
+import genStaticData from './server/utils/mock'
+
 export default defineNuxtConfig({
   modules: [
     '@unocss/nuxt',
@@ -60,6 +62,10 @@ export default defineNuxtConfig({
         target: 'esnext',
       },
     },
+  },
+
+  hooks: {
+    'nitro:build:before': () => genStaticData(), // generate static data before build
   },
 
   app: {

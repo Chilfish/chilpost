@@ -69,13 +69,9 @@ async function generateStatic(...mocks: { name: string; data: any[] }[]) {
   await fs.writeFile(mockDir, `${output}\n`)
 }
 
-function genStaticData() {
+export default function genStaticData() {
   return generateStatic(
     { name: 'users', data: fakeUsers },
     { name: 'posts', data: fakePosts },
   )
 }
-
-export default defineNuxtPlugin((nuxtApp) => {
-  genStaticData()
-})
