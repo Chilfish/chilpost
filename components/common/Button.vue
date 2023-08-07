@@ -25,10 +25,10 @@ defineEmits(['onClick'])
 
 <style lang="scss" scoped>
 button {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    justify-content: center;
-    padding: 0.6rem 1rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 1rem;
 }
 </style>

@@ -55,12 +55,17 @@ watchEffect(() => {
 
     <button
       :class="showFAB ? '' : 'hide'"
-      class="send-post"
-      @click="modalStore.toggleModal"
+      class="fab"
+      @click="modalStore.toggleModal('sendPost')"
     >
       <span class="icon i-tabler-plus" />
       <span class="text">Post</span>
     </button>
+
+    <common-button
+      text="Login"
+      @click="modalStore.toggleModal('login')"
+    />
   </nav>
 </template>
 

@@ -1,9 +1,12 @@
 <script setup lang="ts">
 definePageMeta({
-  title: 'Explore Chilpost',
   description: 'Explore Chilpost',
   showFAB: true,
   alias: '/explore',
+})
+
+useHead({
+  title: 'Explore Chilpost', // reset while route changed
 })
 
 const { y } = useWindowScroll()

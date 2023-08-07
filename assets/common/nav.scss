@@ -19,6 +19,19 @@ nav {
   div {
     display: none;
   }
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    height: 2.5rem;
+    color: #fff;
+    background: $theme-color;
+    border-radius: 16px;
+    box-shadow: 0 0 10px var(--background-color);
+    transition: transform 0.3s ease-in-out;
+  }
 }
 
 a {
@@ -45,22 +58,15 @@ a {
 }
 
 // FAB
-.send-post {
+button.fab {
   position: fixed;
   right: 0.5rem;
   bottom: 3rem;
   z-index: 999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 4rem;
   height: 4rem;
   margin: 1rem;
-  color: #fff;
-  background: $theme-color;
   border-radius: 50%;
-  box-shadow: 0 0 10px var(--background-color);
-  transition: transform 0.3s ease-in-out;
 
   .text {
     display: none;
@@ -131,13 +137,12 @@ a {
     }
   }
 
-  .send-post {
+  button.fab {
     position: relative;
     right: 0;
     bottom: 0;
     width: 90%;
     height: 2.5rem;
-    margin: 1rem 0;
     border-radius: 16px;
 
     .text {

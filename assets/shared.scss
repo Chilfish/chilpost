@@ -83,6 +83,14 @@ input {
   outline: none;
 }
 
+input,
+button,
+textarea {
+  &:focus-visible {
+    outline: thin;
+  }
+}
+
 /* stylelint-disable-next-line selector-id-pattern */
 #__nuxt {
   position: relative;
@@ -152,7 +160,7 @@ button[disabled=""] {
 button.btn-primary {
   width: 6rem;
   padding: 1rem 0.5rem;
-  font-size: 1.3rem;
+  font-size: 1rem;
   font-weight: bold;
   color: #fff;
   background-color: $theme-color;
