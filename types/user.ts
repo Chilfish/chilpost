@@ -10,13 +10,25 @@ export interface UserStatus {
   // following: Id[]
 }
 
-export interface User {
+export interface UserBase {
   id: Id
-  nick_name: string
   name: string
   email: string
+  createdAt: string
+}
+
+export interface User extends UserBase {
+  nick_name: string
   bio: string
   avatar: string
-  createdAt: string
   status: UserStatus
+}
+
+export interface UserAuth extends UserBase {
+  password: string
+}
+
+export interface UserLogin {
+  email: string
+  password: string
 }

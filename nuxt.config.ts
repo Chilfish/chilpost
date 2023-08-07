@@ -1,3 +1,4 @@
+import process from 'node:process'
 import genStaticData from './server/utils/mock'
 
 export default defineNuxtConfig({
@@ -47,7 +48,7 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
-    apiSecret: '',
+    apiSecret: process.env.API_SECRET,
     public: {
       apiBase: '',
     },

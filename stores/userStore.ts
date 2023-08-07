@@ -1,14 +1,21 @@
-import type { Id } from 'types'
-import type { User } from '~/types/user'
+import type { Id, User, UserLogin } from '~/types'
 import { UserService } from '~/services/userService'
 
 export const useUserStore = defineStore('user', () => {
   const service = new UserService()
   const curUser = ref(service.curUser)
 
+  async function login({ email, password }: UserLogin) {
+    return await service.login({ email, password })
+  }
+
   async function fetchCurUser() {
     curUser.value = await service.fetchCurUser()
     return curUser.value
+  }
+
+  function setCurUser(user: User) {
+    curUser.value = user
   }
 
   async function getById(id: Id) {
@@ -29,6 +36,8 @@ export const useUserStore = defineStore('user', () => {
 
   return {
     curUser,
+    setCurUser,
+    login,
     fetchCurUser,
     getById,
     getByName,

@@ -10,9 +10,13 @@ export default defineEventHandler((event) => {
   } = getQuery(event) as QueryParams
 
   try {
-    const user = users.find(user => user.id === id || user.name === name)
-    if (!user)
-      throw new Error('User not found')
+    const user = fakeUsers.find(user => user.id === id || user.name === name)
+    if (!user) {
+      return createError({
+        status: 404,
+        message: 'User not found',
+      })
+    }
     return user
   }
   catch (err: any) {

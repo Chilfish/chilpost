@@ -14,7 +14,7 @@ const modalStore = useModalStore()
   </aside>
 
   <CommonModal v-if="modalStore.showModal">
-    <PostSend />
+    <component :is="modalStore.curSlot" />
   </CommonModal>
 </template>
 

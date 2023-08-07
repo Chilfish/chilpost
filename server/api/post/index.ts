@@ -1,3 +1,3 @@
 export default defineEventHandler((event) => {
-  return posts.map(toDetail)
+  return fakePosts.map(toDetail)
 })

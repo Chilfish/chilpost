@@ -3,17 +3,20 @@ import path from 'node:path'
 import dayjs from 'dayjs'
 import { fakerDE as fake } from '@faker-js/faker'
 import { v4 as uuidv4 } from 'uuid'
-import type { Id, Post, User } from '~/types'
+import type { Id, Post, User, UserAuth } from '~/types'
 
 function genUser(
   nick_name = fake.internet.userName().replace('.', '_'),
-): User {
+  email = fake.internet.email(),
+  password = fake.internet.password(),
+): UserAuth & User {
   return {
     id: uuidv4(),
+    email,
+    password,
     bio: fake.lorem.paragraphs(1),
     nick_name: nick_name.replace(/[_]/g, ' '),
     name: nick_name.toLowerCase(),
-    email: fake.internet.email(),
     avatar: fake.internet.avatar(),
     createdAt: fake.date.past().toISOString(),
     status: {
@@ -49,7 +52,7 @@ function randomNum(min = 0, max = 5000) {
 
 const fakeUsers = [
   ...Array.from({ length: user_num }, () => genUser()),
-  genUser('Chilfish'),
+  genUser('Chilfish', 'me@chilfish.top', 'password'),
 ]
 
 const fakePosts = Array.from({ length: post_num },
@@ -71,7 +74,7 @@ async function generateStatic(...mocks: { name: string; data: any[] }[]) {
 
 export default function genStaticData() {
   return generateStatic(
-    { name: 'users', data: fakeUsers },
-    { name: 'posts', data: fakePosts },
+    { name: 'fakeUsers', data: fakeUsers },
+    { name: 'fakePosts', data: fakePosts },
   )
 }

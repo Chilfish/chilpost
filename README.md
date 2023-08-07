@@ -7,9 +7,12 @@ Build with Vue
 ```bash
 pnpm i
 
-pnpm i -g vercel@latest
-
 pnpm dev
 ```
 
 then open http://localhost:3000
+
+mock login
+
+- email: me@chilfish.top
+- password: password

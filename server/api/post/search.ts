@@ -24,7 +24,7 @@ export default defineEventHandler((event) => {
 })
 
 function byId(id: string): ApiResult<PostDetail> {
-  const post = posts.find(post => post.id === id)
+  const post = fakePosts.find(post => post.id === id)
   if (!post)
     throw new Error('Post not found')
   return {
@@ -34,10 +34,10 @@ function byId(id: string): ApiResult<PostDetail> {
 }
 
 function byOwnerName(owner_name: string): ApiResult<PostsWithOwner> {
-  const owner = users.find(user => user.name === owner_name)
+  const owner = fakeUsers.find(user => user.name === owner_name)
   if (!owner)
     throw new Error('Owner not found')
-  const ownerPost = posts.filter(post => post.owner_id === owner.id)
+  const ownerPost = fakePosts.filter(post => post.owner_id === owner.id)
   return {
     result: true,
     data: {

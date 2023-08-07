@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PostStatus } from '~/types/post'
+import type { PostStatus } from '~/types'
 
 const props = defineProps<{
   status: PostStatus
