@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import type { UserLogin } from '~/types/user'
 
-const inputs = reactive<UserLogin>({
+const inputs = useState<UserLogin>('login', () => ({
   email: '',
   password: '',
-})
+}))
+
+const isRegister = ref(false)
 
 const userStore = useUserStore()
 const modalStore = useModalStore()
@@ -12,17 +14,30 @@ const modalStore = useModalStore()
 const {
   state,
   isLoading,
-  execute: login,
+  execute,
 } = useAsyncState(
-  async () => await userStore.login(inputs),
+  async () => {
+    if (isRegister.value)
+      return await userStore.register(inputs.value)
+
+    return await userStore.login(inputs.value)
+  },
   null,
   { immediate: false },
 )
 
-watchEffect(() => {
+watch(isLoading, () => {
   if (state.value?.result && state.value.data) {
     userStore.setCurUser(state.value.data)
     modalStore.toggleModal()
+  }
+
+  if (state.value?.statusCode === 404) {
+    isRegister.value = confirm('User not found, register?')
+    if (isRegister.value) {
+      execute()
+      isRegister.value = false
+    }
   }
 })
 </script>
@@ -56,7 +71,7 @@ watchEffect(() => {
       <CommonButton
         :is-loading="isLoading"
         text="Log in"
-        @click="login"
+        @click="execute()"
       />
     </div>
   </div>

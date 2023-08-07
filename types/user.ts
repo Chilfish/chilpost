@@ -24,7 +24,7 @@ export interface User extends UserBase {
   status: UserStatus
 }
 
-export interface UserAuth extends UserBase {
+export interface UserAuth extends User {
   password: string
 }
 

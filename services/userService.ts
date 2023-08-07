@@ -12,10 +12,38 @@ export class UserService {
   }
 
   public async login({ email, password }: UserLogin) {
-    const { data } = await useFetch<ApiResult<User>>('/api/auth/login', {
+    const { data, error } = await useFetch<ApiResult<User>>('/api/auth/login', {
       method: 'POST',
       body: { email, password },
     })
+
+    // TODO: handle fetch error
+    if (error.value) {
+      return {
+        result: false,
+        message: error.value.message,
+        statusCode: error.value.statusCode,
+      }
+    }
+
+    if (data.value?.result)
+      this.curUser = data.value.data
+    return data.value
+  }
+
+  public async register({ email, password }: UserLogin) {
+    const { data, error } = await useFetch<ApiResult<User>>('/api/auth/new', {
+      method: 'POST',
+      body: { email, password },
+    })
+
+    if (error.value) {
+      return {
+        result: false,
+        message: error.value.message,
+        statusCode: error.value.statusCode,
+      }
+    }
 
     if (data.value?.result)
       this.curUser = data.value.data

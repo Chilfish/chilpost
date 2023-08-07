@@ -1,6 +1,6 @@
 import { fakeUsers } from './_mock'
 import { uuid } from '~/utils'
-import type { Post, PostDetail } from '~/types'
+import type { Post, PostDetail, UserAuth } from '~/types'
 
 export function toDetail(post: Post): PostDetail {
   const owner = fakeUsers.find(user => user.id === post.owner_id)
@@ -29,6 +29,28 @@ export function newPost(ownerId: string, content: string): Post {
       is_liked: false,
     },
   }
+}
+
+export function newUser(email: string, password: string, name?: string): UserAuth {
+  const _name = name || email.split('@')[0]
+  const user: UserAuth = {
+    id: uuid(),
+    email,
+    password,
+    name: _name,
+    nick_name: _name,
+    avatar: '/placeholder.avatar.png',
+    bio: 'Hello',
+    createdAt: new Date().toISOString(),
+    status: {
+      post_count: 0,
+      follower_count: 0,
+      following_count: 0,
+      is_following: false,
+    },
+  }
+  fakeUsers.unshift(user)
+  return user
 }
 
 export async function getUserByEmail(email: string) {

@@ -10,22 +10,16 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const user = await getUserByEmail(email)
+  const _user = await getUserByEmail(email)
 
-  if (!user) {
+  if (_user) {
     return createError({
-      statusCode: 404,
-      message: 'User not found',
+      statusCode: 409,
+      message: 'User already exists',
     })
   }
 
-  const verified = password === user.password
-  if (!verified) {
-    return createError({
-      statusCode: 401,
-      message: 'Incorrect password',
-    })
-  }
+  const user = newUser(email, password)
 
   return saveCookie(event, user)
 })

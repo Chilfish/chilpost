@@ -9,6 +9,10 @@ export const useUserStore = defineStore('user', () => {
     return await service.login({ email, password })
   }
 
+  async function register({ email, password }: UserLogin) {
+    return await service.register({ email, password })
+  }
+
   async function fetchCurUser() {
     curUser.value = await service.fetchCurUser()
     return curUser.value
@@ -38,6 +42,8 @@ export const useUserStore = defineStore('user', () => {
     curUser,
     setCurUser,
     login,
+    register,
+
     fetchCurUser,
     getById,
     getByName,
