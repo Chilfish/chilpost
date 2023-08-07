@@ -1,5 +1,4 @@
-import type { ApiResult, Id } from '~/types'
-import type { User } from '~/types/user'
+import type { ApiResult, Id, User } from '~/types'
 
 export class UserService {
   curUser?: User

@@ -1,6 +1,4 @@
-import type { User } from 'types/user'
-import type { ApiResult, Id } from '~/types'
-import type { Post, PostDetail, PostsWithOwner } from '~/types/post'
+import type { ApiResult, Id, Post, PostDetail, PostsWithOwner, User } from '~/types'
 
 export class PostService {
   private posts = [] as PostDetail[]

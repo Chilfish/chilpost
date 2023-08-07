@@ -1,4 +1,4 @@
-import type { User } from '~/types/user'
+import type { UserAuth } from '~/types'
 import { delay } from '~/utils'
 
 export default defineEventHandler(async (event) => {

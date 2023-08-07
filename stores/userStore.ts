@@ -1,5 +1,4 @@
-import type { Id } from 'types'
-import type { User } from '~/types/user'
+import type { Id, User } from '~/types'
 import { UserService } from '~/services/userService'
 
 export const useUserStore = defineStore('user', () => {

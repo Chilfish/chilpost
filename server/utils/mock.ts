@@ -3,9 +3,7 @@ import path from 'node:path'
 import dayjs from 'dayjs'
 import { fakerDE as fake } from '@faker-js/faker'
 import { v4 as uuidv4 } from 'uuid'
-import type { Id } from '~/types/index'
-import type { User, UserAuth } from '~/types/user'
-import type { Post } from '~/types/post'
+import type { Id, Post, User, UserAuth } from '~/types'
 
 function genUser(
   nick_name = fake.internet.userName().replace('.', '_'),

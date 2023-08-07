@@ -1,5 +1,4 @@
-import type { Id } from 'types'
-import type { User } from './user'
+import type { Id, User } from 'types'
 
 export interface PostStatus {
   like_count: number
