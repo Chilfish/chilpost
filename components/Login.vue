@@ -1,5 +1,12 @@
 <script setup lang="ts">
+const inputs = ref({
+  email: '',
+  password: '',
+})
 
+async function login() {
+
+}
 </script>
 
 <template>
@@ -8,16 +15,27 @@
     <form>
       <label>
         <span class="icon i-tabler-mail" />
-        <input type="email" placeholder="Email">
+        <input
+          v-model="inputs.email"
+          type="email"
+          placeholder="Email"
+        >
       </label>
       <label>
         <span class="icon i-tabler-lock" />
-        <input type="password" placeholder="Password">
+        <input
+          v-model="inputs.password"
+          type="password"
+          placeholder="Password"
+        >
       </label>
     </form>
     <div class="actions">
       <CommonButton text="Cancel" />
-      <CommonButton text="Log in" />
+      <CommonButton
+        text="Log in"
+        @click="login"
+      />
     </div>
   </div>
 </template>

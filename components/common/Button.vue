@@ -5,7 +5,7 @@ defineProps<{
   isLoading?: boolean
 }>()
 
-defineEmits(['onClick'])
+defineEmits(['click'])
 </script>
 
 <template>
@@ -13,7 +13,7 @@ defineEmits(['onClick'])
     :disabled="isLoading"
     :type="type || 'button'"
     class="btn-primary"
-    @click="$emit('onClick')"
+    @click="$emit('click')"
   >
     <span
       :style="{ display: isLoading ? 'inline' : 'none' }"
