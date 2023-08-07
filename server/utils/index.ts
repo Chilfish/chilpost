@@ -27,3 +27,11 @@ export function newPost(ownerId: string, content: string): Post {
     },
   }
 }
+
+export async function getUserByEmail(email: string) {
+  return users.find(user => user.email === email)
+}
+
+export async function getUserById(id: string) {
+  return users.find(user => user.id === id)
+}

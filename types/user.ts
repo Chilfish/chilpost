@@ -25,6 +25,10 @@ export interface User extends UserBase {
 }
 
 export interface UserAuth extends UserBase {
-  token?: string
+  password: string
+}
+
+export interface UserLogin {
+  email: string
   password: string
 }

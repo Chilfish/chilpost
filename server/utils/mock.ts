@@ -7,14 +7,16 @@ import type { Id, Post, User, UserAuth } from '~/types'
 
 function genUser(
   nick_name = fake.internet.userName().replace('.', '_'),
+  email = fake.internet.email(),
+  password = fake.internet.password(),
 ): UserAuth & User {
   return {
     id: uuidv4(),
-    password: fake.internet.password(),
+    email,
+    password,
     bio: fake.lorem.paragraphs(1),
     nick_name: nick_name.replace(/[_]/g, ' '),
     name: nick_name.toLowerCase(),
-    email: fake.internet.email(),
     avatar: fake.internet.avatar(),
     createdAt: fake.date.past().toISOString(),
     status: {
@@ -50,7 +52,7 @@ function randomNum(min = 0, max = 5000) {
 
 const fakeUsers = [
   ...Array.from({ length: user_num }, () => genUser()),
-  genUser('Chilfish'),
+  genUser('Chilfish', 'me@chilfish.top', 'password'),
 ]
 
 const fakePosts = Array.from({ length: post_num },

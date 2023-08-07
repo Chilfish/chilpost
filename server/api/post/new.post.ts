@@ -1,5 +1,3 @@
-import { newPost } from '../../utils'
-
 interface Body {
   ownerId: string
   content: string

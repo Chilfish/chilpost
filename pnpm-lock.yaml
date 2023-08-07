@@ -65,6 +65,9 @@ devDependencies:
   dayjs:
     specifier: ^1.11.9
     version: 1.11.9
+  jose:
+    specifier: ^4.14.4
+    version: 4.14.4
   nuxt:
     specifier: ^3.6.5
     version: 3.6.5(@types/node@20.4.8)(eslint@8.46.0)(sass@1.64.2)(stylelint@15.10.2)(typescript@5.1.6)
@@ -5607,6 +5610,10 @@ packages:
       '@sideway/address': 4.1.4
       '@sideway/formula': 3.0.1
       '@sideway/pinpoint': 2.0.0
+    dev: true
+
+  /jose@4.14.4:
+    resolution: {integrity: sha512-j8GhLiKmUAh+dsFXlX1aJCbt5KMibuKb+d7j1JaOJG6s2UjX1PQlW+OKB/sD4a/5ZYF4RcmYmLSndOoU3Lt/3g==}
     dev: true
 
   /js-tokens@4.0.0:

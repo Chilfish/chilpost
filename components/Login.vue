@@ -1,12 +1,12 @@
 <script setup lang="ts">
-const inputs = ref({
+import type { UserLogin } from '~/types/user'
+
+const inputs = reactive<UserLogin>({
   email: '',
   password: '',
 })
 
-async function login() {
-
-}
+const userStore = useUserStore()
 </script>
 
 <template>
@@ -34,7 +34,7 @@ async function login() {
       <CommonButton text="Cancel" />
       <CommonButton
         text="Log in"
-        @click="login"
+        @click="userStore.login({ ...inputs })"
       />
     </div>
   </div>
