@@ -6,9 +6,12 @@ export function toDetail(post: Post): PostDetail {
   const owner = users.find(user => user.id === post.owner_id)
   if (!owner)
     throw new Error('Owner not found')
+
+  const { password, ...rest } = owner
+
   return {
     ...post,
-    owner,
+    owner: rest,
   }
 }
 

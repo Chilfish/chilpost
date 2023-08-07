@@ -14,6 +14,10 @@ export const useUserStore = defineStore('user', () => {
     return curUser.value
   }
 
+  function setCurUser(user: User) {
+    curUser.value = user
+  }
+
   async function getById(id: Id) {
     return await service.getById(id)
   }
@@ -32,7 +36,7 @@ export const useUserStore = defineStore('user', () => {
 
   return {
     curUser,
-
+    setCurUser,
     login,
     fetchCurUser,
     getById,

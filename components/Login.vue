@@ -7,6 +7,24 @@ const inputs = reactive<UserLogin>({
 })
 
 const userStore = useUserStore()
+const modalStore = useModalStore()
+
+const {
+  state,
+  isLoading,
+  execute: login,
+} = useAsyncState(
+  async () => await userStore.login(inputs),
+  null,
+  { immediate: false },
+)
+
+watchEffect(() => {
+  if (state.value?.result && state.value.data) {
+    userStore.setCurUser(state.value.data)
+    modalStore.toggleModal()
+  }
+})
 </script>
 
 <template>
@@ -31,10 +49,14 @@ const userStore = useUserStore()
       </label>
     </form>
     <div class="actions">
-      <CommonButton text="Cancel" />
       <CommonButton
+        text="Cancel"
+        @click="modalStore.toggleModal()"
+      />
+      <CommonButton
+        :is-loading="isLoading"
         text="Log in"
-        @click="userStore.login({ ...inputs })"
+        @click="login"
       />
     </div>
   </div>

@@ -19,7 +19,7 @@ defineEmits(['click'])
       :style="{ display: isLoading ? 'inline' : 'none' }"
       class="loading icon"
     />
-    <span> {{ text }}</span>
+    <span> {{ text }} </span>
   </button>
 </template>
 
@@ -30,5 +30,6 @@ button {
   align-items: center;
   justify-content: center;
   padding: 0.6rem 1rem;
+  width: 7rem;
 }
 </style>
