@@ -31,5 +31,6 @@ button {
   justify-content: center;
   padding: 0.6rem 1rem;
   width: 7rem;
+  max-width: 12rem;
 }
 </style>

@@ -74,7 +74,7 @@ async function generateStatic(...mocks: { name: string; data: any[] }[]) {
 
 export default function genStaticData() {
   return generateStatic(
-    { name: 'users', data: fakeUsers },
-    { name: 'posts', data: fakePosts },
+    { name: 'fakeUsers', data: fakeUsers },
+    { name: 'fakePosts', data: fakePosts },
   )
 }

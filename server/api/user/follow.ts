@@ -10,8 +10,8 @@ export default defineEventHandler(async (event): Promise<ApiResult> => {
   await delay(500)
 
   const { id, curId } = getQuery(event) as QueryParams
-  const user = users.find(user => user.id === id)
-  const curUser = users.find(user => user.id === curId)
+  const user = fakeUsers.find(user => user.id === id)
+  const curUser = fakeUsers.find(user => user.id === curId)
   if (!user || !curUser)
     return { message: 'User not found', result: false }
 

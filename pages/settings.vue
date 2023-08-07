@@ -5,6 +5,7 @@ import { useAsyncValidator } from '@vueuse/integrations/useAsyncValidator'
 definePageMeta({
   title: 'Settings',
   description: 'Settings',
+  middleware: ['user-only'],
 })
 
 const userStore = useUserStore()
@@ -137,7 +138,7 @@ watch(state, () => {
       :disabled="!pass"
       text="Save"
       :is-loading="isLoading"
-      @onClick="updateSettings"
+      @click="updateSettings"
     />
   </form>
 </template>

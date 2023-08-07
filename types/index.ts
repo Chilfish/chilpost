@@ -8,3 +8,10 @@ export interface ApiResult<T = any> {
   message?: string
   data?: T | null
 }
+
+export interface NavItem {
+  to: string
+  text: string
+  icon?: string
+  hide?: boolean // hidden while not logged in
+}

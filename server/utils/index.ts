@@ -1,9 +1,9 @@
-import { users } from './_mock'
+import { fakeUsers } from './_mock'
 import { uuid } from '~/utils'
 import type { Post, PostDetail } from '~/types'
 
 export function toDetail(post: Post): PostDetail {
-  const owner = users.find(user => user.id === post.owner_id)
+  const owner = fakeUsers.find(user => user.id === post.owner_id)
   if (!owner)
     throw new Error('Owner not found')
 
@@ -32,9 +32,9 @@ export function newPost(ownerId: string, content: string): Post {
 }
 
 export async function getUserByEmail(email: string) {
-  return users.find(user => user.email === email)
+  return fakeUsers.find(user => user.email === email)
 }
 
 export async function getUserById(id: string) {
-  return users.find(user => user.id === id)
+  return fakeUsers.find(user => user.id === id)
 }
