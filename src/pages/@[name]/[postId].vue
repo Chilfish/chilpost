@@ -1,22 +1,34 @@
 <script setup lang="ts">
-const postId = useRoute().params.postId as string
+import type { PostDetail } from '~/types'
 
-const postStore = usePostStore()
+const route = useRoute()
+const postId = ref(route.params.postId as string)
+
 const {
   state,
   isLoading,
+  error,
+  execute,
 } = useAsyncState(
-  postStore.fetchById(postId),
+  useMyFetch<PostDetail>(`/post/search?id=${postId.value}`),
   null,
+  {
+    immediate: true,
+  },
 )
 
 watchEffect(() => {
-  const post = state.value?.data
-  const title = `${post?.owner.nick_name}'s Post: ${post?.content.substring(0, 50)}`
+  postId.value = route.params.postId as string
+  // execute()
 
-  useHead({
-    title,
-  })
+  if (state.value) {
+    const post = state.value?.data
+    const title = `${post?.owner.nick_name}'s Post: ${post?.content.substring(0, 50)}`
+
+    useHead({
+      title,
+    })
+  }
 })
 </script>
 
@@ -25,20 +37,14 @@ watchEffect(() => {
     <h3>Post Details</h3>
   </CommonHeader>
 
-  <main>
-    <CommonLoading :is-loading="isLoading">
-      <div
-        v-if="!state?.result || !state?.data"
-        class="no-data"
-      >
-        Post Not Found {{ postId }}
-      </div>
-      <PostDetail
-        v-else
-        :post="state.data"
-        :owner="state.data.owner"
-      />
-    </CommonLoading>
+  <CommonLoading v-if="isLoading" :is-loading="isLoading" />
+  <CommonError v-if="error" :error="error" />
+
+  <main v-if="state?.data">
+    <PostDetailItem
+      :post="state?.data"
+      :owner="state?.data?.owner"
+    />
   </main>
 </template>
 

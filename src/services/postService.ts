@@ -1,12 +1,6 @@
 import type { ApiResult, Id, Post, PostDetail, PostsWithOwner, User } from '~/types'
 
 export class PostService {
-  public async fetchPosts() {
-    const data = await useMyFetch<PostDetail[]>('/post')
-
-    return data.value || []
-  }
-
   public async fetchById(id: Id) {
     const { data } = await useFetch<ApiResult<PostDetail>>(`/api/post/search?id=${id}`)
 

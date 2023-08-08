@@ -1,4 +1,5 @@
 import type { UseFetchOptions } from '#app'
+import type { ApiResult } from 'types'
 
 type Methods = 'get' | 'post' | 'put' | 'patch' | 'delete'
 
@@ -10,7 +11,7 @@ export default async function<T = any>(
   method: Methods = 'get',
   data: any = null,
   options?: UseFetchOptions<T>,
-) {
+): ApiResult<T> {
   const config = useRuntimeConfig()
 
   const fetchOptions: UseFetchOptions<T> = {
@@ -26,11 +27,12 @@ export default async function<T = any>(
 
   const { data: result, error } = await useFetch(url, fetchOptions)
 
-  if (error.value) {
-    throw createError({
-      ...error.value,
-    })
-  }
+  // console.log('useMyFetch', result.value, error.value)
+  if (error.value)
+    throw createError({ ...error.value })
 
-  return result
+  return {
+    status: 1,
+    data: result.value as T,
+  }
 }

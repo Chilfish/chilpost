@@ -56,19 +56,16 @@ const {
     </div>
   </header>
 
-  <LazyCommonLoading :is-loading="isLoading">
-    <main v-if="state">
-      <CommonError v-if="state?.error" :error="state.error" />
-
-      <PostItem
-        v-for="post in state?.data"
-        v-else
-        :key="post.id"
-        :post="post"
-        :owner="post.owner"
-      />
-    </main>
-  </LazyCommonLoading>
+  <CommonLoading v-if="isLoading" :is-loading="isLoading" />
+  <main v-if="state">
+    <CommonError v-if="state.error" :error="state.error" />
+    <PostItem
+      v-for="post in state?.data"
+      :key="post.id"
+      :post="post"
+      :owner="post.owner"
+    />
+  </main>
 </template>
 
 <style lang="scss" scoped>

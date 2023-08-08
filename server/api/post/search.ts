@@ -1,5 +1,4 @@
-import type { ApiResult } from '~/types'
-import type { PostDetail, PostsWithOwner } from '~/types/post'
+import type { PostsWithOwner } from '~/types/post'
 
 interface QueryParams {
   id?: string
@@ -18,31 +17,31 @@ export default defineEventHandler((event) => {
     if (ownerName)
       return byOwnerName(ownerName)
   }
-  catch (err: any) {
-    return { message: err.message, result: false }
+  catch (error: any) {
+    return error
   }
 })
 
-function byId(id: string): ApiResult<PostDetail> {
+function byId(id: string) {
   const post = fakePosts.find(post => post.id === id)
-  if (!post)
-    throw new Error('Post not found')
-  return {
-    result: true,
-    data: toDetail(post),
+  if (!post) {
+    throw createError({
+      statusCode: 404,
+      statusMessage: `Post not found. Id: ${id}`,
+    })
   }
+  return toDetail(post)
 }
 
-function byOwnerName(owner_name: string): ApiResult<PostsWithOwner> {
+function byOwnerName(owner_name: string): PostsWithOwner {
   const owner = fakeUsers.find(user => user.name === owner_name)
-  if (!owner)
-    throw new Error('Owner not found')
-  const ownerPost = fakePosts.filter(post => post.owner_id === owner.id)
-  return {
-    result: true,
-    data: {
-      owner,
-      posts: ownerPost,
-    },
+  if (!owner) {
+    throw createError({
+      statusCode: 404,
+      statusMessage: `User not found. Name: ${owner_name}`,
+    })
   }
+
+  const posts = fakePosts.filter(post => post.owner_id === owner.id)
+  return { owner, posts }
 }

@@ -9,12 +9,9 @@ export const usePostStore = defineStore('post', () => {
 
   async function fetchPosts(): ApiResult<PostDetail[]> {
     try {
-      const data = await useMyFetch<PostDetail[]>('/post')
-      posts.value = data.value || []
-      return {
-        status: 1,
-        data: posts.value,
-      }
+      const result = await useMyFetch<PostDetail[]>('/post')
+      posts.value = result.data || []
+      return result
     }
     catch (error) {
       return {
