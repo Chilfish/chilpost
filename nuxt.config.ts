@@ -2,6 +2,9 @@ import process from 'node:process'
 import genStaticData from './server/utils/mock'
 
 export default defineNuxtConfig({
+  srcDir: 'src/',
+  serverDir: './server',
+
   modules: [
     '@unocss/nuxt',
     '@nuxt/image',
@@ -50,7 +53,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     apiSecret: process.env.API_SECRET,
     public: {
-      apiBase: '',
+      apiBase: process.env.API_BASE || '/api',
     },
   },
 

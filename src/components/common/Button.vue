@@ -29,8 +29,8 @@ button {
   gap: 0.5rem;
   align-items: center;
   justify-content: center;
-  padding: 0.6rem 1rem;
   width: 7rem;
   max-width: 12rem;
+  padding: 0.6rem 1rem;
 }
 </style>
