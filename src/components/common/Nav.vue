@@ -44,8 +44,8 @@ watchEffect(() => {
 
 <template>
   <nav class="blur-bg">
-    <nuxt-link to="/">
-      <common-img class="logo" src="/favicon.png" />
+    <nuxt-link class="logo" to="/">
+      <common-img src="/favicon.png" />
       <h1>Chill Post</h1>
     </nuxt-link>
 
