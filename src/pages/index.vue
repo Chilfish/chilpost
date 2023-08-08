@@ -39,14 +39,24 @@ const {
       <input type="search" placeholder="Search">
     </label>
 
-    <span
-      class="icon"
-      :class="darkStore.icon"
-      @click="darkStore.toggle()"
-    />
+    <div>
+      <NuxtLink
+        to="https://github.com/Chilfish/chilpost"
+        external
+        target="_blank"
+      >
+        <span class="icon i-tabler-brand-github" />
+      </NuxtLink>
+
+      <span
+        class="icon"
+        :class="darkStore.icon"
+        @click="darkStore.toggle()"
+      />
+    </div>
   </header>
 
-  <CommonLoading :is-loading="isLoading">
+  <LazyCommonLoading :is-loading="isLoading">
     <main>
       <PostItem
         v-for="post in posts"
@@ -55,7 +65,7 @@ const {
         :owner="post.owner"
       />
     </main>
-  </CommonLoading>
+  </LazyCommonLoading>
 </template>
 
 <style lang="scss" scoped>

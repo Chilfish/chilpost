@@ -44,16 +44,16 @@ watchEffect(() => {
 
 <template>
   <nav class="blur-bg">
-    <div>
+    <nuxt-link to="/">
       <common-img class="logo" src="/favicon.png" />
       <h1>Chill Post</h1>
-    </div>
+    </nuxt-link>
 
     <template
       v-for="route in routes"
       :key="route.to"
     >
-      <router-link
+      <nuxt-link
         v-if="route.hide === false"
         :to="route.to" class="nav-item"
       >
@@ -61,7 +61,7 @@ watchEffect(() => {
         <p class="text">
           {{ route.text }}
         </p>
-      </router-link>
+      </nuxt-link>
     </template>
 
     <button

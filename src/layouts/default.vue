@@ -3,6 +3,7 @@ const modalStore = useModalStore()
 </script>
 
 <template>
+  <span class="i-tabler-moon i-tabler-sun hidden" />
   <div id="main">
     <slot />
   </div>

@@ -39,7 +39,7 @@ header {
     span {
       position: absolute;
       top: 50%;
-      left: 0.5rem;
+      left: 0.8rem;
       transform: translateY(-50%);
     }
   }
@@ -54,6 +54,16 @@ header {
 
     &::-webkit-search-cancel-button {
       margin-left: 0.5rem;
+    }
+  }
+
+  div {
+    display: flex; 
+    gap: 0.8rem;
+    align-items: center;
+
+    a {
+      height: 1.8rem;
     }
   }
 }

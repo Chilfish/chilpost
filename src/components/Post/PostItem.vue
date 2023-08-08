@@ -15,7 +15,7 @@ const avatar = useImg(props.owner.avatar)
       @click="$router.push(`/@${owner.name}/${post.id}`)"
     >
       <div class="avatar">
-        <RouterLink
+        <NuxtLink
           :to="`/@${owner.name}`"
           @click.stop
         >
@@ -23,12 +23,12 @@ const avatar = useImg(props.owner.avatar)
             :src="avatar"
             alt="avatar"
           />
-        </RouterLink>
+        </NuxtLink>
       </div>
 
       <div class="section-main">
         <div class="post-meta">
-          <RouterLink
+          <NuxtLink
             class="name-box"
             :to="`/@${owner.name}`"
             @click.stop
@@ -39,16 +39,16 @@ const avatar = useImg(props.owner.avatar)
             <span class="name">
               @{{ owner.name }}
             </span>
-          </RouterLink>
+          </NuxtLink>
           <span>·</span>
 
-          <RouterLink
+          <NuxtLink
             class="date"
             :to="`/@${owner.name}/${post.id}`"
             @click.stop
           >
             {{ timeDiff(post.createdAt) }}
-          </RouterLink>
+          </NuxtLink>
 
           <button
             class="menu"

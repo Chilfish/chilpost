@@ -11,21 +11,21 @@ const avatar = useImg(props.owner.avatar)
 
 <template>
   <div class="user-box">
-    <RouterLink class="avatar" :to="`/@${owner.name}`">
+    <NuxtLink class="avatar" :to="`/@${owner.name}`">
       <CommonImg
         :src="avatar"
         alt="avatar"
       />
-    </RouterLink>
+    </NuxtLink>
 
-    <RouterLink class="name-box" :to="`/@${owner.name}`">
+    <NuxtLink class="name-box" :to="`/@${owner.name}`">
       <span class="nick-name">
         {{ owner.nick_name }}
       </span>
       <span class="name">
         @{{ owner.name }}
       </span>
-    </RouterLink>
+    </NuxtLink>
 
     <button class="menu">
       <span class="box">
