@@ -22,7 +22,7 @@ const darkStore = useDarkStore()
 
 const postStore = usePostStore()
 const {
-  state: posts,
+  state,
   isLoading,
 } = useAsyncState(postStore.fetchPosts(), null)
 </script>
@@ -57,9 +57,12 @@ const {
   </header>
 
   <LazyCommonLoading :is-loading="isLoading">
-    <main>
+    <main v-if="state">
+      <CommonError v-if="state?.error" :error="state.error" />
+
       <PostItem
-        v-for="post in posts"
+        v-for="post in state?.data"
+        v-else
         :key="post.id"
         :post="post"
         :owner="post.owner"

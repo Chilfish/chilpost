@@ -1,4 +1,5 @@
-import type { Id, PostDetail, User } from '~/types'
+import type { NuxtError } from '#app'
+import type { ApiResult, Id, PostDetail, User } from '~/types'
 import { PostService } from '~/services/postService'
 
 export const usePostStore = defineStore('post', () => {
@@ -6,9 +7,21 @@ export const usePostStore = defineStore('post', () => {
 
   const service = new PostService()
 
-  async function fetchPosts() {
-    posts.value = await service.fetchPosts()
-    return posts.value
+  async function fetchPosts(): ApiResult<PostDetail[]> {
+    try {
+      const data = await useMyFetch<PostDetail[]>('/post')
+      posts.value = data.value || []
+      return {
+        status: 1,
+        data: posts.value,
+      }
+    }
+    catch (error) {
+      return {
+        status: 0,
+        error: (error as NuxtError).data,
+      }
+    }
   }
 
   async function fetchById(id: Id) {
