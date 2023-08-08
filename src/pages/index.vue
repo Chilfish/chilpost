@@ -46,15 +46,16 @@ const {
     />
   </header>
 
-  <CommonLoading :is-loading="isLoading" />
-  <main v-if="!isLoading">
-    <PostItem
-      v-for="post in posts"
-      :key="post.id"
-      :post="post"
-      :owner="post.owner"
-    />
-  </main>
+  <CommonLoading :is-loading="isLoading">
+    <main>
+      <PostItem
+        v-for="post in posts"
+        :key="post.id"
+        :post="post"
+        :owner="post.owner"
+      />
+    </main>
+  </CommonLoading>
 </template>
 
 <style lang="scss" scoped>

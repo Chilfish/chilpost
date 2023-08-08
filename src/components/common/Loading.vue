@@ -8,4 +8,5 @@ defineProps<{
   <div v-if="isLoading" class="loading-box">
     <span class="icon loading" />
   </div>
+  <slot v-else />
 </template>

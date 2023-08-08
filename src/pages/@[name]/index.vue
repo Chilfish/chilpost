@@ -30,9 +30,7 @@ watchEffect(() => {
 
   <div class="banner" />
 
-  <CommonLoading v-if="isLoading" />
-
-  <template v-else>
+  <CommonLoading :is-loading="isLoading">
     <div
       v-if="!state?.result"
       class="no-data"
@@ -58,7 +56,7 @@ watchEffect(() => {
         </div>
       </main>
     </template>
-  </template>
+  </CommonLoading>
 </template>
 
 <style lang="scss" scoped>

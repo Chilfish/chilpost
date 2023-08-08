@@ -26,9 +26,7 @@ watchEffect(() => {
   </CommonHeader>
 
   <main>
-    <CommonLoading v-if="isLoading" />
-
-    <template v-else>
+    <CommonLoading :is-loading="isLoading">
       <div
         v-if="!state?.result || !state?.data"
         class="no-data"
@@ -40,7 +38,7 @@ watchEffect(() => {
         :post="state.data"
         :owner="state.data.owner"
       />
-    </template>
+    </CommonLoading>
   </main>
 </template>
 

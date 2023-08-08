@@ -1,9 +1,14 @@
+import Login from '@/components/Login.vue'
+import PostSend from '@/components/Post/PostSend.vue'
+
+// ↑ Avoid using dynamic rendering to prevent cluttered UI during loading.
+
 export const useModalStore = defineStore('modal', () => {
   const showModal = ref(false)
 
   const slot = {
-    login: defineAsyncComponent(() => import('@/components/Login.vue')),
-    sendPost: defineAsyncComponent(() => import('@/components/Post/PostSend.vue')),
+    login: Login,
+    sendPost: PostSend,
   }
 
   type ModalSlot = keyof typeof slot
@@ -13,7 +18,7 @@ export const useModalStore = defineStore('modal', () => {
 
   function toggleModal(s?: ModalSlot) {
     showModal.value = !showModal.value
-    if (typeof s === 'string')
+    if (s)
       modalSlot.value = s
   }
 

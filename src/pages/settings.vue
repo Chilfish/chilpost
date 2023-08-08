@@ -65,9 +65,9 @@ watch(state, () => {
     <h3>Settings</h3>
   </CommonHeader>
 
-  <CommonLoading v-if="isLoadingUser" />
+  <CommonLoading :is-loading="isLoadingUser" />
 
-  <form v-else-if="isReadyUser && curUser">
+  <form v-if="isReadyUser && curUser">
     <div class="form-group">
       <label for="nick_name">Display Name</label>
       <input
