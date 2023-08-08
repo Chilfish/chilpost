@@ -13,7 +13,7 @@ const modalStore = useModalStore()
     <h2>WIP</h2>
   </aside>
 
-  <CommonModal v-if="modalStore.showModal">
+  <CommonModal>
     <component :is="modalStore.curSlot" />
   </CommonModal>
 </template>

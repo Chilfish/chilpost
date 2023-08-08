@@ -47,7 +47,7 @@ const {
   </header>
 
   <CommonLoading :is-loading="isLoading" />
-  <main>
+  <main v-if="!isLoading">
     <PostItem
       v-for="post in posts"
       :key="post.id"

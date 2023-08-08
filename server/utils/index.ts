@@ -7,7 +7,7 @@ export function toDetail(post: Post): PostDetail {
   if (!owner)
     throw new Error('Owner not found')
 
-  const { password, ...rest } = owner
+  const { password: _, ...rest } = owner
 
   return {
     ...post,
