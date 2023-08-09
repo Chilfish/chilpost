@@ -1,19 +1,20 @@
 import type { ApiResult, User } from '~/types'
 
-export default defineEventHandler(async (event): Promise<ApiResult<User>> => {
+export default defineEventHandler(async (event): ApiResult<User> => {
   const user = event.context.user
 
+  // console.log('/auth/me', user)
+
   if (!user) {
-    return {
-      result: false,
-      data: null,
-    }
+    return createError({
+      status: 401,
+      message: 'Unauthorized',
+    })
   }
 
   const { password: _, ...userWithoutPass } = user
 
   return {
-    result: true,
     data: userWithoutPass,
   }
 })

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 const userStore = useUserStore()
-useAsyncState(userStore.fetchCurUser(), null)
 
 useDarkStore() // init dark mode
+userStore.setCurUser()
 </script>
 
 <template>

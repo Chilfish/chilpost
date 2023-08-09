@@ -12,14 +12,14 @@ const {
 } = useAsyncState(
   useMyFetch<PostDetail>(`/post/search?id=${postId.value}`),
   null,
-  {
-    immediate: true,
-  },
 )
 
 watchEffect(() => {
-  postId.value = route.params.postId as string
-  // execute()
+  const newId = route.params.postId as string
+  if (newId !== postId.value) {
+    postId.value = newId
+    execute()
+  }
 
   if (state.value) {
     const post = state.value?.data

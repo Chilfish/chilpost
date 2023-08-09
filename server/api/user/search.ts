@@ -1,9 +1,11 @@
+import type { ApiResult } from '~/types'
+
 interface QueryParams {
   id?: string
   name?: string
 }
 
-export default defineEventHandler((event) => {
+export default defineEventHandler(async (event): ApiResult => {
   const {
     id,
     name,
@@ -14,12 +16,15 @@ export default defineEventHandler((event) => {
     if (!user) {
       return createError({
         status: 404,
-        message: 'User not found',
+        statusMessage: 'User not found',
       })
     }
-    return user
+    return { data: user }
   }
   catch (err: any) {
-    return { message: err.message }
+    return createError({
+      status: 500,
+      statusMessage: err.message,
+    })
   }
 })

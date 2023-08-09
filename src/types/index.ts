@@ -13,8 +13,7 @@ export interface NavItem {
 }
 
 interface apiResult<T> {
-  status: number
-  data?: T
+  data?: T | null
   error?: NuxtError
 }
 

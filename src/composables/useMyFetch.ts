@@ -31,8 +31,5 @@ export default async function<T = any>(
   if (error.value)
     throw createError({ ...error.value })
 
-  return {
-    status: 1,
-    data: result.value as T,
-  }
+  return result.value as ApiResult<T>
 }

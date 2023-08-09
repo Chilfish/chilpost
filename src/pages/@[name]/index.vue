@@ -4,18 +4,25 @@ import type { PostsWithOwner } from '~/types'
 const route = useRoute()
 const username = ref(route.params.name as string)
 
-const isLoading = ref(true)
-const state = computedAsync(
-  async () => await useMyFetch<PostsWithOwner>(`/post/search?ownerName=${username.value}`),
+const {
+  state,
+  isLoading,
+  error,
+  execute,
+} = useAsyncState(
+  useMyFetch<PostsWithOwner>(`/post/search?ownerName=${username.value}`),
   null,
 )
-
 watchEffect(() => {
-  username.value = route.params.name as string
+  const newUsername = route.params.name as string
+  if (newUsername !== username.value) {
+    username.value = newUsername
+    execute()
+  }
 
-  if (state.value) {
+  if (state.value?.data) {
     isLoading.value = false
-    const owner = state.value.data?.owner
+    const owner = state.value.data.owner
     const title = `${owner?.nick_name}(@${owner?.name})`
     useHead({
       title,
@@ -32,9 +39,9 @@ watchEffect(() => {
   <div class="banner" />
 
   <CommonLoading v-if="isLoading" :is-loading="isLoading" />
-  <CommonError v-if="state?.error" :error="state.error" />
+  <CommonError v-if="error" :error="error" />
 
-  <main v-if="state?.data" class="post-list">
+  <main v-if="state?.data && !isLoading" class="post-list">
     <ProfileCard :user="state.data.owner" />
     <PostItem
       v-for="post in state.data.posts"

@@ -3,10 +3,15 @@ import { UserService } from '~/services/userService'
 
 export const useUserStore = defineStore('user', () => {
   const service = new UserService()
-  const curUser = ref(service.curUser)
+  const curUser = ref<User | null>(null)
 
   async function login({ email, password }: UserLogin) {
     return await service.login({ email, password })
+  }
+
+  async function logout() {
+    await useMyFetch('/auth/logout')
+    curUser.value = null
   }
 
   async function register({ email, password }: UserLogin) {
@@ -14,12 +19,22 @@ export const useUserStore = defineStore('user', () => {
   }
 
   async function fetchCurUser() {
-    curUser.value = await service.fetchCurUser()
-    return curUser.value
+    // curUser.value = await service.fetchCurUser()
+    // return curUser.value
   }
 
-  function setCurUser(user: User) {
-    curUser.value = user
+  async function setCurUser(user?: User) {
+    if (user)
+      return curUser.value = user
+
+    try {
+      const user = await useMyFetch<User>('/auth/me')
+      const { data } = user
+      curUser.value = data || null
+    }
+    catch (e) {
+      // console.log(e)
+    }
   }
 
   async function getById(id: Id) {
@@ -42,6 +57,7 @@ export const useUserStore = defineStore('user', () => {
     curUser,
     setCurUser,
     login,
+    logout,
     register,
 
     fetchCurUser,

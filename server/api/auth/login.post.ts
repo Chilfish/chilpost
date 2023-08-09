@@ -1,12 +1,12 @@
-import type { UserLogin } from '~/types'
+import type { ApiResult, User, UserLogin } from '~/types'
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async (event): ApiResult<User> => {
   const { email, password } = await readBody<UserLogin>(event)
 
   if (!email || !password) {
     return createError({
       statusCode: 400,
-      message: 'Missing email or password',
+      statusMessage: 'Missing email or password',
     })
   }
 
@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
   if (!user) {
     return createError({
       statusCode: 404,
-      message: 'User not found',
+      statusMessage: 'User not found',
     })
   }
 
@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
   if (!verified) {
     return createError({
       statusCode: 401,
-      message: 'Incorrect password',
+      statusMessage: 'Incorrect password',
     })
   }
 

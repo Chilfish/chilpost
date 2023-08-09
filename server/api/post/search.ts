@@ -1,3 +1,4 @@
+import type { ApiResult } from '~/types'
 import type { PostsWithOwner } from '~/types/post'
 
 interface QueryParams {
@@ -5,17 +6,28 @@ interface QueryParams {
   ownerName?: string
 }
 
-export default defineEventHandler((event) => {
+export default defineEventHandler(async (event): ApiResult => {
   const {
     id,
     ownerName,
   } = getQuery(event) as QueryParams
 
   try {
-    if (id)
-      return byId(id)
-    if (ownerName)
-      return byOwnerName(ownerName)
+    if (id) {
+      return {
+        data: byId(id),
+      }
+    }
+
+    if (ownerName) {
+      return {
+        data: byOwnerName(ownerName),
+      }
+    }
+
+    return {
+      data: null,
+    }
   }
   catch (error: any) {
     return error

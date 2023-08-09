@@ -15,7 +15,6 @@ export const usePostStore = defineStore('post', () => {
     }
     catch (error) {
       return {
-        status: 0,
         error: (error as NuxtError).data,
       }
     }

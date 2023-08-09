@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { vElementHover } from '@vueuse/components'
 import type { User } from '~/types'
 
 const props = defineProps<{
@@ -26,14 +27,18 @@ const foBtnText = computed(() => {
   return 'Follow'
 })
 
-const { state, isLoading, execute } = useAsyncState(
-  async () => userStore.follow(props.user.id),
+const {
+  state,
+  isLoading,
+  execute,
+} = useAsyncState(
+  useMyFetch<boolean>(`/user/follow?id=${props.user.id}`),
   null,
   { immediate: false },
 )
 
 watchEffect(() => {
-  if (state.value?.result)
+  if (state.value?.data)
     isFollowing.value = !isFollowing.value
 })
 </script>
