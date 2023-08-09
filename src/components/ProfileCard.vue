@@ -33,14 +33,9 @@ const {
   error,
   execute,
 } = useAsyncState(
-  useMyFetch<boolean>(`/user/follow?id=${props.user.id}`),
+  async () => await useMyFetch<boolean>(`/user/follow?id=${props.user.id}`),
   null,
-  {
-    immediate: false,
-    onError(e) {
-      console.log(e)
-    },
-  },
+  { immediate: false },
 )
 
 watchEffect(() => {
@@ -100,9 +95,9 @@ watchEffect(() => {
           <span class="posts"> posts </span>
         </span>
       </div>
-    </div>
 
-    <CommonError v-show="error" :error="error" />
+      <CommonError v-if="error" :error="error" />
+    </div>
   </div>
 </template>
 

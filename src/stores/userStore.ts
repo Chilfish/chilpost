@@ -4,8 +4,13 @@ export const useUserStore = defineStore('user', () => {
   const curUser = ref<User | null>(null)
 
   async function logout() {
-    await useMyFetch('/auth/logout')
-    curUser.value = null
+    try {
+      await useMyFetch('/auth/logout')
+      curUser.value = null
+    }
+    catch (e: any) {
+      console.log('logout', e)
+    }
   }
 
   async function setCurUser(user?: User) {
