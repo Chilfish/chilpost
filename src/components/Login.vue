@@ -2,10 +2,10 @@
 import type { NuxtError } from '#app'
 import type { User, UserLogin } from '~/types/user'
 
-const inputs = useState<UserLogin>('login', () => ({
+const inputs = reactive<UserLogin>({
   email: '',
   password: '',
-}))
+})
 
 const isRegister = ref(false)
 
@@ -19,25 +19,28 @@ const {
   execute,
 } = useAsyncState(
   async () => {
-    if (isRegister.value)
-      return await useMyFetch<User>('/auth/register', 'post', inputs.value)
+    const { ...data } = inputs // remove the reactivity
 
-    return await useMyFetch<User>('/auth/login', 'post', inputs.value)
+    if (isRegister.value)
+      return await useMyFetch<User>('/auth/register', 'post', data)
+
+    return await useMyFetch<User>('/auth/login', 'post', data)
   },
   null,
   { immediate: false },
 )
 
-watch(isLoading, () => {
+const err = computed(() => (error.value as NuxtError)?.toJSON())
+
+watchEffect(async () => {
   const user = state.value?.data
   if (user) {
     userStore.setCurUser(user)
     modalStore.toggleModal()
   }
 
-  const err = error.value as NuxtError
-
-  if (err?.statusCode === 404) {
+  if (err.value?.statusCode === 404) {
+    await delay(1000)
     isRegister.value = confirm('User not found, register?')
     if (isRegister.value) {
       execute()
@@ -68,6 +71,11 @@ watch(isLoading, () => {
         >
       </label>
     </form>
+
+    <div v-if="err" class="text-red">
+      {{ err?.statusMessage }}
+    </div>
+
     <div class="actions">
       <CommonButton
         text="Cancel"

@@ -6,7 +6,7 @@ export default defineEventHandler(async (event): ApiResult<User> => {
   if (!user) {
     return createError({
       statusCode: 401,
-      message: 'Unauthorized',
+      statusMessage: 'Unauthorized',
     })
   }
 

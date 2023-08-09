@@ -4,18 +4,11 @@ import type { NuxtError } from 'nuxt/app'
 const props = defineProps<{
   error: unknown
 }>()
-
-const _error = (props.error as NuxtError) ?? {
-  statusCode: 500,
-  message: 'Unknown Error',
-}
+const err = (props.error as NuxtError)
 </script>
 
 <template>
-  <div v-show="error" class="error">
-    <p>
-      {{ _error.statusCode }} /
-      {{ _error.message }}
-    </p>
+  <div class="error">
+    {{ `${err.statusCode} / ${err.statusMessage}` }}
   </div>
 </template>

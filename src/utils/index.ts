@@ -1,10 +1,21 @@
 import dayjs from 'dayjs'
 import { v4 as uuidv4 } from 'uuid'
 import { useImage } from '@vueuse/core'
+import type { NuxtError } from 'nuxt/app'
 
 export const uuid = () => uuidv4()
 
 export const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+
+export function useErrorTitle(e: any) {
+  if (e) {
+    const err = e as NuxtError
+
+    useHead({
+      title: `${err.statusCode} / ${err.statusMessage}`,
+    })
+  }
+}
 
 export function useImg(
   src: string,

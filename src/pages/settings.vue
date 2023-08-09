@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Rules } from 'async-validator'
 import { useAsyncValidator } from '@vueuse/integrations/useAsyncValidator'
+import type { NuxtError } from '#app'
 import type { User } from '~/types/user'
 
 definePageMeta({
@@ -52,6 +53,8 @@ const {
   { immediate: false },
 )
 
+const err = computed(() => (error.value as NuxtError)?.toJSON())
+
 watch(state, async () => {
   if (state.value?.data && curUser.value) {
     await userStore.setCurUser(curUser.value)
@@ -65,7 +68,7 @@ watch(state, async () => {
     <h3>Settings</h3>
   </CommonHeader>
 
-  <CommonError :error="error" />
+  <CommonError v-if="err" :error="err" />
 
   <form v-if="curUser">
     <div class="form-group">

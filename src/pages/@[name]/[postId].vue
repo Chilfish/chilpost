@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { NuxtError } from '#app'
 import type { PostDetail } from '~/types'
 
 const route = useRoute()
@@ -13,6 +14,7 @@ const {
   useMyFetch<PostDetail>(`/post/search?id=${postId.value}`),
   null,
 )
+const err = computed(() => (error.value as NuxtError)?.toJSON())
 
 watchEffect(() => {
   const newId = route.params.postId as string
@@ -21,7 +23,7 @@ watchEffect(() => {
     execute()
   }
 
-  if (state.value) {
+  if (state.value?.data) {
     const post = state.value?.data
     const title = `${post?.owner.nick_name}'s Post: ${post?.content.substring(0, 50)}`
 
@@ -29,6 +31,8 @@ watchEffect(() => {
       title,
     })
   }
+
+  useErrorTitle(err.value)
 })
 </script>
 
@@ -37,7 +41,7 @@ watchEffect(() => {
     <h3>Post Details</h3>
   </CommonHeader>
 
-  <CommonLoading :error="error" :is-loading="isLoading" />
+  <CommonLoading :error="err" :is-loading="isLoading" />
 
   <main v-if="state?.data && !isLoading">
     <PostDetailItem

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { NuxtError } from '#app'
 import type { PostsWithOwner } from '~/types'
 
 const route = useRoute()
@@ -13,6 +14,9 @@ const {
   useMyFetch<PostsWithOwner>(`/post/search?ownerName=${username.value}`),
   null,
 )
+
+const err = computed(() => (error.value as NuxtError)?.toJSON())
+
 watchEffect(() => {
   const newUsername = route.params.name as string
   if (newUsername !== username.value) {
@@ -28,6 +32,8 @@ watchEffect(() => {
       title,
     })
   }
+
+  useErrorTitle(err.value)
 })
 </script>
 
@@ -38,7 +44,7 @@ watchEffect(() => {
 
   <div class="banner" />
 
-  <CommonLoading :error="error" :is-loading="isLoading" />
+  <CommonLoading :error="err" :is-loading="isLoading" />
 
   <main v-if="state?.data && !isLoading" class="post-list">
     <ProfileCard :user="state.data.owner" />

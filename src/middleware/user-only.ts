@@ -3,7 +3,7 @@ export default defineNuxtRouteMiddleware(async () => {
 
   if (!userStore.curUser) {
     const res = await userStore.setCurUser()
-    if (!res)
+    if (res?.statusCode === 401)
       return navigateTo({ name: 'index' })
   }
 })

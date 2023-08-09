@@ -1,5 +1,7 @@
 <script setup lang="ts">
-const router = useRouter()
+useHead({
+  title: '404 Page not found',
+})
 </script>
 
 <template>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { NuxtError } from '#app'
 import type { PostDetail } from '~/types'
 
 definePageMeta({
@@ -29,9 +30,13 @@ const {
   error,
 } = useAsyncState(useMyFetch<PostDetail[]>('/post'), null)
 
+const err = computed(() => (error.value as NuxtError)?.toJSON())
+
 watchEffect(() => {
   if (state.value?.data)
     postStore.setPosts(state.value.data)
+
+  useErrorTitle(err.value)
 })
 </script>
 
@@ -64,7 +69,7 @@ watchEffect(() => {
     </div>
   </header>
 
-  <CommonLoading :error="error" :is-loading="isLoading" />
+  <CommonLoading :error="err" :is-loading="isLoading" />
   <main v-if="state">
     <PostItem
       v-for="post in state?.data"

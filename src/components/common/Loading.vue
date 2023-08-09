@@ -9,5 +9,5 @@ defineProps<{
   <div v-show="isLoading" class="loading-box">
     <span class="icon loading" />
   </div>
-  <CommonError v-show="error" :error="error" />
+  <CommonError v-if="error" :error="error" />
 </template>
