@@ -1,9 +1,6 @@
-import process from 'node:process'
 import dayjs from 'dayjs'
 import { v4 as uuidv4 } from 'uuid'
 import { useImage } from '@vueuse/core'
-
-export const isDev = process.env.NODE_ENV === 'development'
 
 export const uuid = () => uuidv4()
 

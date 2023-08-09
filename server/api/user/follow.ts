@@ -1,4 +1,4 @@
-import type { ApiResult } from '~/types'
+import type { ApiResult, User } from '~/types'
 import { delay } from '~/utils'
 
 interface QueryParams {
@@ -13,16 +13,15 @@ export default defineEventHandler(async (event): ApiResult => {
   const user = fakeUsers.find(user => user.id === id)
   if (!user) {
     return createError({
-      status: 404,
+      statusCode: 404,
       statusMessage: 'User not found',
     })
   }
 
-  const curUser = await getUserFromSession(event)
-
+  const curUser = event.context.user as User
   if (!curUser) {
     return createError({
-      status: 401,
+      statusCode: 401,
       statusMessage: 'Unauthorized',
     })
   }

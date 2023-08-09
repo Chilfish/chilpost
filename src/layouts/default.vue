@@ -1,5 +1,9 @@
 <script setup lang="ts">
 const modalStore = useModalStore()
+const userStore = useUserStore()
+const {
+  isLoading,
+} = useAsyncState(userStore.setCurUser, null)
 </script>
 
 <template>

@@ -15,7 +15,7 @@ export default defineEventHandler(async (event): ApiResult => {
     const user = fakeUsers.find(user => user.id === id || user.name === name)
     if (!user) {
       return createError({
-        status: 404,
+        statusCode: 404,
         statusMessage: 'User not found',
       })
     }
@@ -23,7 +23,7 @@ export default defineEventHandler(async (event): ApiResult => {
   }
   catch (err: any) {
     return createError({
-      status: 500,
+      statusCode: 500,
       statusMessage: err.message,
     })
   }

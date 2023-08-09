@@ -1,7 +1,6 @@
 import * as jose from 'jose'
 import type { H3Event } from 'h3'
 import { getUserById } from '.'
-import { isDev } from '~/utils'
 import type { ApiResult, User, UserAuth } from '~/types'
 
 const { apiSecret, apiUrl } = useRuntimeConfig()

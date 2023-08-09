@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Rules } from 'async-validator'
 import { useAsyncValidator } from '@vueuse/integrations/useAsyncValidator'
+import type { User } from '~/types/user'
 
 definePageMeta({
   title: 'Settings',
@@ -9,11 +10,7 @@ definePageMeta({
 })
 
 const userStore = useUserStore()
-const {
-  state: curUser,
-  isLoading: isLoadingUser,
-  isReady: isReadyUser,
-} = useAsyncState(userStore.fetchCurUser(), null) // why doesn't App.vue fetch the current user?
+const curUser = ref({ ...userStore.curUser } as User | null)
 
 const maxBio = 160
 
@@ -48,15 +45,17 @@ const {
 } = useAsyncState(
   async () => {
     if (pass.value && curUser.value)
-      return userStore.saveSettings(curUser.value)
+      return useMyFetch<boolean>('/user/update', 'post', curUser.value)
   },
   null,
   { immediate: false },
 )
 
-watch(state, () => {
-  if (state.value?.result)
-    console.log('Settings saved!')
+watch(state, async () => {
+  if (state.value?.data && curUser.value) {
+    await userStore.setCurUser(curUser.value)
+    console.log('Settings saved!') // Toast needed
+  }
 })
 </script>
 
@@ -65,9 +64,7 @@ watch(state, () => {
     <h3>Settings</h3>
   </CommonHeader>
 
-  <CommonLoading :is-loading="isLoadingUser" />
-
-  <form v-if="isReadyUser && curUser">
+  <form v-if="curUser">
     <div class="form-group">
       <label for="nick_name">Display Name</label>
       <input

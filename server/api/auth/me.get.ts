@@ -3,11 +3,9 @@ import type { ApiResult, User } from '~/types'
 export default defineEventHandler(async (event): ApiResult<User> => {
   const user = event.context.user
 
-  // console.log('/auth/me', user)
-
   if (!user) {
     return createError({
-      status: 401,
+      statusCode: 401,
       message: 'Unauthorized',
     })
   }
