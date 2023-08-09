@@ -1,20 +1,10 @@
-import type { NuxtError } from '#app'
-import type { ApiResult, Id, PostDetail } from '~/types'
+import type { Id, PostDetail } from '~/types'
 
 export const usePostStore = defineStore('post', () => {
   const posts = ref([] as PostDetail[])
 
-  async function fetchPosts(): ApiResult<PostDetail[]> {
-    try {
-      const result = await useMyFetch<PostDetail[]>('/post')
-      posts.value = result.data || []
-      return result
-    }
-    catch (error) {
-      return {
-        error: (error as NuxtError).data,
-      }
-    }
+  async function setPosts(_posts: PostDetail[]) {
+    posts.value = _posts
   }
 
   function getById(id: Id): PostDetail | null {
@@ -39,7 +29,7 @@ export const usePostStore = defineStore('post', () => {
 
   return {
     posts,
-    fetchPosts,
+    setPosts,
     addPost,
     getById,
     toggleLike,

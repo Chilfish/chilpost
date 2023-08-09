@@ -41,6 +41,7 @@ const { pass, errorFields } = useAsyncValidator(curUser, rules)
 const {
   state,
   isLoading,
+  error,
   execute: updateSettings,
 } = useAsyncState(
   async () => {
@@ -63,6 +64,8 @@ watch(state, async () => {
   <CommonHeader>
     <h3>Settings</h3>
   </CommonHeader>
+
+  <CommonError :error="error" />
 
   <form v-if="curUser">
     <div class="form-group">

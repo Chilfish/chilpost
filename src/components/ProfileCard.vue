@@ -30,11 +30,17 @@ const foBtnText = computed(() => {
 const {
   state,
   isLoading,
+  error,
   execute,
 } = useAsyncState(
   useMyFetch<boolean>(`/user/follow?id=${props.user.id}`),
   null,
-  { immediate: false },
+  {
+    immediate: false,
+    onError(e) {
+      console.log(e)
+    },
+  },
 )
 
 watchEffect(() => {
@@ -95,6 +101,8 @@ watchEffect(() => {
         </span>
       </div>
     </div>
+
+    <CommonError v-show="error" :error="error" />
   </div>
 </template>
 

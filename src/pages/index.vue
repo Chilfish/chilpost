@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { PostDetail } from '~/types'
+
 definePageMeta({
   description: 'Explore Chilpost',
   showFAB: true,
@@ -24,7 +26,13 @@ const postStore = usePostStore()
 const {
   state,
   isLoading,
-} = useAsyncState(postStore.fetchPosts(), null)
+  error,
+} = useAsyncState(useMyFetch<PostDetail[]>('/post'), null)
+
+watchEffect(() => {
+  if (state.value?.data)
+    postStore.setPosts(state.value.data)
+})
 </script>
 
 <template>
@@ -56,9 +64,8 @@ const {
     </div>
   </header>
 
-  <CommonLoading v-if="isLoading" :is-loading="isLoading" />
+  <CommonLoading :error="error" :is-loading="isLoading" />
   <main v-if="state">
-    <CommonError v-if="state.error" :error="state.error" />
     <PostItem
       v-for="post in state?.data"
       :key="post.id"

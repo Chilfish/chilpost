@@ -37,10 +37,9 @@ watchEffect(() => {
     <h3>Post Details</h3>
   </CommonHeader>
 
-  <CommonLoading v-if="isLoading" :is-loading="isLoading" />
-  <CommonError v-if="error" :error="error" />
+  <CommonLoading :error="error" :is-loading="isLoading" />
 
-  <main v-if="state?.data">
+  <main v-if="state?.data && !isLoading">
     <PostDetailItem
       :post="state?.data"
       :owner="state?.data?.owner"

@@ -5,17 +5,17 @@ const props = defineProps<{
   error: unknown
 }>()
 
-const error = (props.error as NuxtError) ?? {
+const _error = (props.error as NuxtError) ?? {
   statusCode: 500,
   message: 'Unknown Error',
 }
 </script>
 
 <template>
-  <div class="error">
+  <div v-show="error" class="error">
     <p>
-      {{ error.statusCode }} /
-      {{ error.message }}
+      {{ _error.statusCode }} /
+      {{ _error.message }}
     </p>
   </div>
 </template>

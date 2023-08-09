@@ -38,8 +38,7 @@ watchEffect(() => {
 
   <div class="banner" />
 
-  <CommonLoading v-if="isLoading" :is-loading="isLoading" />
-  <CommonError v-if="error" :error="error" />
+  <CommonLoading :error="error" :is-loading="isLoading" />
 
   <main v-if="state?.data && !isLoading" class="post-list">
     <ProfileCard :user="state.data.owner" />
@@ -47,7 +46,7 @@ watchEffect(() => {
       v-for="post in state.data.posts"
       :key="post.id"
       :post="post"
-      :owner="state.data?.owner"
+      :owner="state.data.owner"
     />
 
     <div
