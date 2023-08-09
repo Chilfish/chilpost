@@ -1,23 +1,10 @@
-import type { Id, PostDetail, User } from '~/types'
-import { PostService } from '~/services/postService'
+import type { Id, PostDetail } from '~/types'
 
 export const usePostStore = defineStore('post', () => {
   const posts = ref([] as PostDetail[])
 
-  const service = new PostService()
-
-  async function fetchPosts() {
-    posts.value = await service.fetchPosts()
-    return posts.value
-  }
-
-  async function fetchById(id: Id) {
-    const post = await service.fetchById(id)
-    return post
-  }
-
-  function fetchByOwnerName(name: string) {
-    return service.fetchByOwnerName(name)
+  async function setPosts(_posts: PostDetail[]) {
+    posts.value = _posts
   }
 
   function getById(id: Id): PostDetail | null {
@@ -36,17 +23,13 @@ export const usePostStore = defineStore('post', () => {
     return post
   }
 
-  async function addPost(content: string, owner: User) {
-    const newPost = await service.addPost(content, owner)
-    posts.value.unshift(newPost)
-    return newPost
+  function addPost(post: PostDetail) {
+    posts.value.unshift(post)
   }
 
   return {
     posts,
-    fetchPosts,
-    fetchById,
-    fetchByOwnerName,
+    setPosts,
     addPost,
     getById,
     toggleLike,

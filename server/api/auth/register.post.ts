@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
   if (!email || !password) {
     return createError({
       statusCode: 400,
-      message: 'Missing email or password',
+      statusMessage: 'Missing email or password',
     })
   }
 
@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
   if (_user) {
     return createError({
       statusCode: 409,
-      message: 'User already exists',
+      statusMessage: 'User already exists',
     })
   }
 

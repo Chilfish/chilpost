@@ -1,6 +1,9 @@
+import * as process from 'node:process'
 import { fakeUsers } from './_mock'
 import { uuid } from '~/utils'
 import type { Post, PostDetail, UserAuth } from '~/types'
+
+export const isDev = process.env.NODE_ENV === 'development'
 
 export function toDetail(post: Post): PostDetail {
   const owner = fakeUsers.find(user => user.id === post.owner_id)

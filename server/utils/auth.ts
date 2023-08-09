@@ -1,7 +1,6 @@
 import * as jose from 'jose'
 import type { H3Event } from 'h3'
 import { getUserById } from '.'
-import { isDev } from '~/utils'
 import type { ApiResult, User, UserAuth } from '~/types'
 
 const { apiSecret, apiUrl } = useRuntimeConfig()
@@ -44,7 +43,7 @@ export async function getUserFromSession(event: H3Event) {
   }
 }
 
-export async function saveCookie(event: H3Event, user: UserAuth) {
+export async function saveCookie(event: H3Event, user: UserAuth): ApiResult<User> {
   const token = await createToken({ id: user.id })
 
   setCookie(event, 'token', token, {
@@ -58,7 +57,6 @@ export async function saveCookie(event: H3Event, user: UserAuth) {
   const { password: _, ...userWithoutPass } = user
 
   return {
-    result: true,
     data: userWithoutPass,
-  } as ApiResult<User>
+  }
 }

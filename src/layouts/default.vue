@@ -1,5 +1,8 @@
 <script setup lang="ts">
 const modalStore = useModalStore()
+const userStore = useUserStore()
+
+useAsyncState(userStore.setCurUser, null)
 </script>
 
 <template>

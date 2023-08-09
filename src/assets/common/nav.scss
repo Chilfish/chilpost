@@ -16,10 +16,6 @@ nav {
   transition: transform 0.3s ease-in-out;
   transform: translateY(0);
 
-  a.logo {
-    display: none;
-  }
-
   button {
     display: flex;
     align-items: center;
@@ -32,6 +28,10 @@ nav {
     box-shadow: 0 0 10px var(--background-color);
     transition: transform 0.3s ease-in-out;
   }
+}
+
+a.logo {
+  display: none;
 }
 
 a {

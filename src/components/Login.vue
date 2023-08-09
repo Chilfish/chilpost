@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import type { UserLogin } from '~/types/user'
+import type { NuxtError } from '#app'
+import type { User, UserLogin } from '~/types/user'
 
 const inputs = useState<UserLogin>('login', () => ({
   email: '',
@@ -14,25 +15,29 @@ const modalStore = useModalStore()
 const {
   state,
   isLoading,
+  error,
   execute,
 } = useAsyncState(
   async () => {
     if (isRegister.value)
-      return await userStore.register(inputs.value)
+      return await useMyFetch<User>('/auth/register', 'post', inputs.value)
 
-    return await userStore.login(inputs.value)
+    return await useMyFetch<User>('/auth/login', 'post', inputs.value)
   },
   null,
   { immediate: false },
 )
 
 watch(isLoading, () => {
-  if (state.value?.result && state.value.data) {
-    userStore.setCurUser(state.value.data)
+  const user = state.value?.data
+  if (user) {
+    userStore.setCurUser(user)
     modalStore.toggleModal()
   }
 
-  if (state.value?.statusCode === 404) {
+  const err = error.value as NuxtError
+
+  if (err?.statusCode === 404) {
     isRegister.value = confirm('User not found, register?')
     if (isRegister.value) {
       execute()

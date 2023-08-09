@@ -1,18 +1,35 @@
 <script setup lang="ts">
 const modalStore = useModalStore()
 const postStore = usePostStore()
-const userStore = useUserStore()
 
 const postValue = ref('')
 
-function submit() {
-  if (!postValue.value)
-    return
+const {
+  state,
+  isLoading,
+  execute: submit,
+  error,
+} = useAsyncState(
+  async () => {
+    if (!postValue.value)
+      return
+    return useMyFetch('/post/new', 'post', { content: postValue.value })
+  },
+  null,
+  { immediate: false },
+)
 
-  postStore.addPost(postValue.value, userStore.curUser!)
-  postValue.value = ''
-  modalStore.toggleModal()
-}
+watch(isLoading, () => {
+  const post = state.value?.data
+  if (post) {
+    postStore.addPost(post)
+    postValue.value = ''
+    modalStore.toggleModal()
+  }
+
+  if (error.value)
+    console.log(error.value)
+})
 </script>
 
 <template>
@@ -22,7 +39,7 @@ function submit() {
     </div>
     <form>
       <textarea v-model="postValue" placeholder="Wassup?!" />
-      <button type="submit" @click.prevent="submit">
+      <button type="submit" @click.prevent="submit()">
         Post
       </button>
     </form>

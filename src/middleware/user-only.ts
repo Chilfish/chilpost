@@ -1,6 +1,9 @@
 export default defineNuxtRouteMiddleware(async () => {
   const userStore = useUserStore()
 
-  if (!userStore.curUser)
-    return navigateTo({ name: 'index' })
+  if (!userStore.curUser) {
+    const res = await userStore.setCurUser()
+    if (!res)
+      return navigateTo({ name: 'index' })
+  }
 })
