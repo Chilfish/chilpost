@@ -2,11 +2,10 @@ import process from 'node:process'
 import genStaticData from './server/utils/mock'
 
 const {
-  PORT = 3003,
   API_SECRET = 'secret',
-  API_URL = `http://localhost:${PORT}/api`,
+  API_URL = '/api',
   SECRET_API_URL = API_URL,
-  AUTH_ORIGIN = `http://localhost:${PORT}`,
+  AUTH_ORIGIN = '/',
 } = process.env
 
 export default defineNuxtConfig({
