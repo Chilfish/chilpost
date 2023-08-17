@@ -33,10 +33,16 @@ export const useModalStore = defineStore('modal', () => {
       postMeta.value = meta
   }
 
+  function open(s: ModalSlot = 'login') {
+    showModal.value = true
+    modalSlot.value = s
+  }
+
   return {
     curSlot,
     postMeta,
     showModal,
     toggleModal,
+    open,
   }
 })
