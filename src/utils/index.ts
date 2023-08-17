@@ -30,7 +30,7 @@ export function randomPick<T>(arr: T[], exclude: T[] = [], count = 1) {
   return Array.from(picked)
 }
 
-export async function toggleFollow(user: User, following: User) {
+export async function toggleFollow(user: User, following: User | UserDetail) {
   const isFollowing = user.status.following.includes(following.id)
 
   if (!isFollowing) {

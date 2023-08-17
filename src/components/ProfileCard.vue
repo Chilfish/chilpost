@@ -1,17 +1,16 @@
 <script setup lang="ts">
 import { vElementHover } from '@vueuse/components'
-import type { User } from '~/types'
+import type { UserDetail } from '~/types'
 
 const props = defineProps<{
-  user: User
+  user: UserDetail
 }>()
 const userStore = useUserStore()
 const curUser = userStore.curUser
 
 const isHovered = ref(false)
 const isFollowing = ref(false)
-
-const isMe = computed(() => props.user.id === curUser?.id)
+const isMe = ref(false)
 
 const foBtnText = computed(() => {
   if (isMe.value)
@@ -39,8 +38,10 @@ const {
 )
 
 watchEffect(() => {
-  if (curUser)
+  if (curUser) {
     isFollowing.value = curUser.status.following.includes(props.user.id)
+    isMe.value = curUser.id === props.user.id
+  }
 
   if (state.value?.data) {
     isFollowing.value = !isFollowing.value

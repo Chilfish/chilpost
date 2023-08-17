@@ -9,19 +9,18 @@ export interface UserStatus {
   following: uid[]
 }
 
-export interface UserBase {
+export interface User {
   id: uid
-  name: string
   email: string
   createdAt: string
-}
-
-export interface User extends UserBase {
+  name: string
   nickname: string
   bio: string
   avatar: string
   status: UserStatus
 }
+
+export type UserDetail = Omit<User, 'email' | 'createdAt'>
 
 export type UserDisplay = Pick<User, 'name' | 'nickname' | 'avatar'>
 

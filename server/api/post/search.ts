@@ -55,5 +55,9 @@ function byOwnerName(owner_name: string): PostsWithOwner {
   }
 
   const posts = fakePosts.filter(post => post.owner_id === owner.id)
-  return { owner, posts }
+  const { email: _e, createdAt: _c, password: _p, ...res } = owner
+  return {
+    owner: res,
+    posts,
+  }
 }

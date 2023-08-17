@@ -1,4 +1,4 @@
-import type { User, UserDisplay, uid } from '.'
+import type { UserDetail, UserDisplay, uid } from '.'
 
 export type pid = string
 
@@ -37,6 +37,6 @@ export interface PostDetail {
 }
 
 export interface PostsWithOwner {
-  owner: User
+  owner: UserDetail
   posts: Post[]
 }
