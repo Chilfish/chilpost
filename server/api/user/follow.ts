@@ -26,6 +26,13 @@ export default defineEventHandler(async (event): ApiResult => {
     })
   }
 
+  if (curUser.id === user.id) {
+    return createError({
+      statusCode: 400,
+      statusMessage: 'Bad Request',
+    })
+  }
+
   await toggleFollow(curUser, user)
 
   return {
