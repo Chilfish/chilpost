@@ -16,6 +16,7 @@ const {
 )
 
 const err = computed(() => (error.value as NuxtError)?.toJSON())
+const isBodyPosts = computed(() => state.value?.data?.posts.filter(p => p.isBody))
 
 watchEffect(() => {
   const newUsername = route.params.name as string
@@ -49,14 +50,14 @@ watchEffect(() => {
   <main v-if="state?.data && !isLoading" class="post-list">
     <ProfileCard :user="state.data.owner" />
     <PostItem
-      v-for="post in state.data.posts"
+      v-for="post in isBodyPosts"
       :key="post.id"
       :post="post"
       :owner="state.data.owner"
     />
 
     <div
-      v-if="!state.data.posts.length"
+      v-if="!isBodyPosts?.length"
       class="no-data"
     >
       No posts yet

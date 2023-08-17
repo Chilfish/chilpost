@@ -3,8 +3,6 @@ import type { NuxtError } from '#app'
 export * from './user'
 export * from './post'
 
-export type Id = string
-
 export interface NavItem {
   to: string
   text: string

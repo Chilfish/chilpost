@@ -45,13 +45,16 @@ function genPost(owner_id: pid): Post {
   return {
     id: uuid(),
     owner_id,
+    isBody: true,
     content: fake.lorem.paragraphs(randomNum(1, 4)),
     createdAt: fake.date.past().toISOString(),
     status: {
       like_count: 0,
-      comment_count: randomNum(),
-      repost_count: randomNum(),
+      comment_count: 0,
+      repost_count: 0,
       likes: [] as uid[],
+      comments: [] as pid[],
+      reposts: [] as pid[],
     },
   }
 }

@@ -18,18 +18,25 @@ export function toDetail(post: Post): PostDetail {
   }
 }
 
-export function newPost(ownerId: string, content: string): Post {
+export function newPost(
+  ownerId: string,
+  content: string,
+  isBody: boolean = true,
+): Post {
   const now = new Date()
   return {
     id: uuid(),
     owner_id: ownerId,
     content,
+    isBody,
     createdAt: now.toISOString(),
     status: {
       like_count: 0,
       comment_count: 0,
       repost_count: 0,
       likes: [],
+      comments: [],
+      reposts: [],
     },
   }
 }

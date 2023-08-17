@@ -31,6 +31,7 @@ const {
 } = useAsyncState(useMyFetch<PostDetail[]>('/post'), null)
 
 const err = computed(() => (error.value as NuxtError)?.toJSON())
+const isBodyPosts = computed(() => state.value?.data?.filter(p => p.isBody))
 
 watchEffect(() => {
   if (state.value?.data)
@@ -72,7 +73,7 @@ watchEffect(() => {
   <CommonLoading :error="err" :is-loading="isLoading" />
   <main v-if="state">
     <PostItem
-      v-for="post in state?.data"
+      v-for="post in isBodyPosts"
       :key="post.id"
       :post="post"
       :owner="post.owner"

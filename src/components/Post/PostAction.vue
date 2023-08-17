@@ -6,6 +6,7 @@ const props = defineProps<{
   id: string
 }>()
 
+const modalStore = useModalStore()
 const curUser = useUserStore().curUser
 const isLike = computed(() => curUser && props.status.likes.includes(curUser.id))
 
@@ -19,7 +20,7 @@ const likeStyle = computed(() =>
 )
 
 const {
-  state,
+  state: likes,
   execute: toggleLike,
 } = useAsyncState(
   async () => await postStore.toggleLike(props.id),
@@ -30,9 +31,9 @@ const {
 )
 
 watchEffect(() => {
-  if (state.value) {
-    status.value.likes = state.value
-    status.value.like_count = state.value.length
+  if (likes.value) {
+    status.value.likes = likes.value
+    status.value.like_count = likes.value.length
   }
 })
 </script>
@@ -42,6 +43,7 @@ watchEffect(() => {
     <button
       class="chat"
       :title="`${status.comment_count}`"
+      @click="modalStore.toggleModal('sendPost', { type: 'comment', pcId: props.id })"
     >
       <span class="box">
         <span class="icon i-tabler-message-circle" />
