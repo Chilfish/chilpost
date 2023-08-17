@@ -1,11 +1,8 @@
 @use "../variables" as *;
 
-section > div {
+div.main {
   display: flex;
-  padding: 0.5rem 1rem;
-  margin-bottom: 0.5rem;
-  cursor: pointer;
-  border-radius: 8px;
+  margin-bottom: 1rem; 
 
   div.section-main {
     display: flex;
@@ -83,10 +80,6 @@ div.content {
 }
 
 @media (min-width: $sm) {
-  section > div:hover {
-    background: var(--hover-1);
-  }
-
   .post-meta {
     span {
       max-width: 20rem;

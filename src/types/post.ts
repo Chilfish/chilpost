@@ -28,7 +28,8 @@ export interface Post {
   status: PostStatus
 }
 
-export interface PostDetail extends Post {
+export interface PostDetail {
+  post: Post
   owner: User
 }
 

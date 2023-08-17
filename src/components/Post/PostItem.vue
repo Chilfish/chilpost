@@ -8,68 +8,67 @@ defineProps<{
 </script>
 
 <template>
-  <section>
-    <div
-      @click="$router.push(`/@${owner.name}/${post.id}`)"
-    >
-      <div class="avatar">
+  <div
+    class="main"
+    @click="$router.push(`/@${owner.name}/${post.id}`)"
+  >
+    <div class="avatar">
+      <NuxtLink
+        :to="`/@${owner.name}`"
+        @click.stop
+      >
+        <CommonImg
+          :src="owner.avatar"
+          alt="avatar"
+        />
+      </NuxtLink>
+    </div>
+
+    <div class="section-main">
+      <div class="post-meta">
         <NuxtLink
+          class="name-box"
           :to="`/@${owner.name}`"
           @click.stop
         >
-          <CommonImg
-            :src="owner.avatar"
-            alt="avatar"
-          />
+          <span class="nick-name">
+            {{ owner.nick_name }}
+          </span>
+          <span class="name">
+            @{{ owner.name }}
+          </span>
         </NuxtLink>
-      </div>
+        <span>·</span>
 
-      <div class="section-main">
-        <div class="post-meta">
-          <NuxtLink
-            class="name-box"
-            :to="`/@${owner.name}`"
-            @click.stop
-          >
-            <span class="nick-name">
-              {{ owner.nick_name }}
-            </span>
-            <span class="name">
-              @{{ owner.name }}
-            </span>
-          </NuxtLink>
-          <span>·</span>
-
-          <NuxtLink
-            class="date"
-            :to="`/@${owner.name}/${post.id}`"
-            @click.stop
-          >
-            {{ timeDiff(post.createdAt) }}
-          </NuxtLink>
-
-          <button
-            class="menu"
-            @click.stop
-          >
-            <span class="box">
-              <span class="icon i-tabler-dots" />
-            </span>
-          </button>
-        </div>
-
-        <div class="content">
-          <p>{{ post.content }}</p>
-        </div>
-
-        <PostAction
-          :id="post.id"
-          :status="post.status"
+        <NuxtLink
+          class="date"
+          :to="`/@${owner.name}/${post.id}`"
           @click.stop
-        />
+        >
+          {{ timeDiff(post.createdAt) }}
+        </NuxtLink>
+
+        <button
+          class="menu"
+          @click.stop
+        >
+          <span class="box">
+            <span class="icon i-tabler-dots" />
+          </span>
+        </button>
       </div>
+
+      <div class="content">
+        <p>{{ post.content }}</p>
+      </div>
+
+      <PostAction
+        :id="post.id"
+        :status="post.status"
+        @click.stop
+      />
     </div>
-  </section>
+  </div>
 </template>
 
 <style lang="scss">

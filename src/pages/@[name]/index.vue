@@ -47,14 +47,20 @@ watchEffect(() => {
 
   <CommonLoading :error="err" :is-loading="isLoading" />
 
-  <main v-if="state?.data && !isLoading" class="post-list">
+  <main v-if="state?.data && !isLoading">
     <ProfileCard :user="state.data.owner" />
-    <PostItem
-      v-for="post in isBodyPosts"
-      :key="post.id"
-      :post="post"
-      :owner="state.data.owner"
-    />
+
+    <div>
+      <section
+        v-for="post in isBodyPosts"
+        :key="post.id"
+      >
+        <PostItem
+          :post="post"
+          :owner="state.data.owner"
+        />
+      </section>
+    </div>
 
     <div
       v-if="!isBodyPosts?.length"

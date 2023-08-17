@@ -24,8 +24,8 @@ watchEffect(() => {
   }
 
   if (state.value?.data) {
-    const post = state.value?.data
-    const title = `${post?.owner.nick_name}'s Post: ${post?.content.substring(0, 50)}`
+    const { post, owner } = state.value?.data
+    const title = `${owner.nick_name}'s Post: ${post.content.substring(0, 50)}`
 
     useHead({
       title,
@@ -44,10 +44,14 @@ watchEffect(() => {
   <CommonLoading :error="err" :is-loading="isLoading" />
 
   <main v-if="state?.data && !isLoading">
-    <PostDetailItem
-      :post="state?.data"
-      :owner="state?.data?.owner"
-    />
+    <div>
+      <PostDetailItem
+        :post="state?.data.post"
+        :owner="state?.data?.owner"
+      />
+    </div>
+
+    <PostComments :comment-ids="state?.data?.post?.status.comments" />
   </main>
 </template>
 

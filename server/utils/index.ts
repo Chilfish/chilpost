@@ -6,14 +6,12 @@ import type { Post, PostDetail, UserAuth } from '~/types'
 export const isDev = process.env.NODE_ENV === 'development'
 
 export function toDetail(post: Post): PostDetail {
-  const owner = fakeUsers.find(user => user.id === post.owner_id)
-  if (!owner)
-    throw new Error('Owner not found')
+  const owner = fakeUsers.find(user => user.id === post.owner_id)!
 
   const { password: _, ...rest } = owner
 
   return {
-    ...post,
+    post,
     owner: rest,
   }
 }
