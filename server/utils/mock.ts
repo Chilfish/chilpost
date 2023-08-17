@@ -88,7 +88,7 @@ async function generateStatic(...mocks: { name: string; type: string; data: any[
     .map(mock => `export const ${mock.name}: ${mock.type} = ${JSON.stringify(mock.data)};`)
     .join('\n')
 
-  await fs.writeFile(mockDir, `${output}\n`)
+  await fs.writeFile(mockDir, `import type { UserAuth, Post } from "~/types"\n${output}\n`)
 }
 
 export default function genStaticData() {

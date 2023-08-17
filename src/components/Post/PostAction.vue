@@ -7,7 +7,7 @@ const props = defineProps<{
 }>()
 
 const curUser = useUserStore().curUser
-const isLike = ref(false)
+const isLike = computed(() => curUser && props.status.likes.includes(curUser.id))
 
 const postStore = usePostStore()
 
@@ -18,10 +18,22 @@ const likeStyle = computed(() =>
     : { icon: 'i-tabler-heart', class: '' },
 )
 
+const {
+  state,
+  execute: toggleLike,
+} = useAsyncState(
+  async () => await postStore.toggleLike(props.id),
+  null,
+  {
+    immediate: false,
+  },
+)
+
 watchEffect(() => {
-  if (!curUser)
-    return
-  isLike.value = props.status.likes.includes(curUser.id)
+  if (state.value) {
+    status.value.likes = state.value
+    status.value.like_count = state.value.length
+  }
 })
 </script>
 
@@ -50,7 +62,7 @@ watchEffect(() => {
     <button
       :class="`like ${likeStyle.class}`"
       :title="`${status.like_count}`"
-      @click="postStore.toggleLike(id)"
+      @click="toggleLike()"
     >
       <span class="box">
         <span :class="`icon ${likeStyle.icon}`" />

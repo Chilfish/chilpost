@@ -1,4 +1,4 @@
-import type { Id, PostDetail } from '~/types'
+import type { PostDetail, pid, uid } from '~/types'
 
 export const usePostStore = defineStore('post', () => {
   const posts = ref([] as PostDetail[])
@@ -7,20 +7,23 @@ export const usePostStore = defineStore('post', () => {
     posts.value = _posts
   }
 
-  function getById(id: Id): PostDetail | null {
-    return posts.value.find(post => post.id === id) || null
+  function getById(id: pid) {
+    return computed(() => posts.value.find(post => post.id === id))
   }
 
-  // TODO
-  const toggleLike = async (id: Id) => {
+  async function toggleLike(id: pid) {
     const post = getById(id)
-    if (!post)
-      return null
 
-    post.status.is_liked = !post.status.is_liked
-    post.status.like_count += post.status.is_liked ? 1 : -1
-    // await service.toggleLike(id)
-    return post
+    try {
+      const { data } = await useMyFetch<uid[]>(`/post/like?id=${id}`)
+      if (data) {
+        post.value && (post.value.status.likes = data)
+        return data
+      }
+    }
+    catch (e: any) {
+      console.log('toggle like error', e)
+    }
   }
 
   function addPost(post: PostDetail) {

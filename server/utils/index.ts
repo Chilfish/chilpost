@@ -29,7 +29,7 @@ export function newPost(ownerId: string, content: string): Post {
       like_count: 0,
       comment_count: 0,
       repost_count: 0,
-      is_liked: false,
+      likes: [],
     },
   }
 }
