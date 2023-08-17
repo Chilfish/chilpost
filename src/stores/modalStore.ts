@@ -25,7 +25,7 @@ export const useModalStore = defineStore('modal', () => {
    * @param s Slot name
    * @param meta Post meta
    */
-  function toggleModal(s?: ModalSlot, meta?: PostMeta) {
+  function toggleModal(s: ModalSlot = 'sendPost', meta: PostMeta = { type: 'new' }) {
     showModal.value = !showModal.value
     if (s)
       modalSlot.value = s
