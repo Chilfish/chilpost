@@ -26,6 +26,9 @@ export interface Post {
   createdAt: string
   owner_id: uid
   status: PostStatus
+
+  parentId?: pid
+  parentPost?: Post
 }
 
 export interface PostDetail {

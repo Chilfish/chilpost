@@ -42,6 +42,8 @@ export default defineEventHandler(async (event): ApiResult<PostDetail> => {
   if (postType === 'comment') {
     pcPost.status.comment_count++
     pcPost.status.comments.unshift(post.id)
+    post.parentId = pcId
+    post.parentPost = pcPost
   }
   else if (postType === 'repost') {
     pcPost.status.repost_count++
