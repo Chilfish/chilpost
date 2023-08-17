@@ -6,14 +6,23 @@ const props = defineProps<{
   id: string
 }>()
 
+const curUser = useUserStore().curUser
+const isLike = ref(false)
+
 const postStore = usePostStore()
 
 const status = ref(props.status)
 const likeStyle = computed(() =>
-  status.value.is_liked
+  isLike.value
     ? { icon: 'is_like i-tabler-heart-filled', class: 'is_like' }
     : { icon: 'i-tabler-heart', class: '' },
 )
+
+watchEffect(() => {
+  if (!curUser)
+    return
+  isLike.value = props.status.likes.includes(curUser.id)
+})
 </script>
 
 <template>

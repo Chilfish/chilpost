@@ -7,10 +7,27 @@ export const uuid = () => uuidv4()
 
 export const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
-export function randomPick<T>(arr: T[], exclude: T[] = []) {
+/**
+ * Pick random items from an array
+ * @param arr the array to pick from
+ * @param exclude items to exclude
+ * @param count number of items to pick, default to 1
+ * @returns the picked item(s)
+ */
+export function randomPick<T>(arr: T[], exclude: T[] = [], count = 1) {
   const filtered = arr.filter(item => !exclude.includes(item))
 
-  return filtered[Math.floor(Math.random() * filtered.length)]
+  if (filtered.length < count)
+    return filtered
+
+  const picked = new Set<T>()
+
+  while (picked.size < count) {
+    const index = Math.floor(Math.random() * filtered.length)
+    picked.add(filtered[index])
+  }
+
+  return Array.from(picked)
 }
 
 export async function toggleFollow(user: User, following: User) {

@@ -1,16 +1,16 @@
-import type { Id } from 'types'
+export type uid = string
 
 export interface UserStatus {
   follower_count: number
   following_count: number
   post_count: number
 
-  followers: Id[]
-  following: Id[]
+  followers: uid[]
+  following: uid[]
 }
 
 export interface UserBase {
-  id: Id
+  id: uid
   name: string
   email: string
   createdAt: string

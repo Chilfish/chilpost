@@ -1,17 +1,20 @@
-import type { Id, User } from 'types'
+import type { User, uid } from 'types'
+
+export type pid = string
 
 export interface PostStatus {
   like_count: number
   comment_count: number
   repost_count: number
-  is_liked: boolean
+
+  likes: uid[]
 }
 
 export interface Post {
-  id: Id
+  id: pid
   content: string
   createdAt: string
-  owner_id: Id
+  owner_id: uid
   status: PostStatus
 }
 
