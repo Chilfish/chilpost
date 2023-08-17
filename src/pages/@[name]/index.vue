@@ -28,7 +28,7 @@ watchEffect(() => {
   if (state.value?.data) {
     isLoading.value = false
     const owner = state.value.data.owner
-    const title = `${owner?.nick_name}(@${owner?.name})`
+    const title = `${owner?.nickname}(@${owner?.name})`
     useHead({
       title,
     })
@@ -40,7 +40,7 @@ watchEffect(() => {
 
 <template>
   <CommonHeader>
-    <h3> {{ state?.data?.owner.nick_name }}</h3>
+    <h3> {{ state?.data?.owner.nickname }}</h3>
   </CommonHeader>
 
   <div class="banner" />

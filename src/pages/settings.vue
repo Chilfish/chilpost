@@ -24,7 +24,7 @@ const rules: Rules = {
       message: 'Username must be alphanumeric',
     },
   ],
-  nick_name: [
+  nickname: [
     { required: true, message: 'Nickname is required' },
     { min: 3, max: 20, message: 'Nickname must be between 3 and 20 characters' },
   ],
@@ -72,18 +72,18 @@ watch(state, async () => {
 
   <form v-if="curUser">
     <div class="form-group">
-      <label for="nick_name">Display Name</label>
+      <label for="nickname">Display Name</label>
       <input
-        id="nick_name"
-        v-model="curUser.nick_name"
+        id="nickname"
+        v-model="curUser.nickname"
         type="text"
         placeholder="Nickname"
       >
       <div
-        v-if="errorFields?.nick_name?.length"
+        v-if="errorFields?.nickname?.length"
         text-red
       >
-        {{ errorFields.nick_name[0].message }}
+        {{ errorFields.nickname[0].message }}
       </div>
     </div>
 

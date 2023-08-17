@@ -8,11 +8,11 @@ export const isDev = process.env.NODE_ENV === 'development'
 export function toDetail(post: Post): PostDetail {
   const owner = fakeUsers.find(user => user.id === post.owner_id)!
 
-  const { password: _, ...rest } = owner
+  const { name, nickname, avatar } = owner
 
   return {
     post,
-    owner: rest,
+    owner: { name, nickname, avatar },
   }
 }
 
@@ -46,7 +46,7 @@ export function newUser(email: string, password: string, name?: string): UserAut
     email,
     password,
     name: _name,
-    nick_name: _name,
+    nickname: _name,
     avatar: '/placeholder.avatar.png',
     bio: 'Hello',
     createdAt: new Date().toISOString(),

@@ -76,8 +76,8 @@ watchEffect(() => {
     </div>
 
     <div class="info">
-      <h3 class="nick_name">
-        {{ user.nick_name }}
+      <h3 class="nickname">
+        {{ user.nickname }}
       </h3>
       <h4 class="name">
         @{{ user.name }}

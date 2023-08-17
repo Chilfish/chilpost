@@ -18,7 +18,7 @@ function randomNum(min = 0, max = 5000) {
 
 function genUser(
   id = uuid(),
-  nick_name = fake.internet.userName().replace('.', '_'),
+  nickname = fake.internet.userName().replace('.', '_'),
   email = fake.internet.email(),
   password = fake.internet.password(),
 ): UserAuth {
@@ -27,8 +27,8 @@ function genUser(
     email,
     password,
     bio: fake.lorem.paragraphs(1),
-    nick_name: nick_name.replace(/[_]/g, ' '),
-    name: nick_name.toLowerCase(),
+    nickname: nickname.replace(/[_]/g, ' '),
+    name: nickname.toLowerCase(),
     avatar: fake.internet.avatar(),
     createdAt: fake.date.past().toISOString(),
     status: {

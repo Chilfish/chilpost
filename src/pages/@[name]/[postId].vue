@@ -25,7 +25,7 @@ watchEffect(() => {
 
   if (state.value?.data) {
     const { post, owner } = state.value?.data
-    const title = `${owner.nick_name}'s Post: ${post.content.substring(0, 50)}`
+    const title = `${owner.nickname}'s Post: ${post.content.substring(0, 50)}`
 
     useHead({
       title,

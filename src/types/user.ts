@@ -17,11 +17,13 @@ export interface UserBase {
 }
 
 export interface User extends UserBase {
-  nick_name: string
+  nickname: string
   bio: string
   avatar: string
   status: UserStatus
 }
+
+export type UserDisplay = Pick<User, 'name' | 'nickname' | 'avatar'>
 
 export interface UserLogin {
   email: string

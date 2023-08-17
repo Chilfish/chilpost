@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { Post, User } from '~/types'
+import type { Post, UserDisplay } from '~/types'
 
 defineProps<{
   post: Post
-  owner: User
+  owner: UserDisplay
 }>()
 </script>
 
@@ -31,8 +31,8 @@ defineProps<{
           :to="`/@${owner.name}`"
           @click.stop
         >
-          <span class="nick-name">
-            {{ owner.nick_name }}
+          <span class="nickname">
+            {{ owner.nickname }}
           </span>
           <span class="name">
             @{{ owner.name }}

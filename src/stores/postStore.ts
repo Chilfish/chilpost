@@ -8,7 +8,7 @@ export const usePostStore = defineStore('post', () => {
   }
 
   function getById(id: pid) {
-    return computed(() => posts.value.find(post => post.id === id))
+    return computed(() => posts.value.find(p => p.post.id === id))
   }
 
   async function toggleLike(id: pid) {
@@ -17,7 +17,7 @@ export const usePostStore = defineStore('post', () => {
     try {
       const { data } = await useMyFetch<uid[]>(`/post/like?id=${id}`)
       if (data) {
-        post.value && (post.value.status.likes = data)
+        post.value && (post.value.post.status.likes = data)
         return data
       }
     }
