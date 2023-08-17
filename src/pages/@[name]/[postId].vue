@@ -24,8 +24,8 @@ watchEffect(() => {
   }
 
   if (state.value?.data) {
-    const post = state.value?.data
-    const title = `${post?.owner.nick_name}'s Post: ${post?.content.substring(0, 50)}`
+    const { post, owner } = state.value?.data
+    const title = `${owner.nickname}'s Post: ${post.content.substring(0, 50)}`
 
     useHead({
       title,
@@ -44,15 +44,31 @@ watchEffect(() => {
   <CommonLoading :error="err" :is-loading="isLoading" />
 
   <main v-if="state?.data && !isLoading">
-    <PostDetailItem
-      :post="state?.data"
-      :owner="state?.data?.owner"
-    />
+    <div
+      v-if="state.data.post.parentPost"
+      class="parent-post"
+    >
+      <PostItem
+        :post="state?.data?.post.parentPost.post"
+        :owner="state?.data?.post.parentPost.owner"
+      />
+
+      <div class="vr" />
+    </div>
+
+    <div>
+      <PostDetailItem
+        :post="state?.data.post"
+        :owner="state?.data?.owner"
+      />
+    </div>
+
+    <PostComments :comment-ids="state?.data?.post?.status.comments" />
   </main>
 </template>
 
 <style lang="scss" scoped>
-@use "~/assets/variables";
+@use "~/assets/variables" as *;
 
 main {
   display: flex;
@@ -61,5 +77,33 @@ main {
   height: 100%;
   padding: 0.5rem 1rem;
   margin: auto;
+}
+
+.parent-post {
+  position: relative;
+  margin-bottom: 1rem;
+
+  .vr {
+    position: absolute;
+    top: 5%;
+    left: 4%;
+    z-index: -1;
+    width: 2px;
+    height: 110%;
+    margin: 1rem 0;
+    background-color: var(--gray);
+  }
+}
+
+@media (min-width: $sm) {
+ .parent-post .vr {
+    left: 3%; // css is awesome
+  }
+}
+
+@media (min-width: $lg) {
+ .parent-post .vr {
+    left: 2%;
+  }
 }
 </style>

@@ -6,8 +6,13 @@
   background-color: var(--text-2);
 }
 
-main.post-list {
+main {
   padding: 1rem 0.5rem;
 
   @include border(top);
+}
+
+section {
+  padding: 0 1rem;
+  margin-top: 1rem;
 }

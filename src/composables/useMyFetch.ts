@@ -27,9 +27,12 @@ export default async function<T = any>(
 
   const { data: result, error } = await useFetch(url, fetchOptions)
 
-  // console.log('useMyFetch', result.value, error.value)
-  if (error.value)
+  if (error.value) {
+    const modalStore = useModalStore()
+    if (error.value.statusCode === 401 && url !== '/auth/me')
+      modalStore.open('login')
     throw createError({ ...error.value })
+  }
 
   return result.value as ApiResult<T>
 }

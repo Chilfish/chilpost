@@ -16,6 +16,7 @@ const {
 )
 
 const err = computed(() => (error.value as NuxtError)?.toJSON())
+const isBodyPosts = computed(() => state.value?.data?.posts.filter(p => p.isBody))
 
 watchEffect(() => {
   const newUsername = route.params.name as string
@@ -27,7 +28,7 @@ watchEffect(() => {
   if (state.value?.data) {
     isLoading.value = false
     const owner = state.value.data.owner
-    const title = `${owner?.nick_name}(@${owner?.name})`
+    const title = `${owner?.nickname}(@${owner?.name})`
     useHead({
       title,
     })
@@ -39,24 +40,30 @@ watchEffect(() => {
 
 <template>
   <CommonHeader>
-    <h3> {{ state?.data?.owner.nick_name }}</h3>
+    <h3> {{ state?.data?.owner.nickname }}</h3>
   </CommonHeader>
 
   <div class="banner" />
 
   <CommonLoading :error="err" :is-loading="isLoading" />
 
-  <main v-if="state?.data && !isLoading" class="post-list">
+  <main v-if="state?.data && !isLoading">
     <ProfileCard :user="state.data.owner" />
-    <PostItem
-      v-for="post in state.data.posts"
-      :key="post.id"
-      :post="post"
-      :owner="state.data.owner"
-    />
+
+    <div>
+      <section
+        v-for="post in isBodyPosts"
+        :key="post.id"
+      >
+        <PostItem
+          :post="post"
+          :owner="state.data.owner"
+        />
+      </section>
+    </div>
 
     <div
-      v-if="!state.data.posts.length"
+      v-if="!isBodyPosts?.length"
       class="no-data"
     >
       No posts yet

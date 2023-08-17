@@ -13,7 +13,12 @@ const {
   async () => {
     if (!postValue.value)
       return
-    return useMyFetch('/post/new', 'post', { content: postValue.value })
+    return useMyFetch('/post/new', 'post',
+      {
+        content: postValue.value,
+        meta: modalStore.postMeta,
+      },
+    )
   },
   null,
   { immediate: false },

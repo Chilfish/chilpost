@@ -6,14 +6,36 @@ const props = defineProps<{
   id: string
 }>()
 
+const modalStore = useModalStore()
+const curUser = useUserStore().curUser
+const isLike = computed(() => curUser && props.status.likes.includes(curUser.id))
+
 const postStore = usePostStore()
 
 const status = ref(props.status)
 const likeStyle = computed(() =>
-  status.value.is_liked
+  isLike.value
     ? { icon: 'is_like i-tabler-heart-filled', class: 'is_like' }
     : { icon: 'i-tabler-heart', class: '' },
 )
+
+const {
+  state: likes,
+  execute: toggleLike,
+} = useAsyncState(
+  async () => await postStore.toggleLike(props.id),
+  null,
+  {
+    immediate: false,
+  },
+)
+
+watchEffect(() => {
+  if (likes.value) {
+    status.value.likes = likes.value
+    status.value.like_count = likes.value.length
+  }
+})
 </script>
 
 <template>
@@ -21,6 +43,7 @@ const likeStyle = computed(() =>
     <button
       class="chat"
       :title="`${status.comment_count}`"
+      @click="modalStore.toggleModal('sendPost', { type: 'comment', pcId: props.id })"
     >
       <span class="box">
         <span class="icon i-tabler-message-circle" />
@@ -41,7 +64,7 @@ const likeStyle = computed(() =>
     <button
       :class="`like ${likeStyle.class}`"
       :title="`${status.like_count}`"
-      @click="postStore.toggleLike(id)"
+      @click="toggleLike()"
     >
       <span class="box">
         <span :class="`icon ${likeStyle.icon}`" />

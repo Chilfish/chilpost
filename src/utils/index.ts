@@ -1,11 +1,50 @@
 import dayjs from 'dayjs'
 import { v4 as uuidv4 } from 'uuid'
-import { useImage } from '@vueuse/core'
 import type { NuxtError } from 'nuxt/app'
+import type { User } from '~/types'
 
 export const uuid = () => uuidv4()
 
 export const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+
+/**
+ * Pick random items from an array
+ * @param arr the array to pick from
+ * @param exclude items to exclude
+ * @param count number of items to pick, default to 1
+ * @returns the picked item(s)
+ */
+export function randomPick<T>(arr: T[], exclude: T[] = [], count = 1) {
+  const filtered = arr.filter(item => !exclude.includes(item))
+
+  if (filtered.length < count)
+    return filtered
+
+  const picked = new Set<T>()
+
+  while (picked.size < count) {
+    const index = Math.floor(Math.random() * filtered.length)
+    picked.add(filtered[index])
+  }
+
+  return Array.from(picked)
+}
+
+export async function toggleFollow(user: User, following: User) {
+  const isFollowing = user.status.following.includes(following.id)
+
+  if (!isFollowing) {
+    user.status.following.unshift(following.id)
+    following.status.followers.unshift(user.id)
+  }
+  else {
+    user.status.following.splice(user.status.following.indexOf(following.id), 1)
+    following.status.followers.splice(following.status.followers.indexOf(user.id), 1)
+  }
+
+  following.status.follower_count = following.status.followers.length
+  user.status.following_count = user.status.following.length
+}
 
 export function useErrorTitle(e: any) {
   if (e) {
@@ -15,15 +54,6 @@ export function useErrorTitle(e: any) {
       title: `${err.statusCode} / ${err.statusMessage}`,
     })
   }
-}
-
-export function useImg(
-  src: string,
-  placeholder = '/placeholder.avatar.png',
-) {
-  const { isLoading } = useImage({ src })
-
-  return computed(() => isLoading.value ? placeholder : src)
 }
 
 export function timeDiff(time: string) {

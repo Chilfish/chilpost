@@ -2,7 +2,7 @@
 const modalStore = useModalStore()
 const userStore = useUserStore()
 
-useAsyncState(userStore.setCurUser, null)
+useAsyncState(userStore.me, null)
 </script>
 
 <template>

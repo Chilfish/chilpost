@@ -6,7 +6,7 @@ const userStore = useUserStore()
   <div>
     <CommonButton
       text="Set Cur User"
-      @click="userStore.setCurUser()"
+      @click="userStore.me()"
     />
     <CommonButton
       text="Log out"

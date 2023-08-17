@@ -58,7 +58,7 @@ header {
   }
 
   div {
-    display: flex; 
+    display: flex;
     gap: 0.8rem;
     align-items: center;
 
@@ -70,6 +70,9 @@ header {
 
 section {
   width: 100%;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 8px;
 }
 
 main {
@@ -84,6 +87,10 @@ main {
 
   main {
     padding: 0.5rem 1rem;
+  }
+
+  section:hover {
+    background: var(--hover-1);
   }
 }
 
