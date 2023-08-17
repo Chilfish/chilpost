@@ -6,12 +6,12 @@ const props = defineProps<{
   user: User
 }>()
 const userStore = useUserStore()
-const avatar = useImg(props.user.avatar)
+const curUser = userStore.curUser
 
 const isHovered = ref(false)
-const isFollowing = ref(props.user.status.is_following)
+const isFollowing = ref(false)
 
-const isMe = computed(() => props.user.id === userStore.curUser?.id)
+const isMe = computed(() => props.user.id === curUser?.id)
 
 const foBtnText = computed(() => {
   if (isMe.value)
@@ -39,8 +39,13 @@ const {
 )
 
 watchEffect(() => {
-  if (state.value?.data)
+  if (curUser)
+    isFollowing.value = curUser.status.following.includes(props.user.id)
+
+  if (state.value?.data) {
     isFollowing.value = !isFollowing.value
+    curUser && toggleFollow(curUser, props.user)
+  }
 })
 </script>
 
@@ -49,7 +54,7 @@ watchEffect(() => {
     <div class="actions">
       <div class="avatar">
         <commonImg
-          :src="avatar"
+          :src="user.avatar"
         />
       </div>
 

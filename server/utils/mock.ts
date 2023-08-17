@@ -2,16 +2,28 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import dayjs from 'dayjs'
 import { fakerDE as fake } from '@faker-js/faker'
-import { v4 as uuidv4 } from 'uuid'
-import type { Id, Post, User, UserAuth } from '~/types'
+import { v4 as uuid } from 'uuid'
+
+import { randomPick } from '../../src/utils'
+import type { Id, Post, UserAuth } from '~/types'
+
+const user_num = 10
+const post_num = 20
+
+const uids = Array.from({ length: user_num }, () => uuid())
+
+function randomNum(min = 0, max = 5000) {
+  return fake.number.int({ min, max })
+}
 
 function genUser(
+  id = uuid(),
   nick_name = fake.internet.userName().replace('.', '_'),
   email = fake.internet.email(),
   password = fake.internet.password(),
-): UserAuth & User {
+): UserAuth {
   return {
-    id: uuidv4(),
+    id,
     email,
     password,
     bio: fake.lorem.paragraphs(1),
@@ -20,17 +32,18 @@ function genUser(
     avatar: fake.internet.avatar(),
     createdAt: fake.date.past().toISOString(),
     status: {
-      follower_count: randomNum(),
-      following_count: randomNum(),
-      post_count: randomNum(),
-      is_following: fake.datatype.boolean(),
+      post_count: 0,
+      follower_count: 0,
+      following_count: 0,
+      followers: [] as Id[],
+      following: [] as Id[],
     },
   }
 }
 
-function generatePost(owner_id: Id): Post {
+function genPost(owner_id: Id): Post {
   return {
-    id: uuidv4(),
+    id: uuid(),
     owner_id,
     content: fake.lorem.paragraphs(randomNum(1, 4)),
     createdAt: fake.date.past().toISOString(),
@@ -43,30 +56,25 @@ function generatePost(owner_id: Id): Post {
   }
 }
 
-const user_num = 10
-const post_num = 20
-
-function randomNum(min = 0, max = 5000) {
-  return fake.number.int({ min, max })
-}
-
 const fakeUsers = [
-  ...Array.from({ length: user_num }, () => genUser()),
-  genUser('Chilfish', 'me@chilfish.top', 'password'),
+  ...uids.map(uid => genUser(uid)),
+  genUser(uuid(), 'Chilfish', 'me@chilfish.top', 'password'),
 ]
 
 const fakePosts = Array.from({ length: post_num },
-  () => generatePost(
-    fakeUsers[randomNum(0, user_num - 1)].id,
-  ),
+  () => {
+    const user = randomPick(fakeUsers)
+    user.status.post_count += 1
+    return genPost(user.id)
+  },
 ).sort((a, b) => dayjs(b.createdAt).unix() - dayjs(a.createdAt).unix())
 
 const mockDir = path.resolve(path.resolve(), 'server/utils/_mock.ts')
 
 // generate static mock data to ts file
-async function generateStatic(...mocks: { name: string; data: any[] }[]) {
+async function generateStatic(...mocks: { name: string; type: string; data: any[] }[]) {
   const output = mocks
-    .map(mock => `export const ${mock.name} = ${JSON.stringify(mock.data)};`)
+    .map(mock => `export const ${mock.name}: ${mock.type} = ${JSON.stringify(mock.data)};`)
     .join('\n')
 
   await fs.writeFile(mockDir, `${output}\n`)
@@ -74,7 +82,7 @@ async function generateStatic(...mocks: { name: string; data: any[] }[]) {
 
 export default function genStaticData() {
   return generateStatic(
-    { name: 'fakeUsers', data: fakeUsers },
-    { name: 'fakePosts', data: fakePosts },
+    { name: 'fakeUsers', type: 'UserAuth[]', data: fakeUsers },
+    { name: 'fakePosts', type: 'Post[]', data: fakePosts },
   )
 }

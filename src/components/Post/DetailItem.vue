@@ -1,20 +1,17 @@
 <script setup lang="ts">
 import type { Post, User } from '~/types'
 
-const props = defineProps<{
+defineProps<{
   post: Post
   owner: User
 }>()
-
-const avatar = useImg(props.owner.avatar)
 </script>
 
 <template>
   <div class="user-box">
     <NuxtLink class="avatar" :to="`/@${owner.name}`">
       <CommonImg
-        :src="avatar"
-        alt="avatar"
+        :src="owner.avatar"
       />
     </NuxtLink>
 

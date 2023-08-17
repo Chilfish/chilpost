@@ -4,10 +4,9 @@ export interface UserStatus {
   follower_count: number
   following_count: number
   post_count: number
-  is_following: boolean
 
-  // followers: Id[]
-  // following: Id[]
+  followers: Id[]
+  following: Id[]
 }
 
 export interface UserBase {
@@ -24,11 +23,9 @@ export interface User extends UserBase {
   status: UserStatus
 }
 
-export interface UserAuth extends User {
-  password: string
-}
-
 export interface UserLogin {
   email: string
   password: string
 }
+
+export type UserAuth = User & UserLogin

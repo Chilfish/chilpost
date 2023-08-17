@@ -49,7 +49,8 @@ export function newUser(email: string, password: string, name?: string): UserAut
       post_count: 0,
       follower_count: 0,
       following_count: 0,
-      is_following: false,
+      followers: [],
+      following: [],
     },
   }
   fakeUsers.unshift(user)

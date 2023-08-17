@@ -13,24 +13,25 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
-  async function setCurUser(user?: User) {
-    if (user)
-      return curUser.value = user
+  async function setCurUser(user: User) {
+    return curUser.value = user
+  }
 
+  async function me() {
     try {
-      const user = await useMyFetch<User>('/auth/me')
-      const { data } = user
+      const { data } = await useMyFetch<User>('/auth/me')
       curUser.value = data || null
-      return user.data
+      return curUser.value
     }
-    catch (e: any) {
-      return e.data
+    catch (e) {
+      return null
     }
   }
 
   return {
     curUser,
     setCurUser,
+    me,
     logout,
   }
 })

@@ -1,5 +1,5 @@
 import type { ApiResult, User } from '~/types'
-import { delay } from '~/utils'
+import { delay, toggleFollow } from '~/utils'
 
 interface QueryParams {
   id?: string
@@ -26,12 +26,7 @@ export default defineEventHandler(async (event): ApiResult => {
     })
   }
 
-  const isFollowing = user.status.is_following ? -1 : 1
-
-  user.status.follower_count += isFollowing
-  curUser.status.following_count += isFollowing
-
-  user.status.is_following = !user.status.is_following
+  await toggleFollow(curUser, user)
 
   return {
     data: true,
