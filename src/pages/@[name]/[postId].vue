@@ -49,8 +49,8 @@ watchEffect(() => {
       class="parent-post"
     >
       <PostItem
-        :post="state?.data?.post.parentPost"
-        :owner="state?.data?.owner"
+        :post="state?.data?.post.parentPost.post"
+        :owner="state?.data?.post.parentPost.owner"
       />
 
       <div class="vr" />
