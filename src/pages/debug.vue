@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Toast } from '~/appCP/Toast'
+
 const userStore = useUserStore()
 </script>
 
@@ -14,4 +16,10 @@ const userStore = useUserStore()
     />
     {{ userStore.curUser }}
   </div>
+
+  <button
+    @click="Toast('hello')"
+  >
+    Toast
+  </button>
 </template>

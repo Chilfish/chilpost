@@ -1,0 +1,39 @@
+@use "~/assets/variables" as *;
+
+.toast {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  z-index: 9999;
+  min-width: 10rem;
+  max-width: 40rem;
+  min-height: 3rem;
+  padding: 10px 20px;
+  color: #fff;
+  text-align: center;
+  overflow-wrap: anywhere;
+  background-color: #333;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+  transform: translateX(-50%);
+
+  &.error {
+    color: var(--error);
+    background-color: var(--error-1);
+  }
+
+  &.warning {
+    color: var(--warning);
+    background-color: var(--warning-1);
+  }
+
+  &.success {
+    color: var(--success);
+    background-color: var(--success-1);
+  }
+
+  &.info {
+    color: var(--info);
+    background-color: var(--info-1);
+  }
+}

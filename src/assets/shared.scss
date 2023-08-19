@@ -1,49 +1,14 @@
 @use "./variables" as *;
+@use "./theme";
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  font-size: var(--font-size);
-  font-weight: 400;
-  line-height: 1.5;
-  color-scheme: light dark;
-  font-synthesis: none;
-  text-rendering: optimizelegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-size-adjust: 100%;
-
-  --border-color: #e5e7eb;
-  --background-color: #fff;
-  --blur-bg: #fffc;
-  --color: #000;
-  --hover: #e7e7e8;
-  --hover-1: #f7f7f7;
-  --text-2: #536471;
-  --font-size: 0.9rem;
-  --gray: #e4e4e7;
-  --error: #f4212e;
-  --error-bg: #fee8ea;
+  font-size: 15px;
+  color: var(--text);
+  background-color: var(--bg);
 }
 
 * {
   box-sizing: border-box;
-}
-
-html {
-  color: var(--color);
-  background-color: var(--background-color);
-
-  &.dark {
-    --background-color: #000;
-    --blur-bg: #26262600;
-    --color: #fff;
-    --border-color: #2f3336;
-    --hover: #181818;
-    --hover-1: #0f0f0f;
-    --text-2: #71767b;
-    --gray: #16181c;
-    --error-bg: #190305;
-  }
 }
 
 html,
