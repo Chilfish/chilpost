@@ -21,18 +21,20 @@ function normalizeOptions(params?: ToastParams): ToastParamsNormalized {
     ...options,
   }
 
-  // if (!normalized.appendTo) {
-  //   normalized.appendTo = document.body
-  // }
-  // else if (typeof normalized.appendTo === 'string') {
-  //   if (!process.client) { normalized.appendTo = undefined as never }
-  //   else {
-  //     let appendTo = document.querySelector<HTMLElement>(normalized.appendTo)
-  //     if (!appendTo)
-  //       appendTo = document.body
-  //     normalized.appendTo = appendTo
-  //   }
-  // }
+  if (!isClient) {
+    normalized.appendTo = (undefined as never)
+    return normalized as ToastParamsNormalized
+  }
+
+  if (!normalized.appendTo) {
+    normalized.appendTo = document.body
+  }
+  else if (typeof normalized.appendTo === 'string') {
+    let appendTo = document.querySelector<HTMLElement>(normalized.appendTo)
+    if (!appendTo)
+      appendTo = document.body
+    normalized.appendTo = appendTo
+  }
 
   return normalized as ToastParamsNormalized
 }

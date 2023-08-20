@@ -1,4 +1,5 @@
 import type { UseFetchOptions } from '#app'
+import Toast from '~/appCP/Toast'
 import type { ApiResult } from 'types'
 
 type Methods = 'get' | 'post' | 'put' | 'patch' | 'delete'
@@ -28,9 +29,8 @@ export default async function<T = any>(
   const { data: result, error } = await useFetch(url, fetchOptions)
 
   if (error.value) {
-    const modalStore = useModalStore()
     if (error.value.statusCode === 401 && url !== '/auth/me')
-      modalStore.open('login')
+      Toast({ message: 'Unauthorized, please login.', type: 'error' })
     throw createError({ ...error.value })
   }
 

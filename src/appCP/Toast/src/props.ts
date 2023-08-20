@@ -4,7 +4,7 @@ export const toastDefault = {
   id: '',
   message: '',
   type: 'info',
-  appendTo: process.client ? document.body : undefined as never,
+  appendTo: isClient ? document.body : (undefined as never),
   offset: 16,
   onClose: undefined,
 } as const

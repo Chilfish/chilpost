@@ -22,7 +22,7 @@ export const usePostStore = defineStore('post', () => {
       }
     }
     catch (e: any) {
-      console.log('toggle like error', e)
+      // console.log('toggle like error', e)
     }
   }
 

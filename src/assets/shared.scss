@@ -2,7 +2,7 @@
 @use "./theme";
 
 :root {
-  font-size: 15px;
+  font-size: 14px;
   color: var(--text);
   background-color: var(--bg);
 }
@@ -40,9 +40,9 @@ input {
   padding: 1rem;
   font-family: Roboto, sans-serif;
   font-weight: 300;
-  color: var(--text-color);
+  color: var(--text);
   resize: none;
-  background-color: var(--background-color);
+  background-color: var(--bg);
   border: none;
   border-radius: 8px;
   outline: none;

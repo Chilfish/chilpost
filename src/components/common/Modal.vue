@@ -43,7 +43,7 @@ div.slot {
   width: 90vw;
   padding: 1.5rem;
   margin: 0 auto;
-  background-color: var(--background-color);
+  background-color: var(--bg);
   border-radius: 16px;
   transform: translate(-50%, -50%);
 }

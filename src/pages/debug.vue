@@ -18,8 +18,8 @@ const userStore = useUserStore()
   </div>
 
   <button
-    @click="Toast('hello')"
+    @click="Toast({ message: 'hello', type: 'success' })"
   >
-    Toast
+    Toast me
   </button>
 </template>
