@@ -40,7 +40,7 @@ watchEffect(async () => {
   }
 
   if (err.value?.statusCode === 404) {
-    await delay(1000)
+    await delay(500)
     isRegister.value = confirm('User not found, register?')
     if (isRegister.value) {
       execute()
@@ -71,10 +71,6 @@ watchEffect(async () => {
         >
       </label>
     </form>
-
-    <div v-if="err" class="text-red">
-      {{ err?.statusMessage }}
-    </div>
 
     <div class="actions">
       <CommonButton

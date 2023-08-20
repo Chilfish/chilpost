@@ -1,0 +1,58 @@
+$themes: (
+  light: (
+    text: #000,
+    text-2: #536471,
+    bg: #fff,
+    border-color: #e5e7eb,
+    hover: #e7e7e8,
+    hover-1: #f7f7f7,
+    error-bg: #fee8ea,
+
+    gray: #e7e5e4,
+    red: #ff6969,
+
+    info: #909399,
+    info-1: #f4f4f5,
+    success: #67c23a,
+    success-1: #f0f9eb,
+    warning: #e6a23c,
+    warning-1: #fdf6ec,
+    error: #f56c6c,
+    error-1: #fef0f0
+  ),
+
+  dark: (
+    text: #ffffffde,
+    bg: #000,
+    blur-bg: #26262600,
+    border-color: #2f3336,
+    hover: #181818,
+    hover-1: #0f0f0f,
+    text-2: #71767b,
+    error-bg: #190305,
+
+    gray: #404040,
+    red: #b91c1c,
+
+    info: #909399,
+    info-1: #202121,
+    success: #67c23a,
+    success-1: #1c2518,
+    warning: #e6a23c,
+    warning-1: #292218,
+    error: #f56c6c,
+    error-1: #2b1d1d
+  )
+);
+
+@mixin themed() {
+  @each $theme, $map in $themes {
+    html.#{$theme} {
+      @each $key, $value in $map {
+        --#{"" + $key}: #{$value};
+      }
+    }
+  }
+}
+
+@include themed;
