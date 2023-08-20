@@ -29,7 +29,6 @@ const foBtnText = computed(() => {
 const {
   state,
   isLoading,
-  error,
   execute,
 } = useAsyncState(
   async () => await useMyFetch<boolean>(`/user/follow?id=${props.user.id}`),
@@ -101,8 +100,6 @@ watchEffect(() => {
           <span class="posts"> posts </span>
         </span>
       </div>
-
-      <CommonError v-if="error" :error="error" />
     </div>
   </div>
 </template>

@@ -3,6 +3,7 @@ import type { Rules } from 'async-validator'
 import { useAsyncValidator } from '@vueuse/integrations/useAsyncValidator'
 import type { NuxtError } from '#app'
 import type { User } from '~/types/user'
+import { Toast } from '~/appCP/Toast'
 
 definePageMeta({
   title: 'Settings',
@@ -58,7 +59,7 @@ const err = computed(() => (error.value as NuxtError)?.toJSON())
 watch(state, async () => {
   if (state.value?.data && curUser.value) {
     await userStore.setCurUser(curUser.value)
-    console.log('Settings saved!') // Toast needed
+    Toast({ message: 'Settings updated!', type: 'success' })
   }
 })
 </script>

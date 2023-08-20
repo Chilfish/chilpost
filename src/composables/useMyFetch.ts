@@ -28,11 +28,15 @@ export default async function<T = any>(
 
   const { data: result, error } = await useFetch(url, fetchOptions)
 
-  if (error.value) {
-    if (error.value.statusCode === 401 && url !== '/auth/me')
+  if (error.value && url !== '/auth/me') {
+    if (error.value.statusCode === 401 && url !== '/auth/login')
       Toast({ message: 'Unauthorized, please login.', type: 'error' })
-    throw createError({ ...error.value })
+    else
+      Toast({ message: error.value.statusMessage, type: 'error' })
   }
+
+  if (error.value)
+    throw createError({ ...error.value })
 
   return result.value as ApiResult<T>
 }
