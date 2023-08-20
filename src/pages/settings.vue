@@ -3,7 +3,7 @@ import type { Rules } from 'async-validator'
 import { useAsyncValidator } from '@vueuse/integrations/useAsyncValidator'
 import type { NuxtError } from '#app'
 import type { User } from '~/types/user'
-import { Toast } from '~/appCP/Toast'
+import { Toast } from '@cpa/Toast'
 
 definePageMeta({
   title: 'Settings',

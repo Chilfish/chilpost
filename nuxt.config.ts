@@ -1,4 +1,5 @@
 import process from 'node:process'
+import { fileURLToPath } from 'node:url'
 import genStaticData from './server/utils/mock'
 
 const {
@@ -27,12 +28,9 @@ export default defineNuxtConfig({
     ],
   ],
 
-  // components: [
-  //   {
-  //     path: '~/components/',
-  //     pathPrefix: false,
-  //   },
-  // ],
+  alias: {
+    '@cpa': fileURLToPath(new URL('./src/components_app', import.meta.url)),
+  },
 
   imports: {
     dirs: [

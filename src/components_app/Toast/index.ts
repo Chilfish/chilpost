@@ -1,4 +1,4 @@
-import toast from './src/Toast'
+import toast from './src/method'
 import { withInstallFunction } from '~/utils/install'
 
 /**

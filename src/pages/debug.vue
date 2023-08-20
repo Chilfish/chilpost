@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Toast } from '~/appCP/Toast'
+import { Toast } from '@cpa/Toast'
 
 const userStore = useUserStore()
 </script>

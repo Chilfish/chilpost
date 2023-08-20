@@ -1,5 +1,5 @@
 import type { UseFetchOptions } from '#app'
-import Toast from '~/appCP/Toast'
+import Toast from '@cpa/Toast'
 import type { ApiResult } from 'types'
 
 type Methods = 'get' | 'post' | 'put' | 'patch' | 'delete'

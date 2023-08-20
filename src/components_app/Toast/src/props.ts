@@ -1,12 +1,12 @@
 export const definePropType = <T>(val: any): PropType<T> => val
 
 export const toastDefault = {
+  appendTo: isClient ? document.body : (undefined as never),
   id: '',
   message: '',
-  type: 'info',
-  appendTo: isClient ? document.body : (undefined as never),
   offset: 16,
   onClose: undefined,
+  type: 'info',
 } as const
 
 export const toastProps = {
