@@ -1,6 +1,6 @@
-import type { UseFetchOptions } from '#app'
 import Toast from '@cpa/Toast'
 import type { ApiResult } from 'types'
+import type { UseFetchOptions } from '#app'
 
 type Methods = 'get' | 'post' | 'put' | 'patch' | 'delete'
 
@@ -14,10 +14,14 @@ export default async function<T = any>(
   options?: UseFetchOptions<T>,
 ): ApiResult<T> {
   const config = useRuntimeConfig()
+  const token = useCookie('token')
 
   const fetchOptions: UseFetchOptions<T> = {
     baseURL: config.public.apiURL,
     method,
+    headers: {
+      Authorization: `Bearer ${token.value}`,
+    },
     ...options,
   }
 

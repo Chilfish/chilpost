@@ -1,12 +1,6 @@
 import { H3Error } from 'h3'
-
-// the handled error codes
-const errorCodes = [
-  'unknown',
-
-  'not_admin',
-  'unauthorized',
-] as const
+import type { errorCodes } from '.'
+import { Errors } from '.'
 
 export type ErrorCode = typeof errorCodes[number]
 
@@ -16,24 +10,6 @@ export interface ErrorType<T = any> {
   statusCode: number
   data?: T
 }
-
-export const Errors: ErrorType[] = [
-  {
-    code: 'unknown',
-    message: 'Server error',
-    statusCode: 500,
-  },
-  {
-    code: 'not_admin',
-    message: 'Not an admin',
-    statusCode: 403,
-  },
-  {
-    code: 'unauthorized',
-    message: 'Unauthorized',
-    statusCode: 401,
-  },
-]
 
 export class MyError extends H3Error {
   code: ErrorCode

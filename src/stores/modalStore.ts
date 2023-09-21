@@ -1,3 +1,4 @@
+import { defineStore } from 'pinia'
 import type { PostMeta } from '~/types'
 
 import Login from '@/components/Login.vue'

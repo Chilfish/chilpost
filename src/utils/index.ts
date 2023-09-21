@@ -1,14 +1,11 @@
 /* eslint-disable n/prefer-global/process */
 
 import dayjs from 'dayjs'
-import { v4 as uuidv4 } from 'uuid'
 import type { NuxtError } from 'nuxt/app'
 import type { User, UserDetail } from '~/types'
 
 export const isClient = process.client
 export const isDev = process.env.NODE_ENV === 'development'
-
-export const uuid = () => uuidv4()
 
 export const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 

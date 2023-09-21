@@ -1,6 +1,5 @@
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
-import genStaticData from './server/utils/mock'
 
 const {
   API_SECRET = 'secret',
@@ -17,15 +16,7 @@ export default defineNuxtConfig({
     '@unocss/nuxt',
     '@nuxt/image',
     '@vueuse/nuxt',
-    [
-      '@pinia/nuxt',
-      {
-        autoImports: [
-          'defineStore',
-          ['defineStore', 'definePiniaStore'],
-        ],
-      },
-    ],
+    '@pinia/nuxt',
   ],
 
   alias: {
@@ -47,16 +38,6 @@ export default defineNuxtConfig({
     '@unocss/reset/tailwind.css',
     '~/assets/shared.scss',
   ],
-
-  vite: {
-    css: {
-      preprocessorOptions: {
-        scss: {
-          // additionalData: '@use "@/assets/_colors.scss" as *;'
-        },
-      },
-    },
-  },
 
   typescript: {
     strict: true,
@@ -83,10 +64,6 @@ export default defineNuxtConfig({
       },
     },
     errorHandler: '~/error/nitroErrorHandler.ts',
-  },
-
-  hooks: {
-    'nitro:build:before': () => genStaticData(), // generate static data before build
   },
 
   app: {

@@ -1,6 +1,6 @@
-import type { ApiResult, User, UserLogin } from '~/types'
+import type { UserLogin } from '~/types'
 
-export default defineEventHandler(async (event): ApiResult<User> => {
+export default defineEventHandler(async (event) => {
   const { email, password } = await readBody<UserLogin>(event)
 
   if (!email || !password) {
@@ -27,5 +27,7 @@ export default defineEventHandler(async (event): ApiResult<User> => {
     })
   }
 
-  return saveCookie(event, user)
+  return {
+    data: await userWithToken(user, event),
+  }
 })

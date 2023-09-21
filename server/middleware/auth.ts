@@ -14,14 +14,17 @@ export default defineEventHandler(async (event) => {
 
   const toReg = (str: string) => new RegExp(`^${str.replace(/\*/g, '.*')}$`)
 
-  if (whiteList.map(toReg).some(item => item.test(path))
-    || !authList.map(toReg).some(item => item.test(path))
-  )
-    return
+  const needAuth = !whiteList.map(toReg).some(item => item.test(path))
+    && authList.map(toReg).some(item => item.test(path))
 
-  const user = await getUserFromSession(event)
+  const token = getHeader(event, 'Authorization')?.split(' ')?.[1]
+    || getCookie(event, 'token')
+    || ''
 
-  if (!user)
+  const { id } = await verifyToken(token)
+  const user = await getUserById(id)
+
+  if (!user && needAuth)
     return newError('unauthorized')
 
   event.context.user = user

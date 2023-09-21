@@ -1,7 +1,7 @@
-import type { ApiResult, User } from '~/types'
+import type { ApiResult, User, UserAuth } from '~/types'
 
 export default defineEventHandler(async (event): ApiResult<User> => {
-  const user = event.context.user
+  const user = event.context.user as UserAuth
 
   if (!user) {
     return createError({

@@ -1,3 +1,4 @@
+import { defineStore } from 'pinia'
 import type { PostDetail, pid, uid } from '~/types'
 
 export const usePostStore = defineStore('post', () => {

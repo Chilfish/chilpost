@@ -1,3 +1,5 @@
+import { defineStore } from 'pinia'
+
 export const useDarkStore = defineStore('dark', () => {
   const isDark = useDark({
     valueLight: 'light',

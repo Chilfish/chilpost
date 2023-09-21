@@ -11,7 +11,7 @@ export interface NavItem {
 }
 
 interface apiResult<T> {
-  data?: T | null
+  data: T
   error?: NuxtError
 }
 

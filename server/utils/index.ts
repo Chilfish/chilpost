@@ -1,6 +1,5 @@
 import * as process from 'node:process'
 import { fakeUsers } from './_mock'
-import { uuid } from '~/utils'
 import type { Post, PostDetail, UserAuth } from '~/types'
 
 export const isDev = process.env.NODE_ENV === 'development'
@@ -23,7 +22,7 @@ export function newPost(
 ): Post {
   const now = new Date()
   return {
-    id: uuid(),
+    id: now.toUTCString(), // TODO: from database
     owner_id: ownerId,
     content,
     isBody,
@@ -42,7 +41,7 @@ export function newPost(
 export function newUser(email: string, password: string, name?: string): UserAuth {
   const _name = name || email.split('@')[0]
   const user: UserAuth = {
-    id: uuid(),
+    id: (new Date()).toUTCString(),
     email,
     password,
     name: _name,

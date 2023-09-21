@@ -1,6 +1,5 @@
 module.exports = {
   extends: [
-    '@nuxtjs/eslint-config-typescript',
     '@antfu',
   ],
   rules: {
@@ -11,6 +10,5 @@ module.exports = {
     'dist',
     '.output',
     '.nuxt',
-    '_mock.ts',
   ],
 }

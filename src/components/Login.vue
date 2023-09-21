@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { NuxtError } from '#app'
-import type { User, UserLogin } from '~/types/user'
+import type { UserLogin, UserWithToken } from '~/types/user'
 
 const inputs = reactive<UserLogin>({
   email: '',
@@ -13,7 +13,6 @@ const userStore = useUserStore()
 const modalStore = useModalStore()
 
 const {
-  state,
   isLoading,
   error,
   execute,
@@ -22,23 +21,25 @@ const {
     const { ...data } = inputs // remove the reactivity
 
     if (isRegister.value)
-      return await useMyFetch<User>('/auth/register', 'post', data)
+      return await useMyFetch<UserWithToken>('/auth/register', 'post', data)
 
-    return await useMyFetch<User>('/auth/login', 'post', data)
+    return await useMyFetch<UserWithToken>('/auth/login', 'post', data)
   },
   null,
-  { immediate: false },
+  {
+    immediate: false,
+    onSuccess(res) {
+      const user = res?.data.user
+
+      userStore.setCurUser(user!)
+      modalStore.toggleModal()
+    },
+  },
 )
 
 const err = computed(() => (error.value as NuxtError)?.toJSON())
 
 watchEffect(async () => {
-  const user = state.value?.data
-  if (user) {
-    userStore.setCurUser(user)
-    modalStore.toggleModal()
-  }
-
   if (err.value?.statusCode === 404) {
     await delay(500)
     isRegister.value = confirm('User not found, register?')

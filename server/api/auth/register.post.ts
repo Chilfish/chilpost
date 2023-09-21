@@ -21,5 +21,7 @@ export default defineEventHandler(async (event) => {
 
   const user = newUser(email, password)
 
-  return saveCookie(event, user)
+  return {
+    data: await userWithToken(user, event),
+  }
 })

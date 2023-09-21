@@ -8,12 +8,6 @@ interface Body {
 export default defineEventHandler(async (event): ApiResult<PostDetail> => {
   const { content, meta } = await readBody(event) as Body
   const user = event.context.user as User
-  if (!user) {
-    return createError({
-      statusCode: 401,
-      statusMessage: 'Unauthorized',
-    })
-  }
 
   const { type: postType, pcId } = meta
   const post = newPost(user.id, content, postType === 'new')

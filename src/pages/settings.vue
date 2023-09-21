@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { Rules } from 'async-validator'
 import { useAsyncValidator } from '@vueuse/integrations/useAsyncValidator'
+import { Toast } from '@cpa/Toast'
 import type { NuxtError } from '#app'
 import type { User } from '~/types/user'
-import { Toast } from '@cpa/Toast'
 
 definePageMeta({
   title: 'Settings',
