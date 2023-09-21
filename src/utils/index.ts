@@ -1,7 +1,7 @@
 /* eslint-disable n/prefer-global/process */
 
 import dayjs from 'dayjs'
-import type { NuxtError } from 'nuxt/app'
+import type { ErrorType } from './../../server/error/newError'
 import type { User, UserDetail } from '~/types'
 
 export const isClient = process.client
@@ -50,10 +50,10 @@ export async function toggleFollow(user: User, following: User | UserDetail) {
 
 export function useErrorTitle(e: any) {
   if (e) {
-    const err = e as NuxtError
+    const err = e as ErrorType
 
     useHead({
-      title: `${err.statusCode} / ${err.statusMessage}`,
+      title: `${err.statusCode} / ${err.message}`,
     })
   }
 }

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { ErrorType } from '../../server/error'
 import type { UserLogin, UserWithToken } from '~/types/user'
 
 const inputs = reactive<UserLogin>({
@@ -13,38 +12,39 @@ const userStore = useUserStore()
 const modalStore = useModalStore()
 
 const {
-  isLoading,
-  error,
-  execute,
-} = useAsyncState(
-  async () => {
-    const { ...data } = inputs // remove the reactivity
+  data: loginData,
+  // pending,
+  error: loginError,
+  execute: login,
+} = useMyFetch<UserWithToken>('/auth/login', 'post', inputs, { immediate: false, watch: false })
 
-    if (isRegister.value)
-      return await useMyFetch<UserWithToken>('/auth/register', 'post', data)
+const {
+  data: registerData,
+  execute: register,
+} = useMyFetch<UserWithToken>('/auth/register', 'post', inputs, { immediate: false, watch: false })
 
-    return await useMyFetch<UserWithToken>('/auth/login', 'post', data)
-  },
-  null,
-  {
-    immediate: false,
-    onSuccess(res) {
-      const user = res?.data.user
-
-      userStore.setCurUser(user!)
-      modalStore.toggleModal()
-    },
-  },
-)
+function onSuccess(data?: UserWithToken) {
+  if (!data)
+    return
+  const user = data.user
+  userStore.setCurUser(user)
+  modalStore.toggleModal()
+}
 
 watchEffect(async () => {
-  if ((error.value as ErrorType)?.statusCode === 404) {
+  if (loginError.value?.statusCode === 404) {
     await delay(500)
     isRegister.value = confirm('User not found, register?')
+
     if (isRegister.value) {
-      execute()
-      isRegister.value = false
+      register().then(() => {
+        isRegister.value = false
+        onSuccess(registerData.value?.data)
+      })
     }
+  }
+  else {
+    onSuccess(loginData.value?.data)
   }
 })
 </script>
@@ -77,9 +77,8 @@ watchEffect(async () => {
         @click="modalStore.toggleModal()"
       />
       <CommonButton
-        :is-loading="isLoading"
         text="Log in"
-        @click="execute()"
+        @click="login()"
       />
     </div>
   </div>

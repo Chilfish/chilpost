@@ -25,17 +25,17 @@ const darkStore = useDarkStore()
 
 const postStore = usePostStore()
 const {
-  state,
-  isLoading,
+  data,
+  pending,
   error,
-} = useAsyncState(useMyFetch<PostDetail[]>('/post'), null)
+} = useMyFetch<PostDetail[]>('/post')
 
 const err = computed(() => (error.value as NuxtError)?.toJSON())
-const isBodyPosts = computed(() => state.value?.data?.filter(p => p.post.isBody))
+const isBodyPosts = computed(() => data.value?.data?.filter(p => p.post.isBody))
 
 watchEffect(() => {
-  if (state.value?.data)
-    postStore.setPosts(state.value.data)
+  if (data.value?.data)
+    postStore.setPosts(data.value.data)
 
   useErrorTitle(err.value)
 })
@@ -70,8 +70,8 @@ watchEffect(() => {
     </div>
   </header>
 
-  <CommonLoading :error="err" :is-loading="isLoading" />
-  <main v-if="state">
+  <CommonLoading :error="err" :is-loading="pending" />
+  <main v-if="data">
     <section
       v-for="item in isBodyPosts"
       :key="item.post.id"

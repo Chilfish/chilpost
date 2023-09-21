@@ -1,7 +1,5 @@
 import Toast from '@cpa/Toast'
-import type { ApiResult } from 'types'
-import type { ErrorType } from '../../server/error'
-import { newError } from '../../server/error'
+import type { MyError } from '../../server/error'
 import type { UseFetchOptions } from '#app'
 
 type Methods = 'get' | 'post' | 'put' | 'patch' | 'delete'
@@ -9,42 +7,49 @@ type Methods = 'get' | 'post' | 'put' | 'patch' | 'delete'
 /**
  *  @see https://nuxt.com.cn/docs/api/composables/use-fetch
  */
-export default async function<T = any>(
+export default function useMyFetch<T = any>(
   url: string,
   method: Methods = 'get',
   data: any = null,
-  options?: UseFetchOptions<T>,
-): ApiResult<T> {
+  options?: UseFetchOptions<{ data: T }>,
+) {
   const config = useRuntimeConfig()
   const token = useCookie('token')
 
-  const fetchOptions: UseFetchOptions<T> = {
+  const fetchOptions: UseFetchOptions<{ data: T }> = {
     baseURL: config.public.apiURL,
     method,
     headers: {
       Authorization: `Bearer ${token.value}`,
     },
+
+    onResponse({ response }) {
+      if (response.ok)
+        return
+
+      const error = response._data as MyError
+
+      if (error.statusCode === 401 && url !== '/auth/login')
+        Toast({ message: 'Unauthorized, please login.', type: 'error' })
+      else
+        Toast({ message: error.message, type: 'error' })
+    },
+
     ...options,
   }
 
-  if (method === 'post' || method === 'put' || method === 'patch')
-    fetchOptions.body = data
-  else if (method === 'get' || method === 'delete')
-    fetchOptions.params = data
+  switch (method) {
+    case 'get':
+    case 'delete':
+      fetchOptions.params = data
+      break
 
-  const { data: result, error } = await useFetch(url, fetchOptions)
-
-  const err = ref<ErrorType>(error.value?.data)
-
-  if (err.value && url !== '/user/me') {
-    if (err.value.statusCode === 401 && url !== '/auth/login')
-      Toast({ message: 'Unauthorized, please login.', type: 'error' })
-    else
-      Toast({ message: err.value.message, type: 'error' })
+    case 'post':
+    case 'put':
+    case 'patch':
+      fetchOptions.body = data
+      break
   }
 
-  if (error.value)
-    throw newError(err.value.code)
-
-  return result.value as ApiResult<T>
+  return useFetch<{ data: T }, MyError>(url, fetchOptions)
 }

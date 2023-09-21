@@ -1,30 +1,17 @@
 <script setup lang="ts">
-import type { NuxtError } from '#app'
 import type { PostDetail } from '~/types'
 
-const route = useRoute()
-const postId = ref(route.params.postId as string)
+const postId = computed(() => useRoute().params.postId as string)
 
 const {
-  state,
-  isLoading,
+  data,
+  pending,
   error,
-  execute,
-} = useAsyncState(
-  useMyFetch<PostDetail>(`/post/search?id=${postId.value}`),
-  null,
-)
-const err = computed(() => (error.value as NuxtError)?.toJSON())
+} = useMyFetch<PostDetail>(`/post/search?id=${postId.value}`)
 
 watchEffect(() => {
-  const newId = route.params.postId as string
-  if (newId !== postId.value) {
-    postId.value = newId
-    execute()
-  }
-
-  if (state.value?.data) {
-    const { post, owner } = state.value?.data
+  if (data.value?.data) {
+    const { post, owner } = data.value?.data
     const title = `${owner.nickname}'s Post: ${post.content.substring(0, 50)}`
 
     useHead({
@@ -32,7 +19,7 @@ watchEffect(() => {
     })
   }
 
-  useErrorTitle(err.value)
+  useErrorTitle(error.value?.data)
 })
 </script>
 
@@ -41,16 +28,16 @@ watchEffect(() => {
     <h3>Post Details</h3>
   </CommonHeader>
 
-  <CommonLoading :error="err" :is-loading="isLoading" />
+  <CommonLoading :error="error?.data" :is-loading="pending" />
 
-  <main v-if="state?.data && !isLoading">
+  <main v-if="data?.data && !pending">
     <div
-      v-if="state.data.post.parentPost"
+      v-if="data.data.post.parentPost"
       class="parent-post"
     >
       <PostItem
-        :post="state?.data?.post.parentPost.post"
-        :owner="state?.data?.post.parentPost.owner"
+        :post="data?.data?.post.parentPost.post"
+        :owner="data?.data?.post.parentPost.owner"
       />
 
       <div class="vr" />
@@ -58,12 +45,12 @@ watchEffect(() => {
 
     <div>
       <PostDetailItem
-        :post="state?.data.post"
-        :owner="state?.data?.owner"
+        :post="data?.data.post"
+        :owner="data?.data?.owner"
       />
     </div>
 
-    <PostComments :comment-ids="state?.data?.post?.status.comments" />
+    <PostComments :comment-ids="data?.data?.post?.status.comments" />
   </main>
 </template>
 
