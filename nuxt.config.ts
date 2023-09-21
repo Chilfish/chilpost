@@ -82,6 +82,7 @@ export default defineNuxtConfig({
         target: 'esnext',
       },
     },
+    errorHandler: '~/error/nitroErrorHandler.ts',
   },
 
   hooks: {
