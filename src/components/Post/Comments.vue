@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { NuxtError } from '#app'
 import type { PostDetail, pid } from '~/types'
 
 const props = defineProps<{
@@ -7,22 +6,21 @@ const props = defineProps<{
 }>()
 
 const {
-  state,
-  isLoading,
+  data,
+  pending,
   error,
-} = useAsyncState(
-  useMyFetch<PostDetail[]>('/post/comments', 'post', { commentIds: props.commentIds }),
-  null,
-)
-const err = computed(() => (error.value as NuxtError)?.toJSON())
+} = useMyFetch<PostDetail[]>('/post/comments', {
+  method: 'post',
+  body: { commentIds: props.commentIds },
+})
 </script>
 
 <template>
-  <CommonLoading :error="err" :is-loading="isLoading" />
+  <CommonLoading :error="error?.data" :is-loading="pending" />
 
-  <section v-if="state?.data && !isLoading">
+  <section v-if="data?.data">
     <PostItem
-      v-for="comment in state?.data"
+      v-for="comment in data.data"
       :key="comment.post.id"
       :post="comment.post"
       :owner="comment.owner"

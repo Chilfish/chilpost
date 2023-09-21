@@ -12,6 +12,7 @@ definePageMeta({
 
 const userStore = useUserStore()
 const curUser = ref({ ...userStore.curUser } as User | null)
+const isLoading = ref(false)
 
 const maxBio = 160
 
@@ -41,19 +42,25 @@ const rules: Rules = {
 const { pass, errorFields } = useAsyncValidator(curUser, rules)
 const {
   data,
-  pending,
   error,
   execute,
-} = useMyFetch<boolean>('/user/update', 'post', curUser.value)
+} = useMyFetch<boolean>('/user/update', {
+  method: 'post',
+  body: curUser,
+  manual: true,
+})
 
 function updateSettings() {
-  if (pass.value && curUser.value)
+  if (pass.value && curUser.value) {
+    isLoading.value = true
     execute()
+  }
 }
 
 watch(data, async () => {
   if (data.value?.data && curUser.value) {
     await userStore.setCurUser(curUser.value)
+    isLoading.value = false
     Toast({ message: 'Settings updated!', type: 'success' })
   }
 })
@@ -136,7 +143,7 @@ watch(data, async () => {
     <CommonButton
       :disabled="!pass"
       text="Save"
-      :is-loading="pending"
+      :is-loading="isLoading"
       @click="updateSettings"
     />
   </form>

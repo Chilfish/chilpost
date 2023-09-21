@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PostStatus } from '~/types'
+import type { PostStatus, uid } from '~/types'
 
 const props = defineProps<{
   status: PostStatus
@@ -10,8 +10,6 @@ const modalStore = useModalStore()
 const curUser = useUserStore().curUser
 const isLike = computed(() => curUser && props.status.likes.includes(curUser.id))
 
-const postStore = usePostStore()
-
 const status = ref(props.status)
 const likeStyle = computed(() =>
   isLike.value
@@ -20,20 +18,16 @@ const likeStyle = computed(() =>
 )
 
 const {
-  state: likes,
+  data: likes,
   execute: toggleLike,
-} = useAsyncState(
-  async () => await postStore.toggleLike(props.id),
-  null,
-  {
-    immediate: false,
-  },
-)
+} = useMyFetch<uid[]>(`/post/like?id=${props.id}`, {
+  manual: true,
+})
 
 watchEffect(() => {
   if (likes.value) {
-    status.value.likes = likes.value
-    status.value.like_count = likes.value.length
+    status.value.likes = likes.value.data
+    status.value.like_count = likes.value.data.length
   }
 })
 </script>

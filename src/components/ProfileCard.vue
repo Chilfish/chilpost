@@ -11,6 +11,7 @@ const curUser = userStore.curUser
 const isHovered = ref(false)
 const isFollowing = ref(false)
 const isMe = ref(false)
+const isLoading = ref(false)
 
 const foBtnText = computed(() => {
   if (isMe.value)
@@ -27,14 +28,11 @@ const foBtnText = computed(() => {
 })
 
 const {
-  state,
-  isLoading,
+  data,
   execute,
-} = useAsyncState(
-  async () => await useMyFetch<boolean>(`/user/follow?id=${props.user.id}`),
-  null,
-  { immediate: false },
-)
+} = useMyFetch<boolean>(`/user/follow?id=${props.user.id}`, {
+  manual: true,
+})
 
 watchEffect(() => {
   if (curUser) {
@@ -42,7 +40,8 @@ watchEffect(() => {
     isMe.value = curUser.id === props.user.id
   }
 
-  if (state.value?.data) {
+  if (data.value?.data) {
+    isLoading.value = false
     isFollowing.value = !isFollowing.value
     curUser && toggleFollow(curUser, props.user)
   }
@@ -64,7 +63,7 @@ watchEffect(() => {
           :class="isFollowing && isHovered ? 'unfollow' : ''"
           :disabled="isLoading"
           @click="() =>
-            isMe ? $router.push('/settings') : execute()"
+            isMe ? $router.push('/settings') : (execute(), isLoading = true)"
         >
           <span
             :style="{ display: isLoading ? 'inline' : 'none' }"

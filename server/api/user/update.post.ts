@@ -1,7 +1,7 @@
 import { delay } from '~/utils'
-import type { ApiResult, User, UserAuth } from '~/types'
+import type { User, UserAuth } from '~/types'
 
-export default defineEventHandler(async (event): ApiResult => {
+export default defineEventHandler(async (event) => {
   await delay(500)
   const oldUser = event.context.user as UserAuth
 

@@ -21,7 +21,7 @@ export const useUserStore = defineStore('user', () => {
   async function me() {
     try {
       const { data } = await useMyFetch<User>('/user/me')
-      curUser.value = data.value || null
+      curUser.value = data.value?.data || null
       return curUser.value
     }
     catch (e) {

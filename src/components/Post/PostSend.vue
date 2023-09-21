@@ -1,39 +1,30 @@
 <script setup lang="ts">
+import type { PostDetail } from 'types'
+
 const modalStore = useModalStore()
 const postStore = usePostStore()
 
 const postValue = ref('')
 
 const {
-  state,
-  isLoading,
+  data,
   execute: submit,
-  error,
-} = useAsyncState(
-  async () => {
-    if (!postValue.value)
-      return
-    return useMyFetch('/post/new', 'post',
-      {
-        content: postValue.value,
-        meta: modalStore.postMeta,
-      },
-    )
+} = useMyFetch<PostDetail>('/post/new', {
+  method: 'post',
+  body: {
+    content: postValue,
+    meta: modalStore.postMeta,
   },
-  null,
-  { immediate: false },
-)
+  manual: true,
+})
 
-watch(isLoading, () => {
-  const post = state.value?.data
+watchEffect(() => {
+  const post = data.value?.data
   if (post) {
     postStore.addPost(post)
     postValue.value = ''
     modalStore.toggleModal()
   }
-
-  if (error.value)
-    console.log(error.value)
 })
 </script>
 

@@ -6,45 +6,54 @@ const inputs = reactive<UserLogin>({
   password: '',
 })
 
-const isRegister = ref(false)
+const isConfirm = ref(false)
+const isLoading = ref(false)
 
 const userStore = useUserStore()
 const modalStore = useModalStore()
 
 const {
   data: loginData,
-  // pending,
   error: loginError,
   execute: login,
-} = useMyFetch<UserWithToken>('/auth/login', 'post', inputs, { immediate: false, watch: false })
+} = useMyFetch<UserWithToken>('/auth/login', {
+  method: 'post',
+  body: inputs,
+  manual: true,
+})
 
 const {
   data: registerData,
   execute: register,
-} = useMyFetch<UserWithToken>('/auth/register', 'post', inputs, { immediate: false, watch: false })
+} = useMyFetch<UserWithToken>('/auth/register', {
+  method: 'post',
+  body: inputs,
+  manual: true,
+})
 
 function onSuccess(data?: UserWithToken) {
   if (!data)
     return
+  isLoading.value = false
+
   const user = data.user
   userStore.setCurUser(user)
   modalStore.toggleModal()
 }
 
-watchEffect(async () => {
-  if (loginError.value?.statusCode === 404) {
-    await delay(500)
-    isRegister.value = confirm('User not found, register?')
+watchEffect(() => {
+  if (loginData.value)
+    return onSuccess(loginData.value.data)
 
-    if (isRegister.value) {
-      register().then(() => {
-        isRegister.value = false
-        onSuccess(registerData.value?.data)
-      })
+  if (registerData.value)
+    return onSuccess(registerData.value.data)
+
+  if (!isConfirm.value && loginError.value?.statusCode === 404) {
+    if (confirm('User not found, register?')) {
+      isLoading.value = true
+      register()
     }
-  }
-  else {
-    onSuccess(loginData.value?.data)
+    isConfirm.value = true
   }
 })
 </script>
@@ -78,7 +87,8 @@ watchEffect(async () => {
       />
       <CommonButton
         text="Log in"
-        @click="login()"
+        :is-loading="isLoading"
+        @click="login(), isConfirm = false, isLoading = true"
       />
     </div>
   </div>
