@@ -32,6 +32,27 @@ export const Errors = [
     message: 'User Not Found',
     statusCode: 404,
   },
+  {
+    code: 'conflict_user',
+    message: 'User already exists',
+    statusCode: 409,
+  },
+  {
+    code: 'conflict_follow',
+    message: 'Cannot follow yourself',
+    statusCode: 409,
+  },
+
+  // post
+  {
+    code: 'notfound_comment',
+    statusCode: 404,
+  },
+  {
+    code: 'notfound_post',
+    message: 'Post Not Found',
+    statusCode: 404,
+  },
 
   // jose
   {

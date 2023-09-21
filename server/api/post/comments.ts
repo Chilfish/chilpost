@@ -5,10 +5,11 @@ export default defineEventHandler(async (event) => {
 
   const comments = commentIds.map((id) => {
     const comment = fakePosts.find(post => post.id === id)
+
     if (!comment) {
-      throw createError({
-        statusCode: 404,
-        statusMessage: `Comment not found. Id: ${id}`,
+      throw new MyError({
+        message: `Comment not found. Id: ${id}`,
+        code: 'notfound_comment',
       })
     }
     return toDetail(comment)

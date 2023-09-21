@@ -1,11 +1,11 @@
-import type { ApiResult, PostDetail, PostMeta, User } from '~/types'
+import type { PostMeta, User } from '~/types'
 
 interface Body {
   content: string
   meta: PostMeta
 }
 
-export default defineEventHandler(async (event): ApiResult<PostDetail> => {
+export default defineEventHandler(async (event) => {
   const { content, meta } = await readBody(event) as Body
   const user = event.context.user as User
 
@@ -25,13 +25,8 @@ export default defineEventHandler(async (event): ApiResult<PostDetail> => {
   // comment or repost
   const pcPost = fakePosts.find(post => post.id === pcId)
 
-  if (!pcPost) {
-    return createError({
-      statusCode: 400,
-      statusMessage: 'Bad Request',
-      message: `Post ${pcId} not found.`,
-    })
-  }
+  if (!pcPost)
+    return newError('notfound_post')
 
   if (postType === 'comment') {
     pcPost.status.comment_count++

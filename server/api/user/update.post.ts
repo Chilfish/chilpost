@@ -1,17 +1,11 @@
 import { delay } from '~/utils'
-import type { ApiResult, User } from '~/types'
+import type { ApiResult, User, UserAuth } from '~/types'
 
 export default defineEventHandler(async (event): ApiResult => {
   await delay(500)
-  const newUser = await readBody<User>(event)
-  const oldUser = event.context.user as User
+  const oldUser = event.context.user as UserAuth
 
-  if (!oldUser) {
-    return createError({
-      statusCode: 401,
-      statusMessage: 'Unauthorized',
-    })
-  }
+  const newUser = await readBody<User>(event)
 
   Object.assign(oldUser, newUser)
 

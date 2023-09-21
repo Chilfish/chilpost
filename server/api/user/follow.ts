@@ -1,37 +1,22 @@
-import type { ApiResult, User } from '~/types'
-import { delay, toggleFollow } from '~/utils'
+import type { UserAuth } from '~/types'
+import { toggleFollow } from '~/utils'
 
 interface QueryParams {
   id?: string
   curId?: string
 }
 
-export default defineEventHandler(async (event): ApiResult => {
-  await delay(500)
+export default defineEventHandler(async (event) => {
+  const curUser = event.context.user as UserAuth
 
   const { id } = getQuery(event) as QueryParams
   const user = fakeUsers.find(user => user.id === id)
-  if (!user) {
-    return createError({
-      statusCode: 404,
-      statusMessage: 'User not found',
-    })
-  }
 
-  const curUser = event.context.user as User
-  if (!curUser) {
-    return createError({
-      statusCode: 401,
-      statusMessage: 'Unauthorized',
-    })
-  }
+  if (!user)
+    return newError('notfound_user')
 
-  if (curUser.id === user.id) {
-    return createError({
-      statusCode: 400,
-      statusMessage: 'Bad Request',
-    })
-  }
+  if (curUser.id === user.id)
+    return newError('conflict_follow')
 
   await toggleFollow(curUser, user)
 
