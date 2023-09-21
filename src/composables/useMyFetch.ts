@@ -1,5 +1,7 @@
 import Toast from '@cpa/Toast'
 import type { ApiResult } from 'types'
+import type { ErrorType } from '../../server/error'
+import { newError } from '../../server/error'
 import type { UseFetchOptions } from '#app'
 
 type Methods = 'get' | 'post' | 'put' | 'patch' | 'delete'
@@ -32,15 +34,17 @@ export default async function<T = any>(
 
   const { data: result, error } = await useFetch(url, fetchOptions)
 
-  if (error.value && url !== '/auth/me') {
-    if (error.value.statusCode === 401 && url !== '/auth/login')
+  const err = ref<ErrorType>(error.value?.data)
+
+  if (err.value && url !== '/user/me') {
+    if (err.value.statusCode === 401 && url !== '/auth/login')
       Toast({ message: 'Unauthorized, please login.', type: 'error' })
     else
-      Toast({ message: error.value.statusMessage, type: 'error' })
+      Toast({ message: err.value.message, type: 'error' })
   }
 
   if (error.value)
-    throw createError({ ...error.value })
+    throw newError(err.value.code)
 
   return result.value as ApiResult<T>
 }

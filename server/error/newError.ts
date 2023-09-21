@@ -1,13 +1,13 @@
 import { H3Error } from 'h3'
-import type { errorCodes } from '.'
+import type { errorCode } from '.'
 import { Errors } from '.'
 
-export type ErrorCode = typeof errorCodes[number]
+export type ErrorCode = typeof errorCode
 
 export interface ErrorType<T = any> {
   code: ErrorCode
-  message: string
-  statusCode: number
+  message?: string
+  statusCode?: number
   data?: T
 }
 
@@ -15,9 +15,9 @@ export class MyError extends H3Error {
   code: ErrorCode
 
   constructor(input: ErrorType) {
-    super(input.message)
+    super(input.message || 'unknown error')
+    this.statusCode = input.statusCode || 500
     this.code = input.code
-    this.statusCode = input.statusCode
     this.data = input.data
   }
 }

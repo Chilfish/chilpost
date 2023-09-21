@@ -17,6 +17,9 @@ export default defineEventHandler(async (event) => {
   const needAuth = !whiteList.map(toReg).some(item => item.test(path))
     && authList.map(toReg).some(item => item.test(path))
 
+  if (!needAuth)
+    return
+
   const token = getHeader(event, 'Authorization')?.split(' ')?.[1]
     || getCookie(event, 'token')
     || ''
@@ -24,7 +27,7 @@ export default defineEventHandler(async (event) => {
   const { id } = await verifyToken(token)
   const user = await getUserById(id)
 
-  if (!user && needAuth)
+  if (!user)
     return newError('unauthorized')
 
   event.context.user = user

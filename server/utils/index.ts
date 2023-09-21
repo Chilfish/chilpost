@@ -1,70 +1,30 @@
-import * as process from 'node:process'
-import { fakeUsers } from './_mock'
-import type { Post, PostDetail, UserAuth } from '~/types'
+import process from 'node:process'
+import { MyError } from '../error'
+
+export * from '../error'
 
 export const isDev = process.env.NODE_ENV === 'development'
 
-export function toDetail(post: Post): PostDetail {
-  const owner = fakeUsers.find(user => user.id === post.owner_id)!
+/**
+ * assert if these's any value in the object is undefined
+ */
+export function hasUndefined(obj: Record<string, unknown>) {
+  return Object.entries(obj)
+    .map(([key, value]) => {
+      if (value === undefined)
+        return key
+      return null
+    }).filter((e): e is string => e !== null)
+}
 
-  const { name, nickname, avatar } = owner
-
-  return {
-    post,
-    owner: { name, nickname, avatar },
+export function assertParams(
+  params: Record<string, unknown>,
+) {
+  const paramsStatus = hasUndefined(params)
+  if (paramsStatus.length > 0) {
+    throw new MyError({
+      message: `Missing params: ${paramsStatus.join(', ')}`,
+      code: 'missing params',
+    })
   }
-}
-
-export function newPost(
-  ownerId: string,
-  content: string,
-  isBody: boolean = true,
-): Post {
-  const now = new Date()
-  return {
-    id: now.toUTCString(), // TODO: from database
-    owner_id: ownerId,
-    content,
-    isBody,
-    createdAt: now.toISOString(),
-    status: {
-      like_count: 0,
-      comment_count: 0,
-      repost_count: 0,
-      likes: [],
-      comments: [],
-      reposts: [],
-    },
-  }
-}
-
-export function newUser(email: string, password: string, name?: string): UserAuth {
-  const _name = name || email.split('@')[0]
-  const user: UserAuth = {
-    id: (new Date()).toUTCString(),
-    email,
-    password,
-    name: _name,
-    nickname: _name,
-    avatar: '/placeholder.avatar.png',
-    bio: 'Hello',
-    createdAt: new Date().toISOString(),
-    status: {
-      post_count: 0,
-      follower_count: 0,
-      following_count: 0,
-      followers: [],
-      following: [],
-    },
-  }
-  fakeUsers.unshift(user)
-  return user
-}
-
-export async function getUserByEmail(email: string) {
-  return fakeUsers.find(user => user.email === email)
-}
-
-export async function getUserById(id: string) {
-  return fakeUsers.find(user => user.id === id)
 }

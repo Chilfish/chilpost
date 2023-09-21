@@ -20,7 +20,7 @@ export const useUserStore = defineStore('user', () => {
 
   async function me() {
     try {
-      const { data } = await useMyFetch<User>('/auth/me')
+      const { data } = await useMyFetch<User>('/user/me')
       curUser.value = data || null
       return curUser.value
     }

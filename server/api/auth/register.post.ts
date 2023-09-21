@@ -3,12 +3,7 @@ import type { UserLogin } from '~/types'
 export default defineEventHandler(async (event) => {
   const { email, password } = await readBody<UserLogin>(event)
 
-  if (!email || !password) {
-    return createError({
-      statusCode: 400,
-      statusMessage: 'Missing email or password',
-    })
-  }
+  assertParams({ email, password })
 
   const _user = await getUserByEmail(email)
 

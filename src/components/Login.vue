@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { NuxtError } from '#app'
+import type { ErrorType } from '../../server/error'
 import type { UserLogin, UserWithToken } from '~/types/user'
 
 const inputs = reactive<UserLogin>({
@@ -37,10 +37,8 @@ const {
   },
 )
 
-const err = computed(() => (error.value as NuxtError)?.toJSON())
-
 watchEffect(async () => {
-  if (err.value?.statusCode === 404) {
+  if ((error.value as ErrorType)?.statusCode === 404) {
     await delay(500)
     isRegister.value = confirm('User not found, register?')
     if (isRegister.value) {

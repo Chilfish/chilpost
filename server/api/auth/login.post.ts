@@ -3,29 +3,16 @@ import type { UserLogin } from '~/types'
 export default defineEventHandler(async (event) => {
   const { email, password } = await readBody<UserLogin>(event)
 
-  if (!email || !password) {
-    return createError({
-      statusCode: 400,
-      statusMessage: 'Missing email or password',
-    })
-  }
+  assertParams({ email, password })
 
   const user = await getUserByEmail(email)
 
-  if (!user) {
-    return createError({
-      statusCode: 404,
-      statusMessage: 'User not found',
-    })
-  }
+  if (!user)
+    return newError('notfound_user')
 
   const verified = password === user.password
-  if (!verified) {
-    return createError({
-      statusCode: 401,
-      statusMessage: 'Incorrect password',
-    })
-  }
+  if (!verified)
+    return newError('incorrect_password')
 
   return {
     data: await userWithToken(user, event),
