@@ -1,25 +1,15 @@
 <script setup lang="ts">
-import type { PostDetail, pid } from '~/types'
+import type { PostDetail } from '~/types'
 
-const props = defineProps<{
-  commentIds: pid[]
+defineProps<{
+  comments: PostDetail[]
 }>()
-
-const {
-  data,
-  pending,
-  error,
-} = useMyFetch<PostDetail[]>('/post/comments', {
-  query: { commentIds: props.commentIds },
-})
 </script>
 
 <template>
-  <CommonLoading :error="error?.data" :is-loading="pending" />
-
-  <section v-if="data?.data">
+  <section>
     <PostItem
-      v-for="comment in data.data"
+      v-for="comment in comments"
       :key="comment.post.id"
       :post="comment.post"
       :owner="comment.owner"

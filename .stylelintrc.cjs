@@ -3,7 +3,7 @@ module.exports = {
     'stylelint-config-standard',
     'stylelint-config-standard-scss',
     'stylelint-config-recommended-vue/scss',
-    'stylelint-config-recess-order'
+    'stylelint-config-recess-order',
   ],
   rules: {
     'media-feature-range-notation': null,
@@ -30,17 +30,16 @@ module.exports = {
   },
   overrides: [
     {
-      files: ["*.vue", "**/*.vue"],
+      files: ['*.vue', '**/*.vue'],
       rules: {
         // "unit-allowed-list": ["em", "rem", "s"]
-      }
-    }
+      },
+    },
   ],
   ignoreFiles: [
-    "dist/**/*",
-    "node_modules/**/*",
-    ".nuxt/**/*",
-    ".output/**/*",
-  ]
-};
-
+    'dist/**/*',
+    'node_modules/**/*',
+    '.nuxt/**/*',
+    '.output/**/*',
+  ],
+}

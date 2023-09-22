@@ -4,8 +4,8 @@ useDarkStore() // init dark mode
 
 <template>
   <NuxtLayout>
-    <ClientOnly>
+    <!-- <ClientOnly> -->
     <NuxtPage />
-    </ClientOnly>
+    <!-- </ClientOnly> -->
   </NuxtLayout>
 </template>

@@ -1,4 +1,4 @@
-/* eslint-disable n/prefer-global/process */
+/* eslint-disable node/prefer-global/process */
 
 import dayjs from 'dayjs'
 import type { ErrorType } from './../../server/error/newError'

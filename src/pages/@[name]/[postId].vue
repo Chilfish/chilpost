@@ -4,14 +4,36 @@ import type { PostDetail } from '~/types'
 const postId = computed(() => useRoute().params.postId as string)
 
 const {
-  data,
-  pending,
-  error,
-} = useMyFetch<PostDetail>(`/post/search?id=${postId.value}`)
+  data: postData,
+  pending: postPending,
+  error: postError,
+} = useMyFetch<PostDetail>('/post/search', {
+  query: {
+    id: postId.value,
+  },
+  server: false,
+})
 
-watchEffect(() => {
-  if (data.value?.data) {
-    const { post, owner } = data.value?.data
+const commentIds = computed(() => postData.value?.data?.post?.status?.comments || [])
+
+const {
+  data: commentData,
+  pending: commentPending,
+  error: commentError,
+  execute: commentExecute,
+} = useMyFetch<PostDetail[]>('/post/comments', {
+  method: 'POST',
+  body: {
+    commentIds,
+  },
+  manual: true,
+})
+
+watch(() => postData.value, () => {
+  if (postData.value?.data) {
+    commentExecute()
+
+    const { post, owner } = postData.value?.data
     const title = `${owner.nickname}'s Post: ${post.content.substring(0, 50)}`
 
     useHead({
@@ -19,7 +41,7 @@ watchEffect(() => {
     })
   }
 
-  useErrorTitle(error.value?.data)
+  useErrorTitle(postError.value?.data)
 })
 </script>
 
@@ -28,16 +50,19 @@ watchEffect(() => {
     <h3>Post Details</h3>
   </CommonHeader>
 
-  <CommonLoading :error="error?.data" :is-loading="pending" />
+  <CommonLoading
+    :error="postError?.data"
+    :is-loading="postPending"
+  />
 
-  <main v-if="data?.data && !pending">
+  <main v-if="postData">
     <div
-      v-if="data.data.post.parentPost"
+      v-if="postData.data.post.parentPost"
       class="parent-post"
     >
       <PostItem
-        :post="data?.data?.post.parentPost.post"
-        :owner="data?.data?.post.parentPost.owner"
+        :post="postData.data.post.parentPost.post"
+        :owner="postData.data.post.parentPost.owner"
       />
 
       <div class="vr" />
@@ -45,12 +70,19 @@ watchEffect(() => {
 
     <div>
       <PostDetailItem
-        :post="data?.data.post"
-        :owner="data?.data?.owner"
+        :post="postData.data.post"
+        :owner="postData.data.owner"
       />
     </div>
 
-    <PostComments :comment-ids="data?.data?.post?.status.comments" />
+    <div v-if="commentData">
+      <CommonLoading
+        :error="commentError?.data"
+        :is-loading="commentPending"
+      />
+
+      <PostComments :comments="commentData.data" />
+    </div>
   </main>
 </template>
 
