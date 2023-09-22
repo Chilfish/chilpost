@@ -1,0 +1,29 @@
+@use "../variables" as *;
+
+section {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+main {
+  padding: 0.5rem;
+  transition: all 0.3s ease-in-out;
+}
+
+@media (min-width: $sm) {
+  main {
+    padding: 0.5rem 1rem;
+  }
+
+  section:hover {
+    background: var(--hover-1);
+  }
+}
+
+@media (min-width: $lg) {
+  header {
+    margin-right: $aside-width;
+  }
+}

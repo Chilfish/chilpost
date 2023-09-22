@@ -9,18 +9,17 @@ const {
   error,
 } = useMyFetch<PostsWithOwner>(`/post/search?ownerName=${username.value}`)
 
-const isBodyPosts = computed(() => data.value?.data?.posts.filter(p => p.isBody))
+const bodyPosts = computed(() => data.value?.data?.posts.filter(p => p.isBody))
 
 watchEffect(() => {
   if (data.value?.data) {
     const owner = data.value.data.owner
     const title = `${owner?.nickname}(@${owner?.name})`
+
     useHead({
       title,
     })
   }
-
-  console.log('user', { ...error.value })
 
   useErrorTitle(error.value)
 })
@@ -40,7 +39,7 @@ watchEffect(() => {
 
     <div>
       <section
-        v-for="post in isBodyPosts"
+        v-for="post in bodyPosts"
         :key="post.id"
       >
         <PostItem
@@ -51,7 +50,7 @@ watchEffect(() => {
     </div>
 
     <div
-      v-if="!isBodyPosts?.length"
+      v-if="!bodyPosts?.length"
       class="no-data"
     >
       No posts yet

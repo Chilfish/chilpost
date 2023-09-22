@@ -35,7 +35,7 @@ export interface ToastHandler {
 
 // The body of the Toast function.
 export interface ToastFn {
-  (options?: ToastParams, context?: AppContext | null): ToastHandler
+  (options?: ToastParams, context?: AppContext | null): void
 }
 
 // Instance containing Toast information.
