@@ -1,12 +1,8 @@
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
-import genStaticData from './server/utils/mock'
 
 const {
-  API_SECRET = 'secret',
-  API_URL = '/api',
-  SECRET_API_URL = API_URL,
-  AUTH_ORIGIN = '/',
+  API_PROXY = '/api',
 } = process.env
 
 export default defineNuxtConfig({
@@ -17,15 +13,7 @@ export default defineNuxtConfig({
     '@unocss/nuxt',
     '@nuxt/image',
     '@vueuse/nuxt',
-    [
-      '@pinia/nuxt',
-      {
-        autoImports: [
-          'defineStore',
-          ['defineStore', 'definePiniaStore'],
-        ],
-      },
-    ],
+    '@pinia/nuxt',
   ],
 
   alias: {
@@ -48,32 +36,14 @@ export default defineNuxtConfig({
     '~/assets/shared.scss',
   ],
 
-  vite: {
-    css: {
-      preprocessorOptions: {
-        scss: {
-          // additionalData: '@use "@/assets/_colors.scss" as *;'
-        },
-      },
-    },
-  },
-
   typescript: {
     strict: true,
   },
 
   runtimeConfig: {
-    apiSecret: API_SECRET,
-    authOrigin: AUTH_ORIGIN,
-    secretApiURL: SECRET_API_URL,
-    public: {
-      apiURL: API_URL,
+    app: {
+      apiProxy: API_PROXY,
     },
-  },
-
-  routeRules: {
-    '/': { redirect: '/explore' },
-    // '/settings': { ssr: false },
   },
 
   nitro: {
@@ -82,10 +52,10 @@ export default defineNuxtConfig({
         target: 'esnext',
       },
     },
-  },
-
-  hooks: {
-    'nitro:build:before': () => genStaticData(), // generate static data before build
+    errorHandler: '~/error/nitroErrorHandler.ts',
+    routeRules: {
+      '/': { redirect: '/explore' },
+    },
   },
 
   app: {

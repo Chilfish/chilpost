@@ -1,52 +1,50 @@
 <script setup lang="ts">
+import type { PostDetail } from '~/types'
+
 const modalStore = useModalStore()
 const postStore = usePostStore()
 
-const postValue = ref('')
+const isLoading = ref(false)
 
 const {
-  state,
-  isLoading,
+  data,
   execute: submit,
-  error,
-} = useAsyncState(
-  async () => {
-    if (!postValue.value)
-      return
-    return useMyFetch('/post/new', 'post',
-      {
-        content: postValue.value,
-        meta: modalStore.postMeta,
-      },
-    )
-  },
-  null,
-  { immediate: false },
-)
+} = useMyFetch<PostDetail>('/post/new', {
+  method: 'post',
+  body: postStore.newPostBody,
+  manual: true,
+})
 
-watch(isLoading, () => {
-  const post = state.value?.data
+watch(data, () => {
+  const post = data.value?.data
   if (post) {
+    isLoading.value = false
     postStore.addPost(post)
-    postValue.value = ''
-    modalStore.toggleModal()
+    modalStore.close()
   }
-
-  if (error.value)
-    console.log(error.value)
 })
 </script>
 
 <template>
   <div id="send-post">
     <div>
-      <span class="icon i-tabler-x" @click="modalStore.toggleModal" />
+      <span
+        class="icon i-tabler-x"
+        @click="modalStore.open()"
+      />
     </div>
     <form>
-      <textarea v-model="postValue" placeholder="Wassup?!" />
-      <button type="submit" @click.prevent="submit()">
-        Post
-      </button>
+      <textarea
+        v-model="postStore.newPostBody.content"
+        placeholder="Wassup?!"
+      />
+      <CommonButton
+        text="submit"
+        class="btn-primary"
+        :is-loading="isLoading"
+        :disabled="!postStore.newPostBody.content"
+        @click="isLoading = true, submit()"
+      />
     </form>
   </div>
 </template>
@@ -80,15 +78,7 @@ form {
   height: 100%;
 
   button {
-    width: 5rem;
-    padding: 0.5rem 1rem;
-    margin-top: 1rem;
     margin-left: auto;
-    font-weight: bold;
-    color: #fff;
-    cursor: pointer;
-    background-color: $theme-color;
-    border-radius: 16px;
   }
 }
 </style>

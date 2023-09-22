@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PostStatus } from '~/types'
+import type { PostStatus, uid } from '~/types'
 
 const props = defineProps<{
   status: PostStatus
@@ -7,10 +7,9 @@ const props = defineProps<{
 }>()
 
 const modalStore = useModalStore()
+const postStore = usePostStore()
 const curUser = useUserStore().curUser
 const isLike = computed(() => curUser && props.status.likes.includes(curUser.id))
-
-const postStore = usePostStore()
 
 const status = ref(props.status)
 const likeStyle = computed(() =>
@@ -20,20 +19,28 @@ const likeStyle = computed(() =>
 )
 
 const {
-  state: likes,
+  data: likes,
   execute: toggleLike,
-} = useAsyncState(
-  async () => await postStore.toggleLike(props.id),
-  null,
-  {
-    immediate: false,
-  },
-)
+} = useMyFetch<uid[]>(`/post/like?id=${props.id}`, {
+  manual: true,
+})
+
+function sendComment() {
+  postStore.newPostBody = {
+    content: '',
+    meta: {
+      type: 'comment',
+      pcId: props.id,
+    },
+  }
+
+  modalStore.open()
+}
 
 watchEffect(() => {
   if (likes.value) {
-    status.value.likes = likes.value
-    status.value.like_count = likes.value.length
+    status.value.likes = likes.value.data
+    status.value.like_count = likes.value.data.length
   }
 })
 </script>
@@ -43,7 +50,7 @@ watchEffect(() => {
     <button
       class="chat"
       :title="`${status.comment_count}`"
-      @click="modalStore.toggleModal('sendPost', { type: 'comment', pcId: props.id })"
+      @click="sendComment"
     >
       <span class="box">
         <span class="icon i-tabler-message-circle" />

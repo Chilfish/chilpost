@@ -2,11 +2,18 @@ import type { UserDetail, UserDisplay, uid } from '.'
 
 export type pid = string
 
-export type PostType = 'new' | 'comment' | 'repost'
+export type PostType = 'post' | 'comment' | 'repost'
 
 export interface PostMeta {
   type: PostType
-  pcId?: pid // parent comment id or repost id
+
+  /** parent comment id or repost id */
+  pcId?: pid
+}
+
+export interface NewPostBody {
+  content: string
+  meta: PostMeta
 }
 
 export interface PostStatus {

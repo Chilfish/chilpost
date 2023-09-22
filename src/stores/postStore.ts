@@ -1,29 +1,20 @@
-import type { PostDetail, pid, uid } from '~/types'
+import { defineStore } from 'pinia'
+import type { NewPostBody, PostDetail, pid } from '~/types'
 
 export const usePostStore = defineStore('post', () => {
   const posts = ref([] as PostDetail[])
 
-  async function setPosts(_posts: PostDetail[]) {
-    posts.value = _posts
-  }
+  const bodyPosts = computed(() => posts.value.filter(p => p.post.isBody))
+
+  const newPostBody = ref<NewPostBody>({
+    content: '',
+    meta: {
+      type: 'post',
+    },
+  })
 
   function getById(id: pid) {
     return computed(() => posts.value.find(p => p.post.id === id))
-  }
-
-  async function toggleLike(id: pid) {
-    const post = getById(id)
-
-    try {
-      const { data } = await useMyFetch<uid[]>(`/post/like?id=${id}`)
-      if (data) {
-        post.value && (post.value.post.status.likes = data)
-        return data
-      }
-    }
-    catch (e: any) {
-      // console.log('toggle like error', e)
-    }
   }
 
   function addPost(post: PostDetail) {
@@ -32,9 +23,10 @@ export const usePostStore = defineStore('post', () => {
 
   return {
     posts,
-    setPosts,
+    bodyPosts,
+    newPostBody,
+
     addPost,
     getById,
-    toggleLike,
   }
 })

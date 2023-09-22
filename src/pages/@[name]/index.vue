@@ -1,69 +1,56 @@
 <script setup lang="ts">
-import type { NuxtError } from '#app'
 import type { PostsWithOwner } from '~/types'
 
-const route = useRoute()
-const username = ref(route.params.name as string)
+const username = computed(() => useRoute().params.name as string)
 
 const {
-  state,
-  isLoading,
+  data,
+  pending,
   error,
-  execute,
-} = useAsyncState(
-  useMyFetch<PostsWithOwner>(`/post/search?ownerName=${username.value}`),
-  null,
-)
+} = useMyFetch<PostsWithOwner>(`/post/search?ownerName=${username.value}`)
 
-const err = computed(() => (error.value as NuxtError)?.toJSON())
-const isBodyPosts = computed(() => state.value?.data?.posts.filter(p => p.isBody))
+const bodyPosts = computed(() => data.value?.data?.posts.filter(p => p.isBody))
 
 watchEffect(() => {
-  const newUsername = route.params.name as string
-  if (newUsername !== username.value) {
-    username.value = newUsername
-    execute()
-  }
-
-  if (state.value?.data) {
-    isLoading.value = false
-    const owner = state.value.data.owner
+  if (data.value?.data) {
+    const owner = data.value.data.owner
     const title = `${owner?.nickname}(@${owner?.name})`
+
     useHead({
       title,
     })
   }
 
-  useErrorTitle(err.value)
+  useErrorTitle(error.value?.data)
 })
 </script>
 
 <template>
   <CommonHeader>
-    <h3> {{ state?.data?.owner.nickname }}</h3>
+    <h3> {{ data?.data?.owner.nickname }}</h3>
   </CommonHeader>
 
   <div class="banner" />
 
-  <CommonLoading :error="err" :is-loading="isLoading" />
+  <CommonLoading :error="error?.data" :is-loading="pending" />
 
-  <main v-if="state?.data && !isLoading">
-    <ProfileCard :user="state.data.owner" />
+  <main v-if="data?.data && !pending">
+    <ProfileCard :user="data.data.owner" />
 
     <div>
       <section
-        v-for="post in isBodyPosts"
+        v-for="post in bodyPosts"
         :key="post.id"
       >
         <PostItem
           :post="post"
-          :owner="state.data.owner"
+          :owner="data.data.owner"
         />
       </section>
     </div>
 
     <div
-      v-if="!isBodyPosts?.length"
+      v-if="!bodyPosts?.length"
       class="no-data"
     >
       No posts yet

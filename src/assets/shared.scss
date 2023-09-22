@@ -128,8 +128,8 @@ button[disabled=""] {
 }
 
 button.btn-primary {
-  width: 6rem;
-  padding: 1rem 0.5rem;
+  min-width: 5rem;
+  padding: 0.7rem 0.5rem;
   font-size: 1rem;
   font-weight: bold;
   color: #fff;
@@ -137,7 +137,7 @@ button.btn-primary {
   border-radius: 12px;
   transition: all 0.2s ease-in-out;
 
-  &:hover {
+  &:not(:disabled):hover {
     opacity: 0.8;
   }
 }

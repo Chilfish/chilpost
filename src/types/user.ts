@@ -30,3 +30,8 @@ export interface UserLogin {
 }
 
 export type UserAuth = User & UserLogin
+
+export interface UserWithToken {
+  user: Omit<UserAuth, 'password'>
+  token: string
+}

@@ -1,14 +1,11 @@
-/* eslint-disable n/prefer-global/process */
+/* eslint-disable node/prefer-global/process */
 
 import dayjs from 'dayjs'
-import { v4 as uuidv4 } from 'uuid'
-import type { NuxtError } from 'nuxt/app'
+import type { ErrorType } from './../../server/error/newError'
 import type { User, UserDetail } from '~/types'
 
 export const isClient = process.client
 export const isDev = process.env.NODE_ENV === 'development'
-
-export const uuid = () => uuidv4()
 
 export const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -51,12 +48,12 @@ export async function toggleFollow(user: User, following: User | UserDetail) {
   user.status.following_count = user.status.following.length
 }
 
-export function useErrorTitle(e: any) {
+export function useErrorTitle(e?: any) {
   if (e) {
-    const err = e as NuxtError
+    const err = e as ErrorType
 
     useHead({
-      title: `${err.statusCode} / ${err.statusMessage}`,
+      title: `${err.statusCode} / ${err.message}`,
     })
   }
 }

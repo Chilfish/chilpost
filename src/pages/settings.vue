@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import type { Rules } from 'async-validator'
 import { useAsyncValidator } from '@vueuse/integrations/useAsyncValidator'
-import type { NuxtError } from '#app'
-import type { User } from '~/types/user'
 import { Toast } from '@cpa/Toast'
+import type { User } from '~/types/user'
 
 definePageMeta({
   title: 'Settings',
@@ -13,6 +12,7 @@ definePageMeta({
 
 const userStore = useUserStore()
 const curUser = ref({ ...userStore.curUser } as User | null)
+const isLoading = ref(false)
 
 const maxBio = 160
 
@@ -41,24 +41,26 @@ const rules: Rules = {
 
 const { pass, errorFields } = useAsyncValidator(curUser, rules)
 const {
-  state,
-  isLoading,
+  data,
   error,
-  execute: updateSettings,
-} = useAsyncState(
-  async () => {
-    if (pass.value && curUser.value)
-      return useMyFetch<boolean>('/user/update', 'post', curUser.value)
-  },
-  null,
-  { immediate: false },
-)
+  execute,
+} = useMyFetch<boolean>('/user/update', {
+  method: 'post',
+  body: curUser,
+  manual: true,
+})
 
-const err = computed(() => (error.value as NuxtError)?.toJSON())
+function updateSettings() {
+  if (pass.value && curUser.value) {
+    isLoading.value = true
+    execute()
+  }
+}
 
-watch(state, async () => {
-  if (state.value?.data && curUser.value) {
+watch(data, async () => {
+  if (data.value?.data && curUser.value) {
     await userStore.setCurUser(curUser.value)
+    isLoading.value = false
     Toast({ message: 'Settings updated!', type: 'success' })
   }
 })
@@ -69,7 +71,7 @@ watch(state, async () => {
     <h3>Settings</h3>
   </CommonHeader>
 
-  <CommonError v-if="err" :error="err" />
+  <CommonError v-if="error" :error="error.data" />
 
   <form v-if="curUser">
     <div class="form-group">

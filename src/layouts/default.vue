@@ -1,8 +1,5 @@
 <script setup lang="ts">
 const modalStore = useModalStore()
-const userStore = useUserStore()
-
-useAsyncState(userStore.me, null)
 </script>
 
 <template>
@@ -17,7 +14,7 @@ useAsyncState(userStore.me, null)
     <h2>WIP</h2>
   </aside>
 
-  <CommonModal>
+  <CommonModal v-if="modalStore.showModal">
     <component :is="modalStore.curSlot" />
   </CommonModal>
 </template>

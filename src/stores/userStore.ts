@@ -1,3 +1,4 @@
+import { defineStore } from 'pinia'
 import type { User } from '~/types'
 
 export const useUserStore = defineStore('user', () => {
@@ -19,8 +20,8 @@ export const useUserStore = defineStore('user', () => {
 
   async function me() {
     try {
-      const { data } = await useMyFetch<User>('/auth/me')
-      curUser.value = data || null
+      const { data } = await useMyFetch<User>('/user/me')
+      curUser.value = data.value?.data || null
       return curUser.value
     }
     catch (e) {

@@ -1,22 +1,13 @@
-import type { User } from '~/types'
+import type { UserAuth } from '~/types'
 
 export default defineEventHandler(async (event) => {
   const { id } = getQuery(event) as { id: string }
   const post = fakePosts.find(post => post.id === id)
-  if (!post) {
-    return createError({
-      statusCode: 404,
-      message: 'Post not found',
-    })
-  }
 
-  const user = event.context.user as User
-  if (!user) {
-    return createError({
-      statusCode: 401,
-      statusMessage: 'Unauthorized',
-    })
-  }
+  if (!post)
+    return newError('notfound_post')
+
+  const user = event.context.user as UserAuth
 
   const likes = post.status.likes
   const index = likes.findIndex(like => like === user.id)

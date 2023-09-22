@@ -22,4 +22,4 @@ logs
 .env.*
 !.env.example
 
-_mock.ts
+*.pem

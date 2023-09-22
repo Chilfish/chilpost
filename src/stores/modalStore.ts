@@ -1,4 +1,4 @@
-import type { PostMeta } from '~/types'
+import { defineStore } from 'pinia'
 
 import Login from '@/components/Login.vue'
 import PostSend from '@/components/Post/PostSend.vue'
@@ -7,8 +7,6 @@ import PostSend from '@/components/Post/PostSend.vue'
 
 export const useModalStore = defineStore('modal', () => {
   const showModal = ref(false)
-
-  const postMeta = ref<PostMeta>({ type: 'new' })
 
   const slot = {
     login: Login,
@@ -20,29 +18,19 @@ export const useModalStore = defineStore('modal', () => {
   const modalSlot = ref<ModalSlot>('login')
   const curSlot = computed(() => slot[modalSlot.value])
 
-  /**
-   * Toggle modal
-   * @param s Slot name
-   * @param meta Post meta
-   */
-  function toggleModal(s: ModalSlot = 'sendPost', meta: PostMeta = { type: 'new' }) {
-    showModal.value = !showModal.value
-    if (s)
-      modalSlot.value = s
-    if (meta)
-      postMeta.value = meta
-  }
-
-  function open(s: ModalSlot = 'login') {
+  function open(s: ModalSlot = 'sendPost') {
     showModal.value = true
     modalSlot.value = s
   }
 
+  function close() {
+    showModal.value = false
+  }
+
   return {
     curSlot,
-    postMeta,
     showModal,
-    toggleModal,
     open,
+    close,
   }
 })

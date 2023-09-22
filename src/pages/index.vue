@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { NuxtError } from '#app'
 import type { PostDetail } from '~/types'
 
 definePageMeta({
@@ -12,68 +11,28 @@ useHead({
   title: 'Explore Chilpost', // reset while route changed
 })
 
-const { y } = useWindowScroll()
-const isScrollingDown = ref(false)
-watch(
-  () => y.value,
-  (newY, oldY) => {
-    isScrollingDown.value = newY > oldY
-  },
-)
-
-const darkStore = useDarkStore()
-
 const postStore = usePostStore()
 const {
-  state,
-  isLoading,
+  data,
+  pending,
   error,
-} = useAsyncState(useMyFetch<PostDetail[]>('/post'), null)
-
-const err = computed(() => (error.value as NuxtError)?.toJSON())
-const isBodyPosts = computed(() => state.value?.data?.filter(p => p.post.isBody))
+} = useMyFetch<PostDetail[]>('/post')
 
 watchEffect(() => {
-  if (state.value?.data)
-    postStore.setPosts(state.value.data)
+  if (data.value?.data)
+    postStore.posts = data.value.data
 
-  useErrorTitle(err.value)
+  useErrorTitle(error.value?.data)
 })
 </script>
 
 <template>
-  <header
-    :class="isScrollingDown ? 'scroll-up' : ''"
-    class="blur-bg"
-  >
-    <h2>Explore</h2>
+  <MainHeader />
 
-    <label>
-      <span class="icon i-tabler-search" />
-      <input type="search" placeholder="Search">
-    </label>
-
-    <div>
-      <NuxtLink
-        to="https://github.com/Chilfish/chilpost"
-        external
-        target="_blank"
-      >
-        <span class="icon i-tabler-brand-github" />
-      </NuxtLink>
-
-      <span
-        class="icon"
-        :class="darkStore.icon"
-        @click="darkStore.toggle()"
-      />
-    </div>
-  </header>
-
-  <CommonLoading :error="err" :is-loading="isLoading" />
-  <main v-if="state">
+  <CommonLoading :error="error?.data" :is-loading="pending" />
+  <main v-if="data">
     <section
-      v-for="item in isBodyPosts"
+      v-for="item in postStore.bodyPosts"
       :key="item.post.id"
     >
       <PostItem
@@ -85,5 +44,5 @@ watchEffect(() => {
 </template>
 
 <style lang="scss" scoped>
-@use "~/assets/index";
+@use "~/assets/index/main";
 </style>

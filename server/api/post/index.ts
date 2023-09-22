@@ -1,11 +1,5 @@
-import type { ApiResult } from '~/types'
-
-export default defineEventHandler(async (event): ApiResult => {
+export default defineEventHandler(async (event) => {
   return {
     data: fakePosts.filter(post => post.isBody).map(toDetail),
   }
-  // return createError({
-  //   statusCode: 404,
-  //   statusMessage: 'Post not found',
-  // })
 })

@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import type { NuxtError } from 'nuxt/app'
+import type { ErrorType } from '../../../server/error'
 
 const props = defineProps<{
   error: unknown
 }>()
-const err = (props.error as NuxtError)
+const err = (props.error as ErrorType)
 </script>
 
 <template>
   <div class="error">
-    {{ `${err.statusCode} / ${err.statusMessage}` }}
+    {{ `${err.statusCode} / ${err.message}` }}
   </div>
 </template>

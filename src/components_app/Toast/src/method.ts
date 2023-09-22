@@ -39,16 +39,19 @@ function normalizeOptions(params?: ToastParams): ToastParamsNormalized {
   return normalized as ToastParamsNormalized
 }
 
-// The toast function creates a new toast instance and returns its handler.
+// The toast function creates a new toast instance
 export const toast: ToastFn & Partial<ToastFn> & { _context: AppContext | null } = (
   options = {},
   context,
 ) => {
   const norOptions = normalizeOptions(options)
-  const instance = createToast(norOptions, context)
+  let instance: ToastInstance
 
-  instances.push(instance)
-  return instance.handler
+  onNuxtReady(() => {
+    instance = createToast(norOptions, context)
+
+    instances.push(instance)
+  })
 }
 
 function createToast(

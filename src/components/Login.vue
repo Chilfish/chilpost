@@ -1,51 +1,59 @@
 <script setup lang="ts">
-import type { NuxtError } from '#app'
-import type { User, UserLogin } from '~/types/user'
+import type { UserLogin, UserWithToken } from '~/types/user'
 
 const inputs = reactive<UserLogin>({
   email: '',
   password: '',
 })
 
-const isRegister = ref(false)
+const isConfirm = ref(false)
+const isLoading = ref(false)
 
 const userStore = useUserStore()
 const modalStore = useModalStore()
 
 const {
-  state,
-  isLoading,
-  error,
-  execute,
-} = useAsyncState(
-  async () => {
-    const { ...data } = inputs // remove the reactivity
+  data: loginData,
+  error: loginError,
+  execute: login,
+} = useMyFetch<UserWithToken>('/auth/login', {
+  method: 'post',
+  body: inputs,
+  manual: true,
+})
 
-    if (isRegister.value)
-      return await useMyFetch<User>('/auth/register', 'post', data)
+const {
+  data: registerData,
+  execute: register,
+} = useMyFetch<UserWithToken>('/auth/register', {
+  method: 'post',
+  body: inputs,
+  manual: true,
+})
 
-    return await useMyFetch<User>('/auth/login', 'post', data)
-  },
-  null,
-  { immediate: false },
-)
+function onSuccess(data?: UserWithToken) {
+  if (!data)
+    return
+  isLoading.value = false
 
-const err = computed(() => (error.value as NuxtError)?.toJSON())
+  const user = data.user
+  userStore.setCurUser(user)
+  modalStore.close()
+}
 
-watchEffect(async () => {
-  const user = state.value?.data
-  if (user) {
-    userStore.setCurUser(user)
-    modalStore.toggleModal()
-  }
+watchEffect(() => {
+  if (loginData.value)
+    return onSuccess(loginData.value.data)
 
-  if (err.value?.statusCode === 404) {
-    await delay(500)
-    isRegister.value = confirm('User not found, register?')
-    if (isRegister.value) {
-      execute()
-      isRegister.value = false
+  if (registerData.value)
+    return onSuccess(registerData.value.data)
+
+  if (!isConfirm.value && loginError.value?.statusCode === 404) {
+    if (confirm('User not found, register?')) {
+      isLoading.value = true
+      register()
     }
+    isConfirm.value = true
   }
 })
 </script>
@@ -75,12 +83,12 @@ watchEffect(async () => {
     <div class="actions">
       <CommonButton
         text="Cancel"
-        @click="modalStore.toggleModal()"
+        @click="modalStore.close()"
       />
       <CommonButton
-        :is-loading="isLoading"
         text="Log in"
-        @click="execute()"
+        :is-loading="isLoading"
+        @click="login(), isConfirm = false, isLoading = true"
       />
     </div>
   </div>

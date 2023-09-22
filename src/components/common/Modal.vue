@@ -4,14 +4,10 @@ const modalStore = useModalStore()
 
 <template>
   <div
-    v-show="modalStore.showModal"
     class="modal"
-    @click="modalStore.toggleModal"
+    @click="modalStore.close()"
   />
-  <div
-    v-show="modalStore.showModal"
-    class="slot"
-  >
+  <div class="slot">
     <slot />
   </div>
 </template>

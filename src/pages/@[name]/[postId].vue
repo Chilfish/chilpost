@@ -1,38 +1,50 @@
 <script setup lang="ts">
-import type { NuxtError } from '#app'
 import type { PostDetail } from '~/types'
 
-const route = useRoute()
-const postId = ref(route.params.postId as string)
+const postId = computed(() => useRoute().params.postId as string)
 
 const {
-  state,
-  isLoading,
-  error,
-  execute,
-} = useAsyncState(
-  useMyFetch<PostDetail>(`/post/search?id=${postId.value}`),
-  null,
-)
-const err = computed(() => (error.value as NuxtError)?.toJSON())
+  data: postData,
+  pending: postPending,
+  error: postError,
+} = useMyFetch<PostDetail>('/post/search', {
+  query: {
+    id: postId.value,
+  },
+  server: false,
+})
 
-watchEffect(() => {
-  const newId = route.params.postId as string
-  if (newId !== postId.value) {
-    postId.value = newId
-    execute()
-  }
+const commentIds = computed(() => postData.value?.data?.post?.status?.comments || [])
 
-  if (state.value?.data) {
-    const { post, owner } = state.value?.data
+const {
+  data: commentData,
+  pending: commentPending,
+  error: commentError,
+  execute: commentExecute,
+} = useMyFetch<PostDetail[]>('/post/comments', {
+  method: 'POST',
+  body: {
+    commentIds,
+  },
+  manual: true,
+})
+
+watch(() => postData.value, () => {
+  if (postData.value?.data) {
+    const { post, owner } = postData.value?.data
     const title = `${owner.nickname}'s Post: ${post.content.substring(0, 50)}`
 
     useHead({
       title,
     })
+
+    if (commentIds.value.length)
+      commentExecute()
+    else
+      commentPending.value = false
   }
 
-  useErrorTitle(err.value)
+  useErrorTitle(postError.value?.data)
 })
 </script>
 
@@ -41,29 +53,35 @@ watchEffect(() => {
     <h3>Post Details</h3>
   </CommonHeader>
 
-  <CommonLoading :error="err" :is-loading="isLoading" />
+  <CommonLoading
+    :error="postError?.data"
+    :is-loading="postPending"
+  />
 
-  <main v-if="state?.data && !isLoading">
+  <main v-if="postData">
     <div
-      v-if="state.data.post.parentPost"
+      v-if="postData.data.post.parentPost"
       class="parent-post"
     >
       <PostItem
-        :post="state?.data?.post.parentPost.post"
-        :owner="state?.data?.post.parentPost.owner"
+        :post="postData.data.post.parentPost.post"
+        :owner="postData.data.post.parentPost.owner"
       />
 
       <div class="vr" />
     </div>
 
-    <div>
-      <PostDetailItem
-        :post="state?.data.post"
-        :owner="state?.data?.owner"
-      />
-    </div>
+    <PostDetailItem
+      :post="postData.data.post"
+      :owner="postData.data.owner"
+    />
 
-    <PostComments :comment-ids="state?.data?.post?.status.comments" />
+    <CommonLoading
+      :error="commentError?.data"
+      :is-loading="commentPending"
+    />
+
+    <PostComments :comments="commentData?.data || []" />
   </main>
 </template>
 
