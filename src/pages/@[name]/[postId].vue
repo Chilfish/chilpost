@@ -31,14 +31,17 @@ const {
 
 watch(() => postData.value, () => {
   if (postData.value?.data) {
-    commentExecute()
-
     const { post, owner } = postData.value?.data
     const title = `${owner.nickname}'s Post: ${post.content.substring(0, 50)}`
 
     useHead({
       title,
     })
+
+    if (commentIds.value.length)
+      commentExecute()
+    else
+      commentPending.value = false
   }
 
   useErrorTitle(postError.value?.data)
@@ -68,21 +71,17 @@ watch(() => postData.value, () => {
       <div class="vr" />
     </div>
 
-    <div>
-      <PostDetailItem
-        :post="postData.data.post"
-        :owner="postData.data.owner"
-      />
-    </div>
+    <PostDetailItem
+      :post="postData.data.post"
+      :owner="postData.data.owner"
+    />
 
-    <div v-if="commentData">
-      <CommonLoading
-        :error="commentError?.data"
-        :is-loading="commentPending"
-      />
+    <CommonLoading
+      :error="commentError?.data"
+      :is-loading="commentPending"
+    />
 
-      <PostComments :comments="commentData.data" />
-    </div>
+    <PostComments :comments="commentData?.data || []" />
   </main>
 </template>
 

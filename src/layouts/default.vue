@@ -1,10 +1,5 @@
 <script setup lang="ts">
 const modalStore = useModalStore()
-const userStore = useUserStore()
-
-onMounted(async () => {
-  await userStore.me()
-})
 </script>
 
 <template>

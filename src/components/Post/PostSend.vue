@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import type { PostDetail } from 'types'
+import type { PostDetail } from '~/types'
 
 const modalStore = useModalStore()
 const postStore = usePostStore()
+
+const isLoading = ref(false)
 
 const {
   data,
@@ -16,6 +18,7 @@ const {
 watch(data, () => {
   const post = data.value?.data
   if (post) {
+    isLoading.value = false
     postStore.addPost(post)
     modalStore.close()
   }
@@ -35,14 +38,13 @@ watch(data, () => {
         v-model="postStore.newPostBody.content"
         placeholder="Wassup?!"
       />
-      <button
-        type="submit"
-        :disabled="!postStore.newPostBody.content"
+      <CommonButton
+        text="submit"
         class="btn-primary"
-        @click.prevent="submit()"
-      >
-        Post
-      </button>
+        :is-loading="isLoading"
+        :disabled="!postStore.newPostBody.content"
+        @click="isLoading = true, submit()"
+      />
     </form>
   </div>
 </template>
