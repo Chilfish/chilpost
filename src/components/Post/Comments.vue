@@ -10,8 +10,7 @@ const {
   pending,
   error,
 } = useMyFetch<PostDetail[]>('/post/comments', {
-  method: 'post',
-  body: { commentIds: props.commentIds },
+  query: { commentIds: props.commentIds },
 })
 </script>
 
