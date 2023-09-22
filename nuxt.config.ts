@@ -2,10 +2,7 @@ import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 
 const {
-  API_SECRET = 'secret',
-  API_URL = '/api',
-  SECRET_API_URL = API_URL,
-  AUTH_ORIGIN = '/',
+  API_PROXY = '/api',
 } = process.env
 
 export default defineNuxtConfig({
@@ -44,16 +41,9 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
-    apiSecret: API_SECRET,
-    authOrigin: AUTH_ORIGIN,
-    secretApiURL: SECRET_API_URL,
-    public: {
-      apiURL: API_URL,
+    app: {
+      apiProxy: API_PROXY,
     },
-  },
-
-  routeRules: {
-    '/': { redirect: '/explore' },
   },
 
   nitro: {
@@ -63,6 +53,9 @@ export default defineNuxtConfig({
       },
     },
     errorHandler: '~/error/nitroErrorHandler.ts',
+    routeRules: {
+      '/': { redirect: '/explore' },
+    },
   },
 
   app: {
