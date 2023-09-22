@@ -21,7 +21,7 @@ watchEffect(() => {
     })
   }
 
-  useErrorTitle(error.value)
+  useErrorTitle(error.value?.data)
 })
 </script>
 

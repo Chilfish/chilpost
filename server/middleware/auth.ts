@@ -7,6 +7,7 @@ export default defineEventHandler(async (event) => {
     '/api/auth/**',
     '/api/post',
     '/api/post/search',
+    '/api/post/comment',
   ]
   const authList = [
     '/api/**',
