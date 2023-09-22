@@ -34,5 +34,6 @@
     "scss",
     "sass",
     "vue"
-  ]
+  ],
+  "typescript.tsdk": "node_modules\\typescript\\lib"
 }

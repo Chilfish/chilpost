@@ -22,10 +22,14 @@ export class MyError extends H3Error {
   }
 }
 
-export function newError(code: ErrorCode) {
-  const error = Errors.find(e => e.code === code)
-  if (error)
+export function newError(code: ErrorCode, message?: string) {
+  const error = Errors.find(e => e.code === code) as ErrorType | null
+  if (error) {
+    if (message)
+      error.message = message
+
     return new MyError(error)
+  }
 
   return new MyError(Errors[0])
 }

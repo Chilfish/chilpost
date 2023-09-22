@@ -1,3 +1,5 @@
+import type { RowDataPacket } from 'mysql2'
+
 export type uid = string
 
 export interface UserStatus {
@@ -35,3 +37,6 @@ export interface UserWithToken {
   user: Omit<UserAuth, 'password'>
   token: string
 }
+
+/** the returns from db query */
+export type UserDB = UserAuth[] & RowDataPacket[]

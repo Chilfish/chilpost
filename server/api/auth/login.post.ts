@@ -1,11 +1,14 @@
-import type { UserLogin } from '~/types'
+import db from '@db'
+import { authUserSQL } from '@db/user'
+import type { UserDB, UserLogin } from '~/types'
 
 export default defineEventHandler(async (event) => {
   const { email, password } = await readBody<UserLogin>(event)
 
   assertParams({ email, password })
 
-  const user = await getUserByEmail(email)
+  const [res] = await db.query<UserDB>(authUserSQL, { email, password })
+  const user = res[0]
 
   if (!user)
     return newError('notfound_user')

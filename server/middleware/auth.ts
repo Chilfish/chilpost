@@ -1,24 +1,29 @@
+import db from '@db'
+import { getUserSQL } from '@db/user'
 import { newError } from '../error'
+import type { UserDB } from '~/types'
 
 export default defineEventHandler(async (event) => {
   const path = event.path.replace(/\?.+/g, '')
 
   const whiteList = [
-    '/api/auth/**',
-    '/api/post',
-    '/api/post/search',
-    '/api/post/comment',
-  ]
-  const authList = [
-    '/api/**',
+    '/auth/**',
+    '/post',
+    '/post/search',
+    '/post/comment',
   ]
 
-  const toReg = (str: string) => new RegExp(`^${str.replace(/\*/g, '.*')}$`)
+  const adminList = [
+    '/user/all',
+  ]
 
-  const needAuth = !whiteList.map(toReg).some(item => item.test(path))
-    && authList.map(toReg).some(item => item.test(path))
+  const toReg = (str: string) => new RegExp(`${str.replace(/\*/g, '.*')}$`)
 
-  if (!needAuth)
+  const noNeedAuth = whiteList.map(toReg).some(item => item.test(path))
+
+  const isAdminRoute = adminList.map(toReg).some(item => item.test(path))
+
+  if (noNeedAuth)
     return
 
   const token = getHeader(event, 'Authorization')?.split(' ')?.[1]
@@ -26,10 +31,19 @@ export default defineEventHandler(async (event) => {
     || ''
 
   const { id } = await verifyToken(token)
-  const user = await getUserById(id)
+  const [res] = await db.query<UserDB>(getUserSQL, { id })
+  const user = res[0]
 
   if (!user)
     return newError('unauthorized')
 
-  event.context.user = user
+  if (isAdminRoute && user.level !== 'admin')
+    return newError('not_admin')
+
+  event.context = {
+    ...event.context,
+    user,
+    uid: user.id,
+    level: user.level,
+  }
 })

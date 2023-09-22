@@ -1,5 +1,4 @@
 import process from 'node:process'
-import { MyError } from '../error'
 
 export * from '../error'
 
@@ -22,9 +21,9 @@ export function assertParams(
 ) {
   const paramsStatus = hasUndefined(params)
   if (paramsStatus.length > 0) {
-    throw new MyError({
-      message: `Missing params: ${paramsStatus.join(', ')}`,
-      code: 'missing params',
-    })
+    throw newError(
+      'missing_params',
+      `Missing params: ${paramsStatus.join(', ')}`,
+    )
   }
 }

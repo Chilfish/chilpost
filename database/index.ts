@@ -2,6 +2,7 @@ import process from 'node:process'
 import dotenv from 'dotenv'
 import { createPool } from 'mysql2'
 import { consola } from 'consola'
+import { initUserDB } from './user'
 
 dotenv.config({ path: `.env.${process.env.NODE_ENV}` })
 
@@ -34,24 +35,9 @@ export const db = createPool({
   .promise()
 
 export async function initTables() {
-  try {
-    await Promise.all([
-
-    ])
-
-    consola.info('Tables initialized')
-    return createError({
-      message: 'Tables initialized, please try again',
-      statusCode: 200,
-    })
-  }
-  catch (error: any) {
-    consola.error(`Tables initialized failed: ${error.message}`)
-    return createError({
-      message: error.message,
-      statusCode: 500,
-    })
-  }
+  await Promise.all([
+    db.query(initUserDB),
+  ])
 }
 
 export async function closeDB() {
