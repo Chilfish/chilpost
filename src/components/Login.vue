@@ -38,7 +38,7 @@ function onSuccess(data?: UserWithToken) {
 
   const user = data.user
   userStore.setCurUser(user)
-  modalStore.toggleModal()
+  modalStore.close()
 }
 
 watchEffect(() => {
@@ -83,7 +83,7 @@ watchEffect(() => {
     <div class="actions">
       <CommonButton
         text="Cancel"
-        @click="modalStore.toggleModal()"
+        @click="modalStore.close()"
       />
       <CommonButton
         text="Log in"

@@ -4,26 +4,20 @@ import type { PostDetail } from 'types'
 const modalStore = useModalStore()
 const postStore = usePostStore()
 
-const postValue = ref('')
-
 const {
   data,
   execute: submit,
 } = useMyFetch<PostDetail>('/post/new', {
   method: 'post',
-  body: {
-    content: postValue,
-    meta: modalStore.postMeta,
-  },
+  body: postStore.newPostBody,
   manual: true,
 })
 
-watchEffect(() => {
+watch(data, () => {
   const post = data.value?.data
   if (post) {
     postStore.addPost(post)
-    postValue.value = ''
-    modalStore.toggleModal()
+    modalStore.close()
   }
 })
 </script>
@@ -31,11 +25,22 @@ watchEffect(() => {
 <template>
   <div id="send-post">
     <div>
-      <span class="icon i-tabler-x" @click="modalStore.toggleModal" />
+      <span
+        class="icon i-tabler-x"
+        @click="modalStore.open()"
+      />
     </div>
     <form>
-      <textarea v-model="postValue" placeholder="Wassup?!" />
-      <button type="submit" @click.prevent="submit()">
+      <textarea
+        v-model="postStore.newPostBody.content"
+        placeholder="Wassup?!"
+      />
+      <button
+        type="submit"
+        :disabled="!postStore.newPostBody.content"
+        class="btn-primary"
+        @click.prevent="submit()"
+      >
         Post
       </button>
     </form>
@@ -71,15 +76,7 @@ form {
   height: 100%;
 
   button {
-    width: 5rem;
-    padding: 0.5rem 1rem;
-    margin-top: 1rem;
     margin-left: auto;
-    font-weight: bold;
-    color: #fff;
-    cursor: pointer;
-    background-color: $theme-color;
-    border-radius: 16px;
   }
 }
 </style>

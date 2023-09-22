@@ -7,6 +7,7 @@ const props = defineProps<{
 }>()
 
 const modalStore = useModalStore()
+const postStore = usePostStore()
 const curUser = useUserStore().curUser
 const isLike = computed(() => curUser && props.status.likes.includes(curUser.id))
 
@@ -24,6 +25,18 @@ const {
   manual: true,
 })
 
+function sendComment() {
+  postStore.newPostBody = {
+    content: '',
+    meta: {
+      type: 'comment',
+      pcId: props.id,
+    },
+  }
+
+  modalStore.open()
+}
+
 watchEffect(() => {
   if (likes.value) {
     status.value.likes = likes.value.data
@@ -37,7 +50,7 @@ watchEffect(() => {
     <button
       class="chat"
       :title="`${status.comment_count}`"
-      @click="modalStore.toggleModal('sendPost', { type: 'comment', pcId: props.id })"
+      @click="sendComment"
     >
       <span class="box">
         <span class="icon i-tabler-message-circle" />

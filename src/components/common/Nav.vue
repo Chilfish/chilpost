@@ -3,6 +3,18 @@ import type { NavItem } from '~/types'
 
 const modalStore = useModalStore()
 const userStore = useUserStore()
+const postStore = usePostStore()
+
+function sendPost() {
+  postStore.newPostBody = {
+    content: '',
+    meta: {
+      type: 'post',
+    },
+  }
+
+  modalStore.open('sendPost')
+}
 
 // hidden while not logged in
 const hideBtn = computed(() => !userStore.curUser)
@@ -68,7 +80,7 @@ watchEffect(() => {
       v-if="!hideBtn"
       :class="showFAB ? '' : 'hide'"
       class="fab"
-      @click="modalStore.toggleModal('sendPost')"
+      @click="sendPost"
     >
       <span class="icon i-tabler-plus" />
       <span class="text">Post</span>
@@ -77,7 +89,7 @@ watchEffect(() => {
     <common-button
       v-if="hideBtn"
       text="Login"
-      @click="modalStore.toggleModal('login')"
+      @click="modalStore.open('login')"
     />
   </nav>
 </template>

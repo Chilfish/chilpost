@@ -1,12 +1,17 @@
 import { defineStore } from 'pinia'
-import type { PostDetail, pid } from '~/types'
+import type { NewPostBody, PostDetail, pid } from '~/types'
 
 export const usePostStore = defineStore('post', () => {
   const posts = ref([] as PostDetail[])
 
-  async function setPosts(_posts: PostDetail[]) {
-    posts.value = _posts
-  }
+  const bodyPosts = computed(() => posts.value.filter(p => p.post.isBody))
+
+  const newPostBody = ref<NewPostBody>({
+    content: '',
+    meta: {
+      type: 'post',
+    },
+  })
 
   function getById(id: pid) {
     return computed(() => posts.value.find(p => p.post.id === id))
@@ -18,7 +23,9 @@ export const usePostStore = defineStore('post', () => {
 
   return {
     posts,
-    setPosts,
+    bodyPosts,
+    newPostBody,
+
     addPost,
     getById,
   }

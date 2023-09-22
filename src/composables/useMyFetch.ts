@@ -26,6 +26,10 @@ export default function useMyFetch<T = any>(
 
       const error = response._data as MyError
 
+      // ignore fetch me error
+      if (url === '/user/me')
+        return
+
       if (error.statusCode === 401 && url !== '/auth/login')
         Toast({ message: 'Unauthorized, please login.', type: 'error' })
       else

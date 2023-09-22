@@ -1,20 +1,15 @@
-import type { PostMeta, User } from '~/types'
-
-interface Body {
-  content: string
-  meta: PostMeta
-}
+import type { NewPostBody, User } from '~/types'
 
 export default defineEventHandler(async (event) => {
-  const { content, meta } = await readBody(event) as Body
+  const { content, meta } = await readBody(event) as NewPostBody
   const user = event.context.user as User
 
   const { type: postType, pcId } = meta
-  const post = newPost(user.id, content, postType === 'new')
+  const post = newPost(user.id, content, postType === 'post')
   user.status.post_count++
 
   // just new a post
-  if (postType === 'new') {
+  if (postType === 'post') {
     fakePosts.unshift(post)
 
     return {

@@ -48,7 +48,7 @@ export async function toggleFollow(user: User, following: User | UserDetail) {
   user.status.following_count = user.status.following.length
 }
 
-export function useErrorTitle(e: any) {
+export function useErrorTitle(e?: any) {
   if (e) {
     const err = e as ErrorType
 

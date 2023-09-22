@@ -20,6 +20,8 @@ watchEffect(() => {
     })
   }
 
+  console.log('user', { ...error.value })
+
   useErrorTitle(error.value)
 })
 </script>
