@@ -13,17 +13,26 @@ export default defineEventHandler(async (event) => {
     '/post/comment',
   ]
 
+  const authList = [
+    '/api/**',
+  ]
+
   const adminList = [
     '/user/all',
   ]
 
   const toReg = (str: string) => new RegExp(`${str.replace(/\*/g, '.*')}$`)
 
-  const noNeedAuth = whiteList.map(toReg).some(item => item.test(path))
+  let [noNeedAuth, isAdminRoute, needAuth] = [whiteList, adminList, authList]
+    .map(list => list.map(toReg)
+      .some(item => item.test(path))
+    )
 
-  const isAdminRoute = adminList.map(toReg).some(item => item.test(path))
+  needAuth = needAuth && !noNeedAuth
 
-  if (noNeedAuth)
+  // console.log({ noNeedAuth, isAdminRoute, path, needAuth })
+
+  if (!needAuth)
     return
 
   const token = getHeader(event, 'Authorization')?.split(' ')?.[1]
