@@ -7,9 +7,9 @@ export default defineEventHandler(async (event) => {
 
   assertParams({ email, password })
 
-  const [res] = await db.query<UserDB>(authUserSQL, { email, password })
+  const [res] = await db.query<UserDB>(authUserSQL, { email })
   const user = res[0]
-
+  console.log(res)
   if (!user)
     return newError('notfound_user')
 

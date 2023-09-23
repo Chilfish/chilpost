@@ -1,9 +1,7 @@
-import { fakeUsers } from './_mock'
 import type { Post, PostDetail, UserAuth } from '~/types'
 
-export function toDetail(post: Post): PostDetail {
-  const owner = fakeUsers.find(user => user.id === post.owner_id)!
-
+// todo owner from database
+export function toDetail(post: Post, owner: UserAuth): PostDetail {
   const { name, nickname, avatar } = owner
 
   return {
@@ -17,13 +15,13 @@ export function newPost(
   content: string,
   isBody: boolean = true,
 ): Post {
-  const now = new Date()
+  const now = new Date().toISOString()
   return {
-    id: now.toUTCString(), // TODO: from database
+    id: now, // TODO: from database
     owner_id: ownerId,
     content,
     isBody,
-    created_at: now.toISOString(),
+    created_at: now,
     status: {
       like_count: 0,
       comment_count: 0,
@@ -37,31 +35,28 @@ export function newPost(
 
 export function newUser(email: string, password: string, name?: string): UserAuth {
   const _name = name || email.replace(/[@\.]/gm, '_')
+  const now = new Date().toISOString()
+
   const user: UserAuth = {
-    id: (new Date()).toUTCString(),
+    id: now,
     email,
     password,
     name: _name,
     nickname: _name,
     avatar: '/placeholder.avatar.png',
     bio: 'Hello',
-    created_at: new Date().toISOString(),
-    status: {
-      post_count: 0,
-      follower_count: 0,
-      following_count: 0,
-      followers: [],
-      following: [],
-    },
+    level: 'user',
+
+    deleted: false,
+    deleted_at: now,
+    created_at: now,
+    updated_at: now,
+
+    post_count: 0,
+    follower_count: 0,
+    following_count: 0,
+    followers: [],
+    following: [],
   }
-  fakeUsers.unshift(user)
   return user
-}
-
-export async function getUserByEmail(email: string) {
-  return fakeUsers.find(user => user.email === email)
-}
-
-export async function getUserById(id: string) {
-  return fakeUsers.find(user => user.id === id)
 }

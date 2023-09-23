@@ -1,4 +1,6 @@
-import type { PostsWithOwner } from '~/types/post'
+import db from '@db'
+import { getUserByNameSQL, getUserSQL } from '@db/user'
+import type { UserDB } from '~/types'
 
 interface QueryParams {
   id?: string
@@ -13,13 +15,13 @@ export default defineEventHandler(async (event) => {
 
   if (id) {
     return {
-      data: byId(id),
+      data: await byId(id),
     }
   }
 
   if (ownerName) {
     return {
-      data: byOwnerName(ownerName),
+      data: await byOwnerName(ownerName),
     }
   }
 
@@ -28,16 +30,20 @@ export default defineEventHandler(async (event) => {
   }
 })
 
-function byId(id: string) {
+async function byId(id: string) {
   const post = fakePosts.find(post => post.id === id)
   if (!post)
     throw newError('notfound_post')
 
-  return toDetail(post)
+  const [row] = await db.query<UserDB>(getUserSQL, { id: post.owner_id })
+  const owner = row[0]
+
+  return toDetail(post, owner)
 }
 
-function byOwnerName(owner_name: string): PostsWithOwner {
-  const owner = fakeUsers.find(user => user.name === owner_name)
+async function byOwnerName(owner_name: string) {
+  const [row] = await db.query<UserDB>(getUserByNameSQL, { name: owner_name })
+  const owner = row[0]
   if (!owner)
     throw newError('notfound_user')
 

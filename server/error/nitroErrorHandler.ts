@@ -7,7 +7,7 @@ export default <NitroErrorHandler> async function (error: MyError, event) {
   const err = newError(code)
   const { message, ...rest } = err
 
-  // console.log({ ...error })
+  console.log({ ...error })
 
   const res = event.node.res
   res.setHeader('Content-Type', 'application/json')

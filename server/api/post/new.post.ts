@@ -1,8 +1,8 @@
-import type { NewPostBody, User } from '~/types'
+import type { NewPostBody, UserAuth } from '~/types'
 
 export default defineEventHandler(async (event) => {
   const { content, meta } = await readBody(event) as NewPostBody
-  const user = event.context.user as User
+  const user = event.context.user as UserAuth
 
   const { type: postType, pcId } = meta
   const post = newPost(user.id, content, postType === 'post')
@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
     fakePosts.unshift(post)
 
     return {
-      data: toDetail(post),
+      data: toDetail(post, user),
     }
   }
 
@@ -27,7 +27,7 @@ export default defineEventHandler(async (event) => {
     pcPost.status.comment_count++
     pcPost.status.comments.unshift(post.id)
     post.parentId = pcId
-    post.parentPost = toDetail(pcPost)
+    post.parentPost = toDetail(pcPost, user)
   }
   else if (postType === 'repost') {
     pcPost.status.repost_count++
@@ -37,6 +37,6 @@ export default defineEventHandler(async (event) => {
   fakePosts.unshift(post)
 
   return {
-    data: toDetail(post),
+    data: toDetail(post, user),
   }
 })

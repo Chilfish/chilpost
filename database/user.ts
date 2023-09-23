@@ -23,7 +23,7 @@ export const initUserDB = `CREATE TABLE IF NOT EXISTS ${TABLE_USER} (
   following JSON NOT NULL DEFAULT ('[]'), -- id[]
 
   PRIMARY KEY (id),
-  UNIQUE (name, email),
+  UNIQUE (name, email)
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 `
 
@@ -40,7 +40,7 @@ export const getUserByNameSQL = `SELECT * FROM ${TABLE_USER}
 `
 
 export const authUserSQL = `SELECT * FROM ${TABLE_USER}
- WHERE email = :email AND password = :password AND deleted = FALSE;
+ WHERE email = :email AND deleted = FALSE;
 `
 
 export const upUserSQL = `UPDATE ${TABLE_USER} SET

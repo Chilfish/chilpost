@@ -1,4 +1,3 @@
-import type { Post, UserAuth } from '~/types'
+import type { Post } from '~/types'
 
-export const fakeUsers = [] as UserAuth[]
 export const fakePosts = [] as Post[]
