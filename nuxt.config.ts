@@ -1,6 +1,5 @@
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
-import { initTables } from './database'
 
 const {
   API_PROXY = '/api',
@@ -52,10 +51,6 @@ export default defineNuxtConfig({
     app: {
       apiProxy: API_PROXY,
     },
-  },
-
-  hooks: {
-    'nitro:build:before': () => initTables(),
   },
 
   nitro: {

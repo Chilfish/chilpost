@@ -1,6 +1,8 @@
 import { H3Error } from 'h3'
-import type { errorCode } from '.'
+import { initTables } from '@db'
 import { Errors } from '.'
+
+import type { errorCode } from '.'
 
 export type ErrorCode = typeof errorCode
 
@@ -19,6 +21,13 @@ export class MyError extends H3Error {
     this.statusCode = input.statusCode || 500
     this.code = input.code
     this.data = input.data
+
+    this.handle()
+  }
+
+  async handle() {
+    if (this.code === 'ER_NO_SUCH_TABLE')
+      return await initTables()
   }
 }
 

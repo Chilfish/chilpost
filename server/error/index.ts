@@ -68,6 +68,11 @@ export const Errors = [
 
   // mysql
   {
+    code: 'ER_NO_SUCH_TABLE',
+    message: 'Table does not exist',
+    statusCode: 500,
+  },
+  {
     code: 'ER_DUP_ENTRY',
     message: 'Duplicate in database',
     statusCode: 409,
