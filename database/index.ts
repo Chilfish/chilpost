@@ -1,8 +1,8 @@
 import process from 'node:process'
 import dotenv from 'dotenv'
-import { createPool } from 'mysql2'
+import fs from 'fs-extra'
+import { createPool } from 'mysql2/promise'
 import { consola } from 'consola'
-import { initUserDB } from './user'
 
 dotenv.config({ path: `.env.${process.env.NODE_ENV}` })
 
@@ -32,12 +32,28 @@ export const db = createPool({
   namedPlaceholders: true,
   ssl,
 })
-  .promise()
 
+// init tables from ./sql/init.sql
 export async function initTables() {
-  await Promise.all([
-    db.query(initUserDB),
-  ])
+  try {
+    const sql = await fs.readFile('database/sql/init.sql', 'utf-8')
+
+    const con = await db.getConnection()
+    await con.beginTransaction()
+
+    sql
+      .split(';\r\n\r\n')
+      .forEach(async (query) => {
+        await con.query(`${query};`)
+      })
+
+    await con.commit()
+
+    consola.info('Database initialized')
+  }
+  catch (error: any) {
+    consola.error(`Database initialization failed: ${error.message}`)
+  }
 }
 
 export async function closeDB() {
@@ -46,7 +62,7 @@ export async function closeDB() {
     consola.info('Database closed')
   }
   catch (error: any) {
-    consola.error(`Database closing failed: ${error.message}`, 'error')
+    consola.error(`Database closing failed: ${error.message}`)
   }
 }
 

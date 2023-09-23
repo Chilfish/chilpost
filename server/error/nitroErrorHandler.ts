@@ -5,9 +5,12 @@ import { newError } from './newError'
 export default <NitroErrorHandler> async function (error: MyError, event) {
   const code = (error.cause as any)?.code || error.code
   const err = newError(code)
+
+  await err.handle()
+
   const { message, ...rest } = err
 
-  console.log({ ...error })
+  // console.log({ ...error })
 
   const res = event.node.res
   res.setHeader('Content-Type', 'application/json')

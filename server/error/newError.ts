@@ -21,8 +21,6 @@ export class MyError extends H3Error {
     this.statusCode = input.statusCode || 500
     this.code = input.code
     this.data = input.data
-
-    this.handle()
   }
 
   async handle() {
