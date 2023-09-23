@@ -42,7 +42,7 @@ function byOwnerName(owner_name: string): PostsWithOwner {
     throw newError('notfound_user')
 
   const posts = fakePosts.filter(post => post.owner_id === owner.id)
-  const { email: _e, createdAt: _c, password: _p, ...res } = owner
+  const { email: _e, created_at: _c, password: _p, ...res } = owner
   return {
     owner: res,
     posts,

@@ -37,7 +37,7 @@ defineProps<{
 
   <div class="post-meta">
     <div class="time">
-      {{ (new Date(post.createdAt)).toLocaleString() }}
+      {{ (new Date(post.created_at)).toLocaleString() }}
     </div>
 
     <PostAction :id="post.id" :status="post.status" />

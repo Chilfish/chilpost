@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { vElementHover } from '@vueuse/components'
-import type { UserDetail } from '~/types'
+import type { User} from '~/types'
 
 const props = defineProps<{
-  user: UserDetail
+  user: User
 }>()
 const userStore = useUserStore()
 const curUser = userStore.curUser
@@ -36,7 +36,7 @@ const {
 
 watchEffect(() => {
   if (curUser) {
-    isFollowing.value = curUser.status.following.includes(props.user.id)
+    isFollowing.value = curUser.following.includes(props.user.id)
     isMe.value = curUser.id === props.user.id
   }
 
@@ -87,15 +87,15 @@ watchEffect(() => {
 
       <div class="meta">
         <span>
-          {{ user.status.follower_count }}
+          {{ user.follower_count }}
           <span class="followers"> followers </span>
         </span>
         <span>
-          {{ user.status.following_count }}
+          {{ user.following_count }}
           <span class="following"> following </span>
         </span>
         <span>
-          {{ user.status.post_count }}
+          {{ user.post_count }}
           <span class="posts"> posts </span>
         </span>
       </div>

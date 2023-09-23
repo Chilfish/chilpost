@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
 
   let [noNeedAuth, isAdminRoute, needAuth] = [whiteList, adminList, authList]
     .map(list => list.map(toReg)
-      .some(item => item.test(path))
+      .some(item => item.test(path)),
     )
 
   needAuth = needAuth && !noNeedAuth

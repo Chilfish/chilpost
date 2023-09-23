@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
 
   const { type: postType, pcId } = meta
   const post = newPost(user.id, content, postType === 'post')
-  user.status.post_count++
+  user.post_count++
 
   // just new a post
   if (postType === 'post') {

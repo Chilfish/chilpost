@@ -30,7 +30,7 @@ export interface Post {
   id: pid
   isBody: boolean
   content: string
-  createdAt: string
+  created_at: string
   owner_id: uid
   status: PostStatus
 

@@ -23,7 +23,7 @@ export function newPost(
     owner_id: ownerId,
     content,
     isBody,
-    createdAt: now.toISOString(),
+    created_at: now.toISOString(),
     status: {
       like_count: 0,
       comment_count: 0,
@@ -45,7 +45,7 @@ export function newUser(email: string, password: string, name?: string): UserAut
     nickname: _name,
     avatar: '/placeholder.avatar.png',
     bio: 'Hello',
-    createdAt: new Date().toISOString(),
+    created_at: new Date().toISOString(),
     status: {
       post_count: 0,
       follower_count: 0,

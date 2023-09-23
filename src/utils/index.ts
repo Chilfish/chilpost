@@ -2,7 +2,7 @@
 
 import dayjs from 'dayjs'
 import type { ErrorType } from './../../server/error/newError'
-import type { User, UserDetail } from '~/types'
+import type { User } from '~/types'
 
 export const isClient = process.client
 export const isDev = process.env.NODE_ENV === 'development'
@@ -32,20 +32,20 @@ export function randomPick<T>(arr: T[], exclude: T[] = [], count = 1) {
   return Array.from(picked)
 }
 
-export async function toggleFollow(user: User, following: User | UserDetail) {
-  const isFollowing = user.status.following.includes(following.id)
+export async function toggleFollow(user: User, target: User) {
+  const isFollowing = user.following.includes(target.id)
 
   if (!isFollowing) {
-    user.status.following.unshift(following.id)
-    following.status.followers.unshift(user.id)
+    user.following.unshift(target.id)
+    target.followers.unshift(user.id)
   }
   else {
-    user.status.following.splice(user.status.following.indexOf(following.id), 1)
-    following.status.followers.splice(following.status.followers.indexOf(user.id), 1)
+    user.following.splice(user.following.indexOf(target.id), 1)
+    target.followers.splice(target.followers.indexOf(user.id), 1)
   }
 
-  following.status.follower_count = following.status.followers.length
-  user.status.following_count = user.status.following.length
+  target.follower_count = target.followers.length
+  user.following_count = user.following.length
 }
 
 export function useErrorTitle(e?: any) {
