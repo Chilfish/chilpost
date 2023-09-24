@@ -7,7 +7,7 @@ import { consola } from 'consola'
 
 dotenv.config({ path: `.env.${process.env.NODE_ENV}` })
 
-const sqlDir = './database/sql'
+const sqlDir = resolve(resolve(), 'database/sql')
 
 const {
   MYSQL_PORT = 3306,
