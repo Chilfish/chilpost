@@ -23,7 +23,6 @@ Where email = :email
 -- Query: upUser
 Update users
 Set name       = :name,
-    password   = :password,
     email      = :email,
     nickname   = :nickname,
     bio        = :bio,

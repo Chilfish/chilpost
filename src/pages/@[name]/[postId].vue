@@ -7,14 +7,13 @@ const {
   data: postData,
   pending: postPending,
   error: postError,
-} = useMyFetch<PostDetail>('/post/search', {
+} = useMyFetch<PostDetail>('/post/get', {
   query: {
     id: postId.value,
   },
-  server: false,
 })
 
-const commentIds = computed(() => postData.value?.data?.post?.status?.comments || [])
+const commentIds = computed(() => postData.value?.data?.status?.comments || [])
 
 const {
   data: commentData,
@@ -31,7 +30,7 @@ const {
 
 watch(() => postData.value, () => {
   if (postData.value?.data) {
-    const { post, owner } = postData.value?.data
+    const { owner, ...post } = postData.value?.data
     const title = `${owner.nickname}'s Post: ${post.content.substring(0, 50)}`
 
     useHead({
@@ -45,7 +44,7 @@ watch(() => postData.value, () => {
   }
 
   useErrorTitle(postError.value?.data)
-})
+}, { immediate: true })
 </script>
 
 <template>
@@ -60,19 +59,19 @@ watch(() => postData.value, () => {
 
   <main v-if="postData">
     <div
-      v-if="postData.data.post.parentPost"
+      v-if="postData.data.parentPost"
       class="parent-post"
     >
       <PostItem
-        :post="postData.data.post.parentPost.post"
-        :owner="postData.data.post.parentPost.owner"
+        :post="postData.data.parentPost"
+        :owner="postData.data.parentPost.owner"
       />
 
       <div class="vr" />
     </div>
 
     <PostDetailItem
-      :post="postData.data.post"
+      :post="postData.data"
       :owner="postData.data.owner"
     />
 
@@ -81,7 +80,7 @@ watch(() => postData.value, () => {
       :is-loading="commentPending"
     />
 
-    <PostComments :comments="commentData?.data || []" />
+    <PostComments v-if="commentData" :comments="commentData.data" />
   </main>
 </template>
 

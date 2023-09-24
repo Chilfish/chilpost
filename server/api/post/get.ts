@@ -3,7 +3,7 @@ import type { PostDB, PostDetail } from '~/types'
 import { getPostById } from '~~/database/queries'
 
 export default defineEventHandler(async (event) => {
-  const { id } = event.context.params as { id: string }
+  const { id } = getQuery(event) as { id: string }
 
   assertParams({ id })
 

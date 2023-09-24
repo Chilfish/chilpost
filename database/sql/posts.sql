@@ -1,17 +1,21 @@
 -- Query: getAllPosts
 Select *
 From post_with_owner As p
-Where is_body = True;
+Where is_body = True
+Order By created_at Desc;
 
 -- Query: getPostByOwner
 Select *
 From post_with_owner As p
-Where owner_id = :owner_id;
+Where owner_id = :owner_id
+  And is_body = True
+Order By created_at Desc;
 
 -- Query: getPostById
 Select *
 From post_with_owner As p
-Where id = :id;
+Where id = :id
+Order By created_at Desc;
 
 -- Query: insertPost
 Insert Into posts (content, owner_id)

@@ -8,9 +8,10 @@ export default defineEventHandler(async (event) => {
 
   const whiteList = [
     '/auth/**',
-    '/post',
-    '/post/search',
-    '/post/comment',
+    '/post/all',
+    '/post/get',
+    '/post/comments',
+    '/user/@*',
   ]
 
   const authList = [

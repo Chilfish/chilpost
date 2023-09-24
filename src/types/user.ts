@@ -1,7 +1,7 @@
 import type { RowDataPacket } from 'mysql2'
 
 /** primary key, auto increasing, uuid */
-export type uid = string
+export type uid = number
 
 export type Level = 'admin' | 'user'
 

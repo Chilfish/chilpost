@@ -1,6 +1,6 @@
 import type { ResultSetHeader } from 'mysql2'
 import db from '@db'
-import { insertPost } from '@db/queries'
+import { insertComment, insertPost } from '@db/queries'
 import type { NewPostBody, UserAuth } from '~/types'
 
 export default defineEventHandler(async (event) => {
@@ -13,15 +13,17 @@ export default defineEventHandler(async (event) => {
 
   // just new a post
   if (postType === 'post') {
-    await db.query(insertPost, {
+    const [row] = await db.query<ResultSetHeader>(insertPost, {
       content: post.content,
       owner_id: post.owner_id,
     })
+
+    post.id = row.insertId
   }
 
   // comment or repost
   if (postType === 'comment') {
-    const [row] = await db.query<ResultSetHeader>(insertPost, {
+    const [row] = await db.query<ResultSetHeader>(insertComment, {
       content: post.content,
       parent_id: pcId,
       owner_id: post.owner_id,
@@ -33,6 +35,8 @@ export default defineEventHandler(async (event) => {
         code: 'comment_failed',
       })
     }
+
+    post.id = row.insertId
   }
 
   return {

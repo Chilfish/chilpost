@@ -1,16 +1,16 @@
-import type { Post, PostDetail, UserAuth } from '~/types'
+import type { Post, PostDetail, UserAuth, uid } from '~/types'
 
 export function toDetail(post: Post, owner: UserAuth): PostDetail {
-  const { name, nickname, avatar } = owner
+  const { password: _, ...rest } = owner
 
   return {
-    post,
-    owner: { name, nickname, avatar },
+    ...post,
+    owner: rest,
   }
 }
 
 export function newPost(
-  ownerId: string,
+  ownerId: uid,
   content: string,
   isBody: boolean = true,
 ): Post {
