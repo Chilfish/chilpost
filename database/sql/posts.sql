@@ -1,11 +1,8 @@
--- new a post
-
+-- Query: newPost
 Insert Into posts (content, owner_id)
 Values (:content, :owner_id);
 
-
--- get posts by user id
-
+-- Query: getPostByOwner
 Select *
 From posts
          Join post_status On posts.id = post_status.post_id

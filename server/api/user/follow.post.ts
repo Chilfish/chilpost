@@ -1,7 +1,8 @@
 import type { ResultSetHeader } from 'mysql2'
 import db from '@db'
-import { getUserSQL, setFollowSQL, setFollowerSQL } from '@db/user'
+import { getUserSQL, setFollowSQL, setFollowerSQL } from '@db/queries'
 import { toggleFollow } from '~/utils'
+
 import type { UserAuth, UserDB } from '~/types'
 
 export default defineEventHandler(async (event) => {

@@ -1,6 +1,6 @@
 import type { ResultSetHeader } from 'mysql2'
-import { upUserSQL } from '@db/user'
 import db from '@db'
+import { upUserSQL } from '@db/queries'
 import type { User, UserAuth } from '~/types'
 
 export default defineEventHandler(async (event) => {

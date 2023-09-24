@@ -22,6 +22,7 @@ logs
 .env.*
 !.env.example
 
+database/queries
 *.pem
 
 .vercel

@@ -1,5 +1,4 @@
 import db from '@db'
-import { getUserByNameSQL, getUserSQL } from '@db/user'
 import type { UserDB } from '~/types'
 
 interface QueryParams {

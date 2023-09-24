@@ -1,5 +1,5 @@
 import db from '@db'
-import { getUserSQL } from '@db/user'
+import { getUserSQL } from '@db/queries/user'
 import { newError } from '../error'
 import type { UserDB } from '~/types'
 

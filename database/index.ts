@@ -42,7 +42,8 @@ export async function initTables() {
     await con.beginTransaction()
 
     sql
-      .split(';\r\n\r\n')
+      .split(';\n\n')
+      .filter(query => !!query)
       .forEach(async (query) => {
         await con.query(`${query};`)
       })

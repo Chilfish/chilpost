@@ -1,6 +1,6 @@
 import type { ResultSetHeader } from 'mysql2'
 
-import { addUserSQL, getUserSQL } from '@db/user'
+import { addUserSQL, getUserSQL } from '@db/queries'
 import db from '@db'
 import type { UserDB, UserLogin } from '~/types'
 

@@ -1,5 +1,6 @@
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
+import sqlToTs from './server/utils/sqlToTs.server'
 
 const {
   API_PROXY = '/api',
@@ -51,6 +52,10 @@ export default defineNuxtConfig({
     app: {
       apiProxy: API_PROXY,
     },
+  },
+
+  hooks: {
+    'build:before': sqlToTs,
   },
 
   nitro: {

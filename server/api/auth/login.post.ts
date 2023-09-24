@@ -1,5 +1,5 @@
 import db from '@db'
-import { authUserSQL } from '@db/user'
+import { authUserSQL } from '@db/queries'
 import type { UserDB, UserLogin } from '~/types'
 
 export default defineEventHandler(async (event) => {
