@@ -37,8 +37,8 @@ Create Table If Not Exists posts (
     deleted    Boolean  Not Null Default False,
     deleted_at Datetime Not Null Default '1970-01-01 00:00:00',
     created_at Datetime Not Null Default Current_Timestamp,
-    isBody     Boolean  Not Null Default False,
-    parentId   Int      Not Null Default -1 References posts (id)
+    is_body    Boolean  Not Null Default True,
+    parent_id  Int      Not Null Default -1 References posts (id)
 );
 
 Create Table If Not Exists post_status (
@@ -52,14 +52,3 @@ Create Table If Not Exists post_status (
 
     Foreign Key (post_id) References posts (id)
 );
-
-Create Trigger post_status_insert
-    After Insert
-    On posts
-    For Each Row
-Begin
-    Insert Into post_status (post_id) Values (NEW.id);
-    Update user_status
-    Set post_count = post_count + 1
-    Where id = NEW.owner_id;
-End;

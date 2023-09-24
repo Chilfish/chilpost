@@ -1,6 +1,5 @@
 import type { Post, PostDetail, UserAuth } from '~/types'
 
-// todo owner from database
 export function toDetail(post: Post, owner: UserAuth): PostDetail {
   const { name, nickname, avatar } = owner
 

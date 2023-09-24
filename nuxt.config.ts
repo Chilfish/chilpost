@@ -55,7 +55,7 @@ export default defineNuxtConfig({
   },
 
   hooks: {
-    'build:before': sqlToTs,
+    'nitro:init': sqlToTs,
   },
 
   nitro: {

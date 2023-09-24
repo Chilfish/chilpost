@@ -6,9 +6,11 @@ const root = resolve(__dirname, '../../database')
 const baseDir = resolve(root, 'sql')
 const outDir = resolve(root, 'queries')
 
-const exclude = [
-  'init.sql',
-]
+function exclude(name: string) {
+  return [
+    'init.sql',
+  ].some(file => name.endsWith(file))
+}
 
 async function convertSQL(filename: string) {
   const filenameTs = filename.replace('.sql', '.ts')
@@ -43,11 +45,12 @@ async function convertSQL(filename: string) {
  * Convert SQL files to TypeScript
  */
 export default async function sqlToTs() {
+  await createFile(resolve(outDir, 'index.ts'))
+
   const files = await readdir(baseDir)
-  const sqlFiles = files.filter(file => file.endsWith('.sql') && !exclude.includes(file))
+  const sqlFiles = files.filter(file => file.endsWith('.sql') && !exclude(file))
 
   await Promise.all([
-    createFile(resolve(outDir, 'index.ts')),
     writeFile(resolve(outDir, 'index.ts'), ''),
     ...sqlFiles.map(convertSQL),
   ])

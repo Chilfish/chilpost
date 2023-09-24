@@ -4,8 +4,10 @@ Values (:content, :owner_id);
 
 -- Query: getPostByOwner
 Select *
-From posts
-         Join post_status On posts.id = post_status.post_id
-Where owner_id = :owner_id
-  And deleted = False
-Order By created_at Desc;
+From post_with_user As p
+Where p.owner_id = :owner_id;
+
+-- Query: getPostById
+Select *
+From post_with_user As p
+Where p.post_id = :id;

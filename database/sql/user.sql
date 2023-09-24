@@ -5,18 +5,21 @@ Values (:email, :name, :nickname, :password);
 -- Query: getUserSQL
 Select *
 From users
+         Join user_status Us On users.id = Us.user_id
 Where id = :id
   And deleted = False;
 
 -- Query: getUserByNameSQL
 Select *
 From users
+         Join user_status Us On users.id = Us.user_id
 Where name = :name
   And deleted = False;
 
 -- Query: authUserSQL
 Select *
 From users
+         Join user_status Us On users.id = Us.user_id
 Where email = :email
   And deleted = False;
 
@@ -43,15 +46,13 @@ Where id = :id
 Update user_status
 Set following       = Json_Array(:following),
     following_count = :following_count
-Where id = :id
-  And deleted = False;
+Where user_id = :id;
 
 -- Query: setFollowerSQL
 Update user_status
 Set followers      = Json_Array(:followers),
     follower_count = :follower_count
-Where id = :id
-  And deleted = False;
+Where user_id = :id;
 
 -- Query: getUsersSQL
 Select *

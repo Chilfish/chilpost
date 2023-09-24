@@ -1,10 +1,13 @@
 import process from 'node:process'
+import { resolve } from 'node:path'
 import dotenv from 'dotenv'
 import fs from 'fs-extra'
 import { createPool } from 'mysql2/promise'
 import { consola } from 'consola'
 
 dotenv.config({ path: `.env.${process.env.NODE_ENV}` })
+
+const sqlDir = './database/sql'
 
 const {
   MYSQL_PORT = 3306,
@@ -36,17 +39,19 @@ export const db = createPool({
 // init tables from ./sql/init.sql
 export async function initTables() {
   try {
-    const sql = await fs.readFile('database/sql/init.sql', 'utf-8')
+    const sqlFiles = await fs.readdir(sqlDir)
+      .then(files => files.filter(file => file.endsWith('init.sql')))
 
     const con = await db.getConnection()
     await con.beginTransaction()
 
-    sql
-      .split(';\n\n')
-      .filter(query => !!query)
-      .forEach(async (query) => {
-        await con.query(`${query};`)
-      })
+    sqlFiles.forEach(async (file) => {
+      const sql = await fs.readFile(resolve(sqlDir, file), 'utf-8')
+
+      sql
+        .split(';\n\n')
+        .forEach(async query => await con.query(`${query};`))
+    })
 
     await con.commit()
 

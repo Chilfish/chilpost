@@ -1,4 +1,5 @@
-import type { UserDetail, UserDisplay, uid } from '.'
+import type { RowDataPacket } from 'mysql2'
+import type { User, UserDetail, uid } from '.'
 
 export type pid = string
 
@@ -40,10 +41,12 @@ export interface Post {
 
 export interface PostDetail {
   post: Post
-  owner: UserDisplay
+  owner: User
 }
 
 export interface PostsWithOwner {
   owner: UserDetail
   posts: Post[]
 }
+
+export type PostDB = PostDetail[] & RowDataPacket[]
