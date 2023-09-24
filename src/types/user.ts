@@ -14,7 +14,7 @@ export interface UserStatus {
   following: uid[]
 }
 
-export interface User extends UserStatus {
+export interface User {
   id: uid
   email: string
   name: string
@@ -32,6 +32,8 @@ export interface User extends UserStatus {
   created_at: string
   updated_at: string
   deleted_at: string
+
+  status: UserStatus
 }
 
 export type UserDetail = Omit<User, 'email' | 'created_at'>

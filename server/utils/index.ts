@@ -10,7 +10,7 @@ export const isDev = process.env.NODE_ENV === 'development'
 export function hasUndefined(obj: Record<string, unknown>) {
   return Object.entries(obj)
     .map(([key, value]) => {
-      if (value === undefined)
+      if (!value)
         return key
       return null
     }).filter((e): e is string => e !== null)

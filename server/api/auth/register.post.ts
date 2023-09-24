@@ -1,6 +1,6 @@
 import type { ResultSetHeader } from 'mysql2'
 
-import { addUserSQL, getUserSQL } from '@db/queries'
+import { addUser, getUser } from '@db/queries'
 import db from '@db'
 import type { UserDB, UserLogin } from '~/types'
 
@@ -11,8 +11,8 @@ export default defineEventHandler(async (event) => {
 
   const _user = newUser(email, password)
 
-  const [res] = await db.query<ResultSetHeader>(addUserSQL, { ..._user })
-  const [user] = await db.query<UserDB>(getUserSQL, { id: res.insertId })
+  const [res] = await db.query<ResultSetHeader>(addUser, { ..._user })
+  const [user] = await db.query<UserDB>(getUser, { id: res.insertId })
 
   return {
     data: await userWithToken(user[0], event),

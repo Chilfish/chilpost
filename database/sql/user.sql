@@ -1,29 +1,26 @@
--- Query: addUserSQL
+-- Query: addUser
 Insert Into users (email, name, nickname, password)
 Values (:email, :name, :nickname, :password);
 
--- Query: getUserSQL
+-- Query: getUser
 Select *
-From users
-         Join user_status Us On users.id = Us.user_id
-Where id = :id
-  And deleted = False;
+From user_details As u
+Where u.id = :id
+  And u.deleted = False;
 
--- Query: getUserByNameSQL
+-- Query: getUserByName
 Select *
-From users
-         Join user_status Us On users.id = Us.user_id
-Where name = :name
-  And deleted = False;
+From user_details As u
+Where u.name = :name
+  And u.deleted = False;
 
--- Query: authUserSQL
-Select *
+-- Query: authUser
+Select id, name, email, password, level
 From users
-         Join user_status Us On users.id = Us.user_id
 Where email = :email
   And deleted = False;
 
--- Query: upUserSQL
+-- Query: upUser
 Update users
 Set name       = :name,
     password   = :password,
@@ -35,27 +32,26 @@ Set name       = :name,
 Where id = :id
   And deleted = False;
 
--- Query: rmUserSQL
+-- Query: rmUser
 Update users
 Set deleted    = True,
     deleted_at = Current_Timestamp
 Where id = :id
   And deleted = False;
 
--- Query: setFollowSQL
+-- Query: setFollowing
 Update user_status
 Set following       = Json_Array(:following),
     following_count = :following_count
 Where user_id = :id;
 
--- Query: setFollowerSQL
+-- Query: setFollowers
 Update user_status
 Set followers      = Json_Array(:followers),
     follower_count = :follower_count
 Where user_id = :id;
 
--- Query: getUsersSQL
+-- Query: getUsers
 Select *
-From users
-Order By id Desc;
-
+From user_status As u
+Order By u.user_id Desc;

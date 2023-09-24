@@ -1,5 +1,5 @@
 import db from '@db'
-import { getUserSQL } from '@db/queries/user'
+import { getUser } from '@db/queries/user'
 import { newError } from '../error'
 import type { UserDB } from '~/types'
 
@@ -40,7 +40,7 @@ export default defineEventHandler(async (event) => {
     || ''
 
   const { id } = await verifyToken(token)
-  const [res] = await db.query<UserDB>(getUserSQL, { id })
+  const [res] = await db.query<UserDB>(getUser, { id })
   const user = res[0]
 
   if (!user)

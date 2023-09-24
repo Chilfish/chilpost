@@ -1,3 +1,6 @@
+import type { ResultSetHeader } from 'mysql2'
+import db from '@db'
+import { insertPost } from '@db/queries'
 import type { NewPostBody, UserAuth } from '~/types'
 
 export default defineEventHandler(async (event) => {
@@ -6,35 +9,31 @@ export default defineEventHandler(async (event) => {
 
   const { type: postType, pcId } = meta
   const post = newPost(user.id, content, postType === 'post')
-  user.post_count++
+  user.status.post_count++
 
   // just new a post
   if (postType === 'post') {
-    fakePosts.unshift(post)
-
-    return {
-      data: toDetail(post, user),
-    }
+    await db.query(insertPost, {
+      content: post.content,
+      owner_id: post.owner_id,
+    })
   }
 
   // comment or repost
-  const pcPost = fakePosts.find(post => post.id === pcId)
-
-  if (!pcPost)
-    return newError('notfound_post')
-
   if (postType === 'comment') {
-    pcPost.status.comment_count++
-    pcPost.status.comments.unshift(post.id)
-    post.parentId = pcId
-    post.parentPost = toDetail(pcPost, user)
-  }
-  else if (postType === 'repost') {
-    pcPost.status.repost_count++
-    pcPost.status.reposts.unshift(post.id)
-  }
+    const [row] = await db.query<ResultSetHeader>(insertPost, {
+      content: post.content,
+      parent_id: pcId,
+      owner_id: post.owner_id,
+    })
 
-  fakePosts.unshift(post)
+    if (row.affectedRows === 0) {
+      throw new MyError({
+        message: 'Comment failed',
+        code: 'comment_failed',
+      })
+    }
+  }
 
   return {
     data: toDetail(post, user),

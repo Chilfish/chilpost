@@ -53,6 +53,11 @@ export const Errors = [
     message: 'Post Not Found',
     statusCode: 404,
   },
+  {
+    code: 'comment_failed',
+    message: 'Comment failed',
+    statusCode: 400,
+  },
 
   // jose
   {

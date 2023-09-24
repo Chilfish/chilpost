@@ -1,6 +1,6 @@
+import db from '@db'
+import { getPostById } from '@db/queries'
 import type { PostDB, PostDetail, pid } from '~/types'
-import db from '~~/database'
-import { getPostById } from '~~/database/queries'
 
 async function getComment(id: pid) {
   const [row] = await db.query<PostDB>(getPostById, { id })
@@ -19,7 +19,6 @@ export default defineEventHandler(async (event) => {
         code: 'notfound_comment',
       })
     }
-
     return comment
   }))
 

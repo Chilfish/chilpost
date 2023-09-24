@@ -39,8 +39,7 @@ export interface Post {
   parentPost?: PostDetail
 }
 
-export interface PostDetail {
-  post: Post
+export type PostDetail = Post & {
   owner: User
 }
 

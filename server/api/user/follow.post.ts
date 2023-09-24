@@ -1,6 +1,6 @@
 import type { ResultSetHeader } from 'mysql2'
 import db from '@db'
-import { getUserSQL, setFollowSQL, setFollowerSQL } from '@db/queries'
+import { getUser, setFollowers, setFollowing } from '@db/queries'
 import { toggleFollow } from '~/utils'
 
 import type { UserAuth, UserDB } from '~/types'
@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
   if (curUser.id === id)
     return newError('conflict_follow')
 
-  const [res] = await db.query<UserDB>(getUserSQL, { id })
+  const [res] = await db.query<UserDB>(getUser, { id })
   const user = res[0]
 
   if (!user)
@@ -22,10 +22,10 @@ export default defineEventHandler(async (event) => {
   await toggleFollow(curUser, user)
 
   const [[row], [row1]] = await Promise.all([
-    db.query<ResultSetHeader>(setFollowSQL,
-      { id: curUser.id, following: curUser.following, following_count: curUser.following_count }),
-    db.query<ResultSetHeader>(setFollowerSQL,
-      { id: user.id, followers: user.followers, follower_count: user.follower_count }),
+    db.query<ResultSetHeader>(setFollowing,
+      { id: curUser.id, following: curUser.status.following, following_count: curUser.status.following_count }),
+    db.query<ResultSetHeader>(setFollowers,
+      { id: user.id, followers: user.status.followers, follower_count: user.status.follower_count }),
   ])
 
   return {

@@ -33,19 +33,19 @@ export function randomPick<T>(arr: T[], exclude: T[] = [], count = 1) {
 }
 
 export async function toggleFollow(user: User, target: User) {
-  const isFollowing = user.following.includes(target.id)
+  const isFollowing = user.status.following.includes(target.id)
 
   if (!isFollowing) {
-    user.following.unshift(target.id)
-    target.followers.unshift(user.id)
+    user.status.following.unshift(target.id)
+    target.status.followers.unshift(user.id)
   }
   else {
-    user.following.splice(user.following.indexOf(target.id), 1)
-    target.followers.splice(target.followers.indexOf(user.id), 1)
+    user.status.following.splice(user.status.following.indexOf(target.id), 1)
+    target.status.followers.splice(target.status.followers.indexOf(user.id), 1)
   }
 
-  target.follower_count = target.followers.length
-  user.following_count = user.following.length
+  target.status.follower_count = target.status.followers.length
+  user.status.following_count = user.status.following.length
 }
 
 export function useErrorTitle(e?: any) {
