@@ -16,13 +16,11 @@ const {
   data,
   pending,
   error,
-} = useMyFetch<PostDetail[]>('/post')
+} = useMyFetch<PostDetail[]>('/post/all')
 
-watchEffect(() => {
+watch(data, () => {
   if (data.value?.data)
     postStore.posts = data.value.data
-
-  useErrorTitle(error.value?.data)
 })
 </script>
 
@@ -30,13 +28,14 @@ watchEffect(() => {
   <MainHeader />
 
   <CommonLoading :error="error?.data" :is-loading="pending" />
+
   <main v-if="data">
     <section
-      v-for="item in postStore.bodyPosts"
-      :key="item.post.id"
+      v-for="item in postStore.posts"
+      :key="item.id"
     >
       <PostItem
-        :post="item.post"
+        :post="item"
         :owner="item.owner"
       />
     </section>

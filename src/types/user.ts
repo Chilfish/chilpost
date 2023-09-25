@@ -1,4 +1,9 @@
-export type uid = string
+import type { RowDataPacket } from 'mysql2'
+
+/** primary key, auto increasing, uuid */
+export type uid = number
+
+export type Level = 'admin' | 'user'
 
 export interface UserStatus {
   follower_count: number
@@ -12,15 +17,26 @@ export interface UserStatus {
 export interface User {
   id: uid
   email: string
-  createdAt: string
   name: string
   nickname: string
   bio: string
+  level: Level
+
+  /** path to avatar file */
   avatar: string
+
+  /** soft delete, default to false */
+  deleted: boolean
+
+  // times are in ISO format, default to now
+  created_at: string
+  updated_at: string
+  deleted_at: string
+
   status: UserStatus
 }
 
-export type UserDetail = Omit<User, 'email' | 'createdAt'>
+export type UserDetail = Omit<User, 'email' | 'created_at'>
 
 export type UserDisplay = Pick<User, 'name' | 'nickname' | 'avatar'>
 
@@ -35,3 +51,6 @@ export interface UserWithToken {
   user: Omit<UserAuth, 'password'>
   token: string
 }
+
+/** the returns from db query */
+export type UserDB = UserAuth[] & RowDataPacket[]

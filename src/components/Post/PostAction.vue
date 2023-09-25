@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { PostStatus, uid } from '~/types'
+import type { PostStatus } from '~/types'
 
 const props = defineProps<{
   status: PostStatus
-  id: string
+  id: number
 }>()
 
 const modalStore = useModalStore()
@@ -21,7 +21,11 @@ const likeStyle = computed(() =>
 const {
   data: likes,
   execute: toggleLike,
-} = useMyFetch<uid[]>(`/post/like?id=${props.id}`, {
+} = useMyFetch<{ count: number }>('/post/like', {
+  method: 'POST',
+  body: {
+    id: props.id,
+  },
   manual: true,
 })
 
@@ -38,10 +42,8 @@ function sendComment() {
 }
 
 watchEffect(() => {
-  if (likes.value) {
-    status.value.likes = likes.value.data
-    status.value.like_count = likes.value.data.length
-  }
+  if (likes.value)
+    status.value.like_count += likes.value.data.count === 1 ? 1 : -1
 })
 </script>
 

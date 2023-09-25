@@ -1,22 +1,37 @@
+import db from '@db'
+import { getUser } from '@db/queries/user'
 import { newError } from '../error'
+import type { UserDB } from '~/types'
 
 export default defineEventHandler(async (event) => {
   const path = event.path.replace(/\?.+/g, '')
 
   const whiteList = [
-    '/api/auth/**',
-    '/api/post',
-    '/api/post/search',
-    '/api/post/comment',
+    '/auth/**',
+    '/post/all',
+    '/post/get',
+    '/post/comments',
+    '/user/@*',
   ]
+
   const authList = [
     '/api/**',
   ]
 
-  const toReg = (str: string) => new RegExp(`^${str.replace(/\*/g, '.*')}$`)
+  const adminList = [
+    '/user/all',
+  ]
 
-  const needAuth = !whiteList.map(toReg).some(item => item.test(path))
-    && authList.map(toReg).some(item => item.test(path))
+  const toReg = (str: string) => new RegExp(`${str.replace(/\*/g, '.*')}$`)
+
+  let [noNeedAuth, isAdminRoute, needAuth] = [whiteList, adminList, authList]
+    .map(list => list.map(toReg)
+      .some(item => item.test(path)),
+    )
+
+  needAuth = needAuth && !noNeedAuth
+
+  // console.log({ noNeedAuth, isAdminRoute, path, needAuth })
 
   if (!needAuth)
     return
@@ -26,10 +41,19 @@ export default defineEventHandler(async (event) => {
     || ''
 
   const { id } = await verifyToken(token)
-  const user = await getUserById(id)
+  const [res] = await db.query<UserDB>(getUser, { id })
+  const user = res[0]
 
   if (!user)
     return newError('unauthorized')
 
-  event.context.user = user
+  if (isAdminRoute && user.level !== 'admin')
+    return newError('not_admin')
+
+  event.context = {
+    ...event.context,
+    user,
+    uid: user.id,
+    level: user.level,
+  }
 })

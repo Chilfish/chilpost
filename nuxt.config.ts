@@ -1,9 +1,16 @@
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
+import sqlToTs from './server/utils/sqlToTs.server'
 
 const {
   API_PROXY = '/api',
 } = process.env
+
+function toAlias(name: string, path: string) {
+  return {
+    [name]: fileURLToPath(new URL(path, import.meta.url)),
+  }
+}
 
 export default defineNuxtConfig({
   srcDir: 'src/',
@@ -17,7 +24,8 @@ export default defineNuxtConfig({
   ],
 
   alias: {
-    '@cpa': fileURLToPath(new URL('./src/components_app', import.meta.url)),
+    ...toAlias('@cpa', './src/components_app'),
+    ...toAlias('@db', './database'),
   },
 
   imports: {
@@ -44,6 +52,10 @@ export default defineNuxtConfig({
     app: {
       apiProxy: API_PROXY,
     },
+  },
+
+  hooks: {
+    'nitro:init': sqlToTs,
   },
 
   nitro: {

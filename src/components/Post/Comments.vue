@@ -10,8 +10,8 @@ defineProps<{
   <section>
     <PostItem
       v-for="comment in comments"
-      :key="comment.post.id"
-      :post="comment.post"
+      :key="comment.id"
+      :post="comment"
       :owner="comment.owner"
     />
   </section>

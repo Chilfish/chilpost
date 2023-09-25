@@ -7,7 +7,7 @@ export const Errors = [
     statusCode: 500,
   },
   {
-    code: 'missing params',
+    code: 'missing_params',
     statusCode: 400,
   },
 
@@ -53,6 +53,11 @@ export const Errors = [
     message: 'Post Not Found',
     statusCode: 404,
   },
+  {
+    code: 'comment_failed',
+    message: 'Comment failed',
+    statusCode: 400,
+  },
 
   // jose
   {
@@ -64,6 +69,18 @@ export const Errors = [
     code: 'ERR_JWS_INVALID',
     message: 'Invalid token',
     statusCode: 401,
+  },
+
+  // mysql
+  {
+    code: 'ER_NO_SUCH_TABLE',
+    message: 'Table does not exist',
+    statusCode: 500,
+  },
+  {
+    code: 'ER_DUP_ENTRY',
+    message: 'Duplicate in database',
+    statusCode: 409,
   },
 ] as const
 

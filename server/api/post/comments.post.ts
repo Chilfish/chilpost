@@ -1,10 +1,17 @@
-import type { pid } from '~/types'
+import db from '@db'
+import { getPostById } from '@db/queries'
+import type { PostDB, PostDetail, pid } from '~/types'
+
+async function getComment(id: pid) {
+  const [row] = await db.query<PostDB>(getPostById, { id })
+  return row[0] as PostDetail
+}
 
 export default defineEventHandler(async (event) => {
   const { commentIds } = await readBody(event) as { commentIds: pid[] }
 
-  const comments = commentIds.map((id) => {
-    const comment = fakePosts.find(post => post.id === id)
+  const comments = await Promise.all(commentIds.map(async (id) => {
+    const comment = await getComment(id)
 
     if (!comment) {
       throw new MyError({
@@ -12,8 +19,8 @@ export default defineEventHandler(async (event) => {
         code: 'notfound_comment',
       })
     }
-    return toDetail(comment)
-  })
+    return comment
+  }))
 
   return {
     data: comments,

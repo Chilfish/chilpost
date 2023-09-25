@@ -45,7 +45,7 @@ defineProps<{
           :to="`/@${owner.name}/${post.id}`"
           @click.stop
         >
-          {{ timeDiff(post.createdAt) }}
+          {{ timeDiff(post.created_at) }}
         </NuxtLink>
 
         <button

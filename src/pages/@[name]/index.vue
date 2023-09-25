@@ -7,14 +7,13 @@ const {
   data,
   pending,
   error,
-} = useMyFetch<PostsWithOwner>(`/post/search?ownerName=${username.value}`)
+} = useMyFetch<PostsWithOwner>(`/user/@/${username.value}/`)
 
-const bodyPosts = computed(() => data.value?.data?.posts.filter(p => p.isBody))
+const owner = computed(() => data.value?.data?.owner)
 
 watchEffect(() => {
   if (data.value?.data) {
-    const owner = data.value.data.owner
-    const title = `${owner?.nickname}(@${owner?.name})`
+    const title = `${owner.value?.nickname}(@${username.value})`
 
     useHead({
       title,
@@ -27,30 +26,30 @@ watchEffect(() => {
 
 <template>
   <CommonHeader>
-    <h3> {{ data?.data?.owner.nickname }}</h3>
+    <h3> {{ owner?.nickname }}</h3>
   </CommonHeader>
 
   <div class="banner" />
 
   <CommonLoading :error="error?.data" :is-loading="pending" />
 
-  <main v-if="data?.data && !pending">
-    <ProfileCard :user="data.data.owner" />
+  <main v-if="data?.data && owner">
+    <ProfileCard :user="owner" />
 
     <div>
       <section
-        v-for="post in bodyPosts"
+        v-for="post in data.data.posts"
         :key="post.id"
       >
         <PostItem
           :post="post"
-          :owner="data.data.owner"
+          :owner="owner"
         />
       </section>
     </div>
 
     <div
-      v-if="!bodyPosts?.length"
+      v-if="!data.data.posts.length"
       class="no-data"
     >
       No posts yet

@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { vElementHover } from '@vueuse/components'
-import type { UserDetail } from '~/types'
+import type { User } from '~/types'
 
 const props = defineProps<{
-  user: UserDetail
+  user: User
 }>()
 const userStore = useUserStore()
 const curUser = userStore.curUser
@@ -30,7 +30,11 @@ const foBtnText = computed(() => {
 const {
   data,
   execute,
-} = useMyFetch<boolean>(`/user/follow?id=${props.user.id}`, {
+} = useMyFetch<boolean>('/user/follow', {
+  method: 'POST',
+  body: {
+    id: props.user.id,
+  },
   manual: true,
 })
 

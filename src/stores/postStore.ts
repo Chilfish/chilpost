@@ -4,8 +4,6 @@ import type { NewPostBody, PostDetail, pid } from '~/types'
 export const usePostStore = defineStore('post', () => {
   const posts = ref([] as PostDetail[])
 
-  const bodyPosts = computed(() => posts.value.filter(p => p.post.isBody))
-
   const newPostBody = ref<NewPostBody>({
     content: '',
     meta: {
@@ -14,7 +12,7 @@ export const usePostStore = defineStore('post', () => {
   })
 
   function getById(id: pid) {
-    return computed(() => posts.value.find(p => p.post.id === id))
+    return computed(() => posts.value.find(p => p.id === id))
   }
 
   function addPost(post: PostDetail) {
@@ -23,7 +21,6 @@ export const usePostStore = defineStore('post', () => {
 
   return {
     posts,
-    bodyPosts,
     newPostBody,
 
     addPost,
