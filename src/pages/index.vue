@@ -21,7 +21,7 @@ const {
 watch(data, () => {
   if (data.value?.data)
     postStore.posts = data.value.data
-})
+}, {immediate:true})
 </script>
 
 <template>
