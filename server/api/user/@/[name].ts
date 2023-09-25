@@ -10,6 +10,9 @@ export default defineEventHandler(async (event) => {
   const [rows] = await db.query<UserDB>(getUserByName, { name })
   const owner = rows[0] as User
 
+  if (!owner)
+    return newError('notfound_user')
+
   const [posts] = await db.query<PostDB>(getPostByOwner, {
     owner_id: owner.id,
   })

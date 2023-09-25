@@ -12,7 +12,14 @@ export default defineEventHandler(async (event) => {
   const _user = newUser(email, password)
 
   const [res] = await db.query<ResultSetHeader>(addUser, { ..._user })
+
+  if (!res.insertId)
+    return newError('notfound_user')
+
   const [user] = await db.query<UserDB>(getUser, { id: res.insertId })
+
+  if (!user.length)
+    return newError('notfound_user')
 
   return {
     data: await userWithToken(user[0], event),

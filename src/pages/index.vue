@@ -31,7 +31,7 @@ watch(data, () => {
 
   <main v-if="data">
     <section
-      v-for="item in data.data"
+      v-for="item in postStore.posts"
       :key="item.id"
     >
       <PostItem

@@ -1,4 +1,4 @@
-Create Trigger if not exists post_status_insert
+Create Trigger If Not Exists post_status_insert
   After Insert
   On posts
   For Each Row
@@ -9,7 +9,7 @@ Begin
   Where us.user_id = NEW.owner_id;
 End;
 
-Create Trigger if not exists  update_comment_count
+Create Trigger If Not Exists update_comment_count
   After Insert
   On posts
   For Each Row
@@ -22,12 +22,12 @@ Begin
   End If;
 End;
 
-Create Trigger if not exists  user_status_insert
+Create Trigger If Not Exists user_status_insert
   After Insert
   On users
   For Each Row
 Begin
-  Insert Into user_status (user_id) Values (NEW.id);
+  Insert Into user_status (user_id) Values (1);
 End;
 
 Create View user_details As
