@@ -21,5 +21,5 @@ export interface ApiReturn<T = any> {
   code: ErrorCode | 'ok'
   statusCode: number
   message: string
-  data?: T
+  data: T
 }

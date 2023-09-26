@@ -15,8 +15,8 @@ Where u.name = :name
   And u.deleted = False;
 
 -- Query: authUser
-Select id, name, email, password, level
-From users
+Select *
+From user_details
 Where email = :email
   And deleted = False;
 

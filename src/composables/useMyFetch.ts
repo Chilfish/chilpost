@@ -1,39 +1,34 @@
 import Toast from '@cpa/Toast'
-import type { MyError } from '../../server/error'
 import type { UseFetchOptions } from '#app'
+import type { ApiReturn } from '~/types'
 
 /**
  *  @see https://nuxt.com.cn/docs/api/composables/use-fetch
  */
 export default function useMyFetch<T = any>(
-  url: string,
-  options?: UseFetchOptions<{ data: T }> & {
+  url: MaybeRefOrGetter<string>,
+  options?: UseFetchOptions<ApiReturn<T>> & {
     manual?: boolean
   },
 ) {
   const config = useRuntimeConfig()
   const token = useCookie('token')
 
-  let fetchOptions: UseFetchOptions<{ data: T }> = {
+  let fetchOptions: UseFetchOptions<ApiReturn<T>> = {
     baseURL: config.app.apiProxy,
     headers: {
       Authorization: `Bearer ${token.value}`,
     },
 
     onResponse({ response }) {
-      if (response.ok)
+      const data = response._data as ApiReturn
+      if (data.statusCode === 200)
         return
 
-      const error = response._data as MyError
-
-      // ignore fetch me error
-      if (url === '/user/me')
-        return
-
-      if (error.statusCode === 401 && url !== '/auth/login')
+      if (data.statusCode === 401 && toValue(url) !== '/auth/login')
         Toast({ message: 'Unauthorized, please login.', type: 'error' })
       else
-        Toast({ message: error.message, type: 'error' })
+        Toast({ message: data.message, type: 'error' })
     },
 
     ...options,
@@ -47,5 +42,5 @@ export default function useMyFetch<T = any>(
     }
   }
 
-  return useFetch<{ data: T }, MyError>(url, fetchOptions)
+  return useFetch<ApiReturn<T>>(url, fetchOptions)
 }

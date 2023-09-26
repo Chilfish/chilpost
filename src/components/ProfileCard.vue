@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { vElementHover } from '@vueuse/components'
+import { storeToRefs } from 'pinia'
 import type { User } from '~/types'
 
 const props = defineProps<{
   user: User
 }>()
-const userStore = useUserStore()
-const curUser = userStore.curUser
+const { curUser } = storeToRefs(useUserStore())
 
 const isHovered = ref(false)
 const isFollowing = ref(false)
@@ -39,15 +39,15 @@ const {
 })
 
 watchEffect(() => {
-  if (curUser) {
-    isFollowing.value = curUser.status.following.includes(props.user.id)
-    isMe.value = curUser.id === props.user.id
+  if (curUser.value?.name) {
+    isFollowing.value = curUser.value.status.following.includes(props.user.id)
+    isMe.value = curUser.value.id === props.user.id
   }
 
   if (data.value?.data) {
     isLoading.value = false
     isFollowing.value = !isFollowing.value
-    curUser && toggleFollow(curUser, props.user)
+    curUser.value && toggleFollow(curUser.value, props.user)
   }
 })
 </script>

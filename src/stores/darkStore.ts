@@ -4,6 +4,8 @@ export const useDarkStore = defineStore('dark', () => {
   const isDark = useDark({
     valueLight: 'light',
     valueDark: 'dark',
+    disableTransition: false,
+    storageKey: 'color',
   })
   const toggle = useToggle(isDark)
   const icon = computed(() =>

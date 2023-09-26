@@ -24,6 +24,8 @@ export function newError(code: ErrorCode, message?: string) {
     if (message)
       error.message = message
 
+    error.data = {}
+
     return new MyError(error)
   }
 

@@ -8,52 +8,43 @@ const inputs = reactive<UserLogin>({
 
 const isConfirm = ref(false)
 const isLoading = ref(false)
+const url = ref('/auth/login')
 
 const userStore = useUserStore()
 const modalStore = useModalStore()
 
 const {
-  data: loginData,
-  error: loginError,
-  execute: login,
-} = useMyFetch<UserWithToken>('/auth/login', {
+  data,
+  execute,
+} = useMyFetch<UserWithToken>(url, {
   method: 'post',
   body: inputs,
   manual: true,
 })
 
-const {
-  data: registerData,
-  execute: register,
-} = useMyFetch<UserWithToken>('/auth/register', {
-  method: 'post',
-  body: inputs,
-  manual: true,
-})
-
-function onSuccess(data?: UserWithToken) {
-  if (!data)
-    return
+function onSuccess(data: UserWithToken) {
   isLoading.value = false
 
-  const user = data.user
-  userStore.setCurUser(user)
+  console.log(data, 'login')
+  userStore.curUser = data.user
   modalStore.close()
 }
 
-watchEffect(() => {
-  if (loginData.value)
-    return onSuccess(loginData.value.data)
+watch(data, async () => {
+  if (!data.value)
+    return
 
-  if (registerData.value)
-    return onSuccess(registerData.value.data)
+  if (data.value.statusCode === 200)
+    return onSuccess(data.value.data)
 
-  if (!isConfirm.value && loginError.value?.statusCode === 404) {
+  if (!isConfirm.value && data.value.statusCode === 404) {
+    await delay(500)
     if (confirm('User not found, register?')) {
       isLoading.value = true
-      register()
+      url.value = '/auth/register'
+      execute()
     }
-    isConfirm.value = true
+    return isConfirm.value = true
   }
 })
 </script>
@@ -88,7 +79,7 @@ watchEffect(() => {
       <CommonButton
         text="Log in"
         :is-loading="isLoading"
-        @click="login(), isConfirm = false, isLoading = true"
+        @click="execute(), isConfirm = false, isLoading = true"
       />
     </div>
   </div>

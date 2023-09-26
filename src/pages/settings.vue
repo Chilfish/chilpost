@@ -59,7 +59,7 @@ function updateSettings() {
 
 watch(data, async () => {
   if (data.value?.data && curUser.value) {
-    await userStore.setCurUser(curUser.value)
+    userStore.curUser = curUser.value
     isLoading.value = false
     Toast({ message: 'Settings updated!', type: 'success' })
   }

@@ -42,7 +42,7 @@ export default defineEventHandler(async (event) => {
 
   const { id } = await verifyToken(token)
   const [res] = await db.query<UserDB>(getUser, { id })
-  const user = res[0]
+  const user = withoutPass(res[0])
 
   if (!user)
     return newError('unauthorized')

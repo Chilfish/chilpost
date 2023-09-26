@@ -20,7 +20,7 @@ const {
   pending: commentPending,
   error: commentError,
   execute: commentExecute,
-} = useMyFetch<PostDetail[]>('/post/comments', {
+} = useMyFetch<{ comments: PostDetail[] }>('/post/comments', {
   method: 'POST',
   body: {
     commentIds,
@@ -80,7 +80,7 @@ watch(() => postData.value, () => {
       :is-loading="commentPending"
     />
 
-    <PostComments v-if="commentData" :comments="commentData.data" />
+    <PostComments v-if="commentData" :comments="commentData.data.comments" />
   </main>
 </template>
 

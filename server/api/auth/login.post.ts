@@ -14,19 +14,20 @@ export default defineEventHandler(async (event) => {
   if (!user)
     return newError('notfound_user')
 
-  const verified = password === user.password
-  if (!verified)
+  if (password !== user.password)
     return newError('incorrect_password')
+
+  const userWithoutPass = withoutPass(user)
 
   event.context = {
     ...event.context,
-    user,
+    user: userWithoutPass,
     uid: user.id,
     level: user.level,
   }
 
   return newReturn(
-    await userWithToken(user, event),
+    await userWithToken(userWithoutPass, event),
     'login success',
   )
 })
