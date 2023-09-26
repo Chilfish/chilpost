@@ -4,6 +4,15 @@ export * from '../error'
 
 export const isDev = process.env.NODE_ENV === 'development'
 
+export function newReturn<T = any>(data: T, message = 'ok') {
+  return {
+    code: 'ok',
+    statusCode: 200,
+    message,
+    data,
+  }
+}
+
 /**
  * assert if these's any value in the object is undefined
  */

@@ -1,17 +1,6 @@
 import { H3Error } from 'h3'
 import { initTables } from '@db'
-import { Errors } from '.'
-
-import type { errorCode } from '.'
-
-export type ErrorCode = typeof errorCode
-
-export interface ErrorType<T = any> {
-  code: ErrorCode
-  message?: string
-  statusCode?: number
-  data?: T
-}
+import type { ErrorCode, ErrorType } from '~/types'
 
 export class MyError extends H3Error {
   code: ErrorCode

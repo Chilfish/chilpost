@@ -25,7 +25,8 @@ export default defineEventHandler(async (event) => {
     level: user.level,
   }
 
-  return {
-    data: await userWithToken(user, event),
-  }
+  return newReturn(
+    await userWithToken(user, event),
+    'login success',
+  )
 })

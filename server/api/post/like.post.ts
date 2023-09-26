@@ -11,9 +11,9 @@ export default defineEventHandler(async (event) => {
     user_id: uid,
   })
 
-  return {
-    data: {
-      count: row.affectedRows,
-    },
-  }
+  return newReturn({
+    count: row.affectedRows,
+  },
+  'like post success',
+  )
 })

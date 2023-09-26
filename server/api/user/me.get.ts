@@ -5,7 +5,5 @@ export default defineEventHandler(async (event) => {
 
   const { password: _, ...userWithoutPass } = user
 
-  return {
-    data: userWithoutPass,
-  }
+  return newReturn(userWithoutPass)
 })
