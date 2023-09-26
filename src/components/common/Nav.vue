@@ -17,7 +17,7 @@ function sendPost() {
 }
 
 // hidden while not logged in
-const hideBtn = computed(() => !userStore.curUser)
+const hideBtn = computed(() => !userStore.curUser?.name)
 
 const routes = computed<NavItem[]>(() => [
   {
@@ -66,7 +66,7 @@ watchEffect(() => {
       :key="route.to"
     >
       <nuxt-link
-        v-if="route.hide === false"
+        v-show="!route.hide"
         :to="route.to" class="nav-item"
       >
         <span class="icon" :class="route.icon" />
@@ -77,7 +77,7 @@ watchEffect(() => {
     </template>
 
     <button
-      v-if="!hideBtn"
+      v-show="!hideBtn"
       :class="showFAB ? '' : 'hide'"
       class="fab"
       @click="sendPost"
@@ -87,7 +87,7 @@ watchEffect(() => {
     </button>
 
     <common-button
-      v-if="hideBtn"
+      v-show="hideBtn"
       text="Login"
       @click="modalStore.open('login')"
     />

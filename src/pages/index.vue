@@ -16,12 +16,12 @@ const {
   data,
   pending,
   error,
-} = useMyFetch<PostDetail[]>('/post/all')
+} = useMyFetch<{ posts: PostDetail[] }>('/post/all')
 
 watch(data, () => {
   if (data.value?.data)
-    postStore.posts = data.value.data
-}, {immediate:true})
+    postStore.posts = data.value.data.posts
+}, { immediate: true })
 </script>
 
 <template>
@@ -29,7 +29,7 @@ watch(data, () => {
 
   <CommonLoading :error="error?.data" :is-loading="pending" />
 
-  <main v-if="data">
+  <main v-if="postStore.posts.length">
     <section
       v-for="item in postStore.posts"
       :key="item.id"

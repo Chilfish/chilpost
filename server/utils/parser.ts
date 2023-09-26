@@ -1,11 +1,14 @@
-import type { Post, PostDetail, UserAuth, uid } from '~/types'
+import type { Post, PostDetail, User, UserAuth, uid } from '~/types'
+
+export function withoutPass(user: UserAuth): User {
+  const { password: _, ...rest } = user
+  return rest
+}
 
 export function toDetail(post: Post, owner: UserAuth): PostDetail {
-  const { password: _, ...rest } = owner
-
   return {
     ...post,
-    owner: rest,
+    owner: withoutPass(owner),
   }
 }
 
@@ -16,11 +19,12 @@ export function newPost(
 ): Post {
   const now = new Date().toISOString()
   return {
-    id: now, // TODO: from database
+    id: 1,
     owner_id: ownerId,
     content,
     isBody,
     created_at: now,
+    parentId: -1,
     status: {
       like_count: 0,
       comment_count: 0,
@@ -37,7 +41,7 @@ export function newUser(email: string, password: string, name?: string): UserAut
   const now = new Date().toISOString()
 
   const user: UserAuth = {
-    id: now,
+    id: 1,
     email,
     password,
     name: _name,
@@ -51,11 +55,14 @@ export function newUser(email: string, password: string, name?: string): UserAut
     created_at: now,
     updated_at: now,
 
-    post_count: 0,
-    follower_count: 0,
-    following_count: 0,
-    followers: [],
-    following: [],
+    status: {
+
+      post_count: 0,
+      follower_count: 0,
+      following_count: 0,
+      followers: [],
+      following: [],
+    },
   }
   return user
 }

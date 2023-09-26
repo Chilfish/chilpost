@@ -2,9 +2,10 @@ export * from './newError'
 
 export const Errors = [
   {
-    code: 'unknown',
+    code: 'unknown error',
     message: 'Server error',
     statusCode: 500,
+    data: {},
   },
   {
     code: 'missing_params',

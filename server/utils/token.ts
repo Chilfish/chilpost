@@ -4,7 +4,7 @@ import type { H3Event } from 'h3'
 
 import { alg, getKeys } from './keys'
 import { TOKEN_EXP } from '~/constants'
-import type { UserAuth, UserWithToken, uid } from '~/types'
+import type { User, UserWithToken, uid } from '~/types'
 
 const { ecPrivateKey, ecPublicKey } = await getKeys()
 
@@ -26,17 +26,15 @@ export async function verifyToken(token: string) {
 }
 
 export async function userWithToken(
-  user: UserAuth,
+  user: User,
   event: H3Event,
 ): Promise<UserWithToken> {
-  const { password: _pass, ...userWithoutPass } = user
-
   const token = await createToken({ id: user.id, name: user.name })
 
   setCookie(event, 'token', token)
 
   return {
-    user: userWithoutPass,
+    user,
     token,
   }
 }

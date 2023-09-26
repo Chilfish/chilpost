@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
 
   const { id } = await readBody(event) as { id: string }
 
-  if (curUser.id === id)
+  if (curUser.id === Number(id))
     return newError('conflict_follow')
 
   const [res] = await db.query<UserDB>(getUser, { id })
@@ -28,9 +28,7 @@ export default defineEventHandler(async (event) => {
       { id: user.id, followers: user.status.followers, follower_count: user.status.follower_count }),
   ])
 
-  return {
-    data: {
-      count: row.affectedRows + row1.affectedRows,
-    },
-  }
+  return newReturn({
+    count: row.affectedRows + row1.affectedRows,
+  })
 })

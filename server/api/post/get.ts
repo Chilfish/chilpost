@@ -14,10 +14,12 @@ export default defineEventHandler(async (event) => {
     throw new MyError({
       message: `Post not found. Id: ${id}`,
       code: 'notfound_post',
+      statusCode: 404,
     })
   }
 
-  return {
-    data: post,
-  }
+  return newReturn(
+    post,
+    'get post success',
+  )
 })

@@ -34,6 +34,7 @@ Create View user_details As
 Select u.id,
        u.name,
        u.nickname,
+       u.password,
        u.avatar,
        u.bio,
        u.email,

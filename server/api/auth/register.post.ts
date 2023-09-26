@@ -16,12 +16,20 @@ export default defineEventHandler(async (event) => {
   if (!res.insertId)
     return newError('notfound_user')
 
-  const [user] = await db.query<UserDB>(getUser, { id: res.insertId })
+  const [row] = await db.query<UserDB>(getUser, { id: res.insertId })
+  const user = row[0]
 
-  if (!user.length)
-    return newError('notfound_user')
+  const userWithoutPass = withoutPass(user)
 
-  return {
-    data: await userWithToken(user[0], event),
+  event.context = {
+    ...event.context,
+    user: userWithoutPass,
+    uid: user.id,
+    level: user.level,
   }
+
+  return newReturn(
+    await userWithToken(userWithoutPass, event),
+    'register success',
+  )
 })

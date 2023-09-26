@@ -17,12 +17,17 @@ export default defineEventHandler(async (event) => {
       throw new MyError({
         message: `Comment not found. Id: ${id}`,
         code: 'notfound_comment',
+        statusCode: 404,
       })
     }
     return comment
   }))
 
-  return {
-    data: comments,
-  }
+  return newReturn(
+    {
+      comments,
+      count: comments.length,
+    },
+    'get comments success',
+  )
 })

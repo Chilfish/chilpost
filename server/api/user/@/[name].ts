@@ -17,10 +17,11 @@ export default defineEventHandler(async (event) => {
     owner_id: owner.id,
   })
 
-  return {
-    data: {
-      owner,
-      posts,
-    },
-  }
+  return newReturn({
+    posts,
+    owner,
+    count: posts.length,
+  },
+  'get posts success',
+  )
 })

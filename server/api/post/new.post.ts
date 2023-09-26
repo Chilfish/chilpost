@@ -33,13 +33,16 @@ export default defineEventHandler(async (event) => {
       throw new MyError({
         message: 'Comment failed',
         code: 'comment_failed',
+        statusCode: 500,
       })
     }
 
     post.id = row.insertId
   }
 
-  return {
-    data: toDetail(post, user),
-  }
+  return newReturn({
+    post: toDetail(post, user),
+  },
+  'new post success',
+  )
 })

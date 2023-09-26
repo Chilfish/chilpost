@@ -6,7 +6,8 @@ export default defineEventHandler(async (event) => {
     secure: !isDev,
   })
 
-  return {
-    data: null,
-  }
+  return newReturn(
+    111,
+    'logout success',
+  )
 })
