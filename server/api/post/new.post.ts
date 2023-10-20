@@ -42,7 +42,5 @@ export default defineEventHandler(async (event) => {
 
   return newReturn({
     post: toDetail(post, user),
-  },
-  'new post success',
-  )
+  }, 'new post success')
 })

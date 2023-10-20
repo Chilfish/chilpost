@@ -9,6 +9,7 @@ export default antfu({
 }, {
   rules: {
     'no-console': 'off',
+    'no-alert': 'off',
     'vue/no-multiple-template-root': 'off',
   },
 }, {

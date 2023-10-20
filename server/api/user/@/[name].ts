@@ -21,7 +21,5 @@ export default defineEventHandler(async (event) => {
     posts,
     owner,
     count: posts.length,
-  },
-  'get posts success',
-  )
+  }, 'get posts success')
 })

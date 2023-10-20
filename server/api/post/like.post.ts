@@ -13,7 +13,5 @@ export default defineEventHandler(async (event) => {
 
   return newReturn({
     count: row.affectedRows,
-  },
-  'like post success',
-  )
+  }, 'like post success')
 })
