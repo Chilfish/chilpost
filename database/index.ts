@@ -33,6 +33,7 @@ export const db = createPool({
   port: Number(MYSQL_PORT),
 
   namedPlaceholders: true,
+  connectTimeout: 8 * 1000, // vercel serverless function timeout is 10s
   ssl,
 })
 

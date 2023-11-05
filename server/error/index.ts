@@ -83,6 +83,11 @@ export const Errors = [
     message: 'Duplicate in database',
     statusCode: 409,
   },
+  {
+    code: 'ECONNREFUSED',
+    message: 'Database connection refused',
+    statusCode: 500,
+  },
 ] as const
 
 // the handled error codes

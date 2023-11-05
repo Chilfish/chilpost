@@ -1,4 +1,5 @@
 import type { NitroErrorHandler } from 'nitropack'
+import { consola } from 'consola'
 import type { MyError } from './newError'
 import { newError } from './newError'
 
@@ -10,7 +11,8 @@ export default <NitroErrorHandler> async function (error: MyError, event) {
 
   const { message, ...rest } = err
 
-  // console.log({ ...error })
+  if (err.statusCode >= 500)
+    consola.error({ ...error })
 
   const res = event.node.res
   res.setHeader('Content-Type', 'application/json')

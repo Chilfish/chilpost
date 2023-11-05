@@ -10,6 +10,10 @@ export class MyError extends H3Error {
     this.statusCode = input.statusCode || 500
     this.code = input.code
     this.data = input.data
+
+    // hide stack trace in production
+    if (process.env.NODE_ENV === 'production')
+      this.stack = undefined
   }
 
   async handle() {

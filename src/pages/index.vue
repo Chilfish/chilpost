@@ -29,7 +29,7 @@ watch(data, () => {
 
   <CommonLoading :error="error?.data" :is-loading="pending" />
 
-  <main v-if="postStore.posts.length">
+  <main v-if="postStore.posts?.length">
     <section
       v-for="item in postStore.posts"
       :key="item.id"
@@ -39,6 +39,11 @@ watch(data, () => {
         :owner="item.owner"
       />
     </section>
+  </main>
+  <main v-else>
+    <h3 class="error">
+      No Post Yet
+    </h3>
   </main>
 </template>
 
