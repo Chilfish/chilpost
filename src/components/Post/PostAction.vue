@@ -42,7 +42,7 @@ function sendComment() {
 }
 
 watchEffect(() => {
-  if (likes.value)
+  if (likes.value?.data)
     status.value.like_count += likes.value.data.count === 1 ? 1 : -1
 })
 </script>

@@ -11,14 +11,15 @@ export default function useMyFetch<T = any>(
     manual?: boolean
   },
 ) {
-  const config = useRuntimeConfig()
+  const { app } = useRuntimeConfig()
   const token = useCookie('token')
 
   let fetchOptions: UseFetchOptions<ApiReturn<T>> = {
-    baseURL: config.app.apiProxy,
+    baseURL: app.proxy ? '/api1' : '/api',
     headers: {
       Authorization: `Bearer ${token.value}`,
     },
+    mode: 'cors',
 
     onResponse({ response }) {
       const data = response._data as ApiReturn
@@ -26,9 +27,10 @@ export default function useMyFetch<T = any>(
         return
 
       if (data.statusCode === 401 && toValue(url) !== '/auth/login')
-        Toast({ message: 'Unauthorized, please login.', type: 'error' })
-      else
-        Toast({ message: data.message, type: 'error' })
+        return Toast({ message: 'Unauthorized, please login.', type: 'error' })
+
+      if (token.value?.trim() !== '')
+        return Toast({ message: data.message, type: 'error' })
     },
 
     ...options,
@@ -41,6 +43,8 @@ export default function useMyFetch<T = any>(
       watch: false,
     }
   }
+
+  // console.log('fetchOptions', fetchOptions)
 
   return useFetch<ApiReturn<T>>(url, fetchOptions)
 }

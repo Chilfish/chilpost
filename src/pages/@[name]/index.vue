@@ -7,7 +7,7 @@ const {
   data,
   pending,
   error,
-} = useMyFetch<PostsWithOwner>(`/user/@/${username.value}/`)
+} = useMyFetch<PostsWithOwner>(`/user/@/${username.value}`)
 
 const owner = computed(() => data.value?.data?.owner)
 

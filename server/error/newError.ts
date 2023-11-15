@@ -5,11 +5,13 @@ import type { ErrorCode, ErrorType } from '~/types'
 export class MyError extends H3Error {
   code: ErrorCode
 
-  constructor(input: ErrorType) {
+  constructor(input: ErrorType, error?: Error) {
     super(input.message || 'unknown error')
     this.statusCode = input.statusCode || 500
     this.code = input.code
     this.data = input.data
+    this.cause = error?.cause
+    this.stack = error?.stack
 
     // hide stack trace in production
     if (process.env.NODE_ENV === 'production')
@@ -22,15 +24,15 @@ export class MyError extends H3Error {
   }
 }
 
-export function newError(code: ErrorCode, message?: string) {
-  const error = Errors.find(e => e.code === code) as ErrorType | null
-  if (error) {
+export function newError(code: ErrorCode, message?: string, error?: Error) {
+  const err = Errors.find(e => e.code === code) as ErrorType | null
+  if (err) {
     if (message)
-      error.message = message
+      err.message = message
 
-    error.data = {}
+    err.data = {}
 
-    return new MyError(error)
+    return new MyError(err, error)
   }
 
   return new MyError(Errors[0])

@@ -25,8 +25,9 @@ const {
 function onSuccess(data: UserWithToken) {
   isLoading.value = false
 
-  console.log(data, 'login')
+  // console.log(data, 'login')
   userStore.curUser = data.user
+  useCookie('token').value = data.token
   modalStore.close()
 }
 
@@ -35,7 +36,7 @@ watch(data, async () => {
     return
 
   if (data.value.statusCode === 200)
-    return onSuccess(data.value.data)
+    return onSuccess(data.value.data!)
 
   if (!isConfirm.value && data.value.statusCode === 404) {
     await delay(500)

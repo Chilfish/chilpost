@@ -5,14 +5,14 @@ import { newError } from './newError'
 
 export default <NitroErrorHandler> async function (error: MyError, event) {
   const code = (error.cause as any)?.code || error.code
-  const err = newError(code)
+  const err = newError(code, undefined, error)
 
   await err.handle()
 
   const { message, ...rest } = err
 
   if (err.statusCode >= 500)
-    consola.error({ ...error })
+    consola.error({ ...err })
 
   const res = event.node.res
   res.setHeader('Content-Type', 'application/json')

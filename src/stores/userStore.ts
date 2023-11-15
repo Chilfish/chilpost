@@ -12,8 +12,10 @@ export const useUserStore = defineStore('user', () => {
   async function fetchMe() {
     const { data } = useMyFetch<User>('/user/me')
 
+    // console.log(data)
+
     watch(data, (user) => {
-      if (!user?.data.name)
+      if (!user?.data?.name)
         return
       curUser.value = user.data
     })
