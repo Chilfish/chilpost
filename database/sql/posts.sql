@@ -11,6 +11,14 @@ Where owner_id = :owner_id
   And is_body = True
 Order By created_at Desc;
 
+-- Query: getComments
+Select *
+From post_with_owner As p
+Where parent_id = :parent_id
+  And is_body = False
+Order By created_at Desc;
+
+
 -- Query: getPostById
 Select *
 From post_with_owner As p
@@ -32,3 +40,10 @@ Update post_status
 Set like_count = like_count + 1,
     likes      = Json_Array_Append(likes, '$', :user_id)
 Where post_id = :post_id;
+
+-- Query: unlikePost
+Update post_status
+Set like_count = like_count - 1,
+    likes      = Json_Remove(likes, Json_Unquote(Json_Search(likes, 'one', :user_id)))
+Where post_id = :post_id
+  And Json_Search(likes, 'one', :user_id) Is Not Null;

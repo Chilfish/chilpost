@@ -9,7 +9,7 @@ const props = defineProps<{
 const modalStore = useModalStore()
 const postStore = usePostStore()
 const curUser = useUserStore().curUser
-const isLike = computed(() => curUser && props.status.likes.includes(curUser.id))
+const isLike = computed(() => curUser && props.status.likes.includes(curUser.id.toString()))
 
 const status = ref(props.status)
 const likeStyle = computed(() =>

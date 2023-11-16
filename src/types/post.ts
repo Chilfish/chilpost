@@ -22,7 +22,7 @@ export interface PostStatus {
   comment_count: number
   repost_count: number
 
-  likes: uid[]
+  likes: string[] // due to mysql8.0, json array should be string type
   comments: pid[]
   reposts: pid[]
 }
@@ -35,7 +35,7 @@ export interface Post {
   owner_id: uid
   status: PostStatus
 
-  parentId: pid
+  parent_id: pid
   parent_post?: PostDetail
 }
 

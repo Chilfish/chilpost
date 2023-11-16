@@ -1,35 +1,3 @@
-Create Trigger If Not Exists post_status_insert
-  After Insert
-  On posts
-  For Each Row
-Begin
-  Insert Into post_status (post_id) Values (NEW.id);
-  Update user_status As us
-  Set post_count = post_count + 1
-  Where us.user_id = NEW.owner_id;
-End;
-
-Create Trigger If Not Exists update_comment_count
-  After Insert
-  On posts
-  For Each Row
-Begin
-  If NEW.parent_id Is Not Null Then
-    Update post_status As ps
-    Set comment_count = comment_count + 1,
-        comments      = Json_Array_Append(comments, '$', New.id)
-    Where ps.post_id = NEW.parent_id;
-  End If;
-End;
-
-Create Trigger If Not Exists user_status_insert
-  After Insert
-  On users
-  For Each Row
-Begin
-  Insert Into user_status (user_id) Values (1);
-End;
-
 Create View user_details As
 Select u.id,
        u.name,
@@ -46,7 +14,7 @@ Select u.id,
            'following_count', us.following_count,
            'followers', us.followers,
            'followings', us.followings
-         ) As status
+       ) As status
 From users As u
        Inner Join user_status As us
                   On us.user_id = u.id;
@@ -65,7 +33,7 @@ Select p.id,
            'like_count', ps.like_count,
            'comment_count', ps.comment_count,
            'repost_count', ps.repost_count
-         ) As status
+       ) As status
 From posts As p
        Inner Join post_status As ps
                   On ps.post_id = p.id;
@@ -83,8 +51,7 @@ Select pd.id,
            'name', u.name,
            'nickname', u.nickname,
            'avatar', u.avatar
-         ) As owner
+       ) As owner
 From post_details As pd
        Inner Join users As u
-                  On u.id = pd.owner_id
-Group By pd.id;
+                  On u.id = pd.owner_id;

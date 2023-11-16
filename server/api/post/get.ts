@@ -18,6 +18,14 @@ export default defineEventHandler(async (event) => {
     })
   }
 
+  if (post.parent_id !== -1) {
+    const [parent] = await db.query<PostDB>(getPostById, {
+      id: post.parent_id,
+    })
+
+    post.parent_post = parent[0]
+  }
+
   return newReturn(
     post,
     'get post success',

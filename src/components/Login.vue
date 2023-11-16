@@ -25,10 +25,14 @@ const {
 function onSuccess(data: UserWithToken) {
   isLoading.value = false
 
-  // console.log(data, 'login')
+  console.log(data, 'login')
   userStore.curUser = data.user
-  useCookie('token').value = data.token
   modalStore.close()
+
+  // have to use setTimeout to avoid the token not being set
+  setTimeout(() => {
+    useCookie('token').value = data.token
+  }, 0)
 }
 
 watch(data, async () => {

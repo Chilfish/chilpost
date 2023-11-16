@@ -24,7 +24,7 @@ export function newPost(
     content,
     isBody,
     created_at: now,
-    parentId: -1,
+    parent_id: -1,
     status: {
       like_count: 0,
       comment_count: 0,

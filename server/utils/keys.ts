@@ -3,7 +3,7 @@ import fs from 'fs-extra'
 import { exportPKCS8, exportSPKI, generateKeyPair, importPKCS8, importSPKI } from 'jose'
 import 'dotenv/config'
 
-export const alg = 'ES256'
+export const alg = 'RS256'
 
 const {
   PRIVATE_KEY,
