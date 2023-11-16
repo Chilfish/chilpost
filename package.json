@@ -1,9 +1,9 @@
 {
   "name": "chilpost",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "private": true,
-  "packageManager": "pnpm@8.6.11",
+  "packageManager": "pnpm@8.10.5",
   "author": {
     "name": "Chilfish",
     "email": "chill4fish@gmail.com"
@@ -42,6 +42,7 @@
     "mysql2": "^3.6.3",
     "nuxt": "^3.8.1",
     "pinia": "^2.1.7",
+    "pnpm": "^8.10.5",
     "sass": "^1.69.5",
     "sharp": "^0.32.6",
     "simple-git-hooks": "^2.9.0",
@@ -70,7 +71,9 @@
       "object.fromentries": "npm:@nolyfill/object.fromentries@latest",
       "object.groupby": "npm:@nolyfill/object.groupby@latest",
       "object.values": "npm:@nolyfill/object.values@latest",
-      "which-typed-array": "npm:@nolyfill/which-typed-array@latest"
+      "which-typed-array": "npm:@nolyfill/which-typed-array@latest",
+      "hasown": "npm:@nolyfill/hasown@latest",
+      "isarray": "npm:@nolyfill/isarray@latest"
     }
   },
   "simple-git-hooks": {

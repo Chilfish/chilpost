@@ -1,6 +1,12 @@
 ### Chill Post App
 
-Build with Nuxt3
+An https://x.com like app, it's very simple, but it's a good practice for me to learn the nuxt3 and mysql.
+
+Build with Nuxt3 + nodejs/MySql2 + jose/jws
+
+> I'm looking for the mysql hosting service, so the online preview is not fully available now.
+
+Also, I am trying to use kotlin + spring boot + exposed to build the another backend version. Kotlin is so cool!😍 It's still in development and closed source now.
 
 ### Features
 
@@ -15,6 +21,8 @@ pnpm i
 
 pnpm dev
 ```
+
+then rename the `.env.example` to `.env` and fill the environment variables in it.
 
 ### Build
 
