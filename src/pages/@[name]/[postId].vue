@@ -11,9 +11,10 @@ const {
   query: {
     id: postId.value,
   },
+  server: false,
 })
 
-const commentIds = computed(() => postData.value?.data?.status?.comments || [])
+// const commentIds = computed(() => postData.value?.data?.status?.comments || [])
 
 const {
   data: commentData,
@@ -21,23 +22,26 @@ const {
   error: commentError,
   execute: commentExecute,
 } = useMyFetch<{ comments: PostDetail[] }>('/post/comments', {
-  method: 'POST',
-  body: {
-    commentIds,
+  query: {
+    id: postId,
   },
   manual: true,
+  server: false,
 })
 
 watch(() => postData.value, () => {
   if (postData.value?.data) {
     const { owner, ...post } = postData.value?.data
+    if (!owner)
+      return
+
     const title = `${owner.nickname}'s Post: ${post.content.substring(0, 50)}`
 
     useHead({
       title,
     })
 
-    if (commentIds.value.length)
+    if (postData.value.data.status.comment_count > 0)
       commentExecute()
     else
       commentPending.value = false
@@ -57,14 +61,14 @@ watch(() => postData.value, () => {
     :is-loading="postPending"
   />
 
-  <main v-if="postData">
+  <main v-if="postData?.data.owner">
     <div
-      v-if="postData.data.parentPost"
+      v-if="postData.data.parent_post"
       class="parent-post"
     >
       <PostItem
-        :post="postData.data.parentPost"
-        :owner="postData.data.parentPost.owner"
+        :post="postData.data.parent_post"
+        :owner="postData.data.parent_post.owner"
       />
 
       <div class="vr" />

@@ -40,7 +40,7 @@ const {
 
 watchEffect(() => {
   if (curUser.value?.name) {
-    isFollowing.value = curUser.value.status.following.includes(props.user.id)
+    isFollowing.value = curUser.value.status.followings.includes(props.user.id)
     isMe.value = curUser.value.id === props.user.id
   }
 
@@ -96,7 +96,7 @@ watchEffect(() => {
         </span>
         <span>
           {{ user.status.following_count }}
-          <span class="following"> following </span>
+          <span class="followings"> followings </span>
         </span>
         <span>
           {{ user.status.post_count }}

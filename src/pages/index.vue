@@ -16,7 +16,7 @@ const {
   data,
   pending,
   error,
-} = useMyFetch<{ posts: PostDetail[] }>('/post/all', { server: false })
+} = useMyFetch<{ posts: PostDetail[] }>('/post/all')
 
 watch(data, () => {
   if (data.value?.data)
@@ -29,7 +29,13 @@ watch(data, () => {
 
   <CommonLoading :error="error?.data" :is-loading="pending" />
 
-  <main>
+  <main v-if="!pending">
+    <h3
+      v-if="postStore.posts.length === 0"
+      class="error"
+    >
+      No Post Yet
+    </h3>
     <section
       v-for="item in postStore.posts"
       :key="item.id"
@@ -40,11 +46,6 @@ watch(data, () => {
       />
     </section>
   </main>
-  <!-- <main v-else>
-    <h3 class="error">
-      No Post Yet
-    </h3>
-  </main> -->
 </template>
 
 <style lang="scss" scoped>

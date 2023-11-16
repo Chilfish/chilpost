@@ -45,7 +45,7 @@ Select u.id,
            'follower_count', us.follower_count,
            'following_count', us.following_count,
            'followers', us.followers,
-           'following', us.following
+           'followings', us.followings
          ) As status
 From users As u
        Inner Join user_status As us

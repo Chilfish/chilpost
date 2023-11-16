@@ -1,5 +1,13 @@
 <script setup lang="ts">
 const modalStore = useModalStore()
+
+onNuxtReady(async () => {
+  const userStore = useUserStore()
+
+  // get user info from server, in SSR mode
+  if (!userStore.curUser?.name)
+    await userStore.fetchMe()
+})
 </script>
 
 <template>

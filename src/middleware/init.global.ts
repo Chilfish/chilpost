@@ -1,8 +1,8 @@
 export default defineNuxtRouteMiddleware(async (_to, _from) => {
-  const userStore = useUserStore()
   useDarkStore()
 
+  // const userStore = useUserStore()
   // get user info from server, in SSR mode
-  if (!userStore.curUser?.name)
-    await userStore.fetchMe()
+  // if (!userStore.curUser?.name)
+  // await userStore.fetchMe()
 })

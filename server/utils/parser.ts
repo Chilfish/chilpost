@@ -61,7 +61,7 @@ export function newUser(email: string, password: string, name?: string): UserAut
       follower_count: 0,
       following_count: 0,
       followers: [],
-      following: [],
+      followings: [],
     },
   }
   return user

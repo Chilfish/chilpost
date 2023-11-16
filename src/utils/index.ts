@@ -1,5 +1,3 @@
-/* eslint-disable node/prefer-global/process */
-
 import dayjs from 'dayjs'
 import type { ErrorType } from './../../server/error/newError'
 import type { User } from '~/types'
@@ -33,19 +31,19 @@ export function randomPick<T>(arr: T[], exclude: T[] = [], count = 1) {
 }
 
 export async function toggleFollow(user: User, target: User) {
-  const isFollowing = user.status.following.includes(target.id)
+  const isFollowing = user.status.followings.includes(target.id)
 
   if (!isFollowing) {
-    user.status.following.unshift(target.id)
+    user.status.followings.unshift(target.id)
     target.status.followers.unshift(user.id)
   }
   else {
-    user.status.following.splice(user.status.following.indexOf(target.id), 1)
+    user.status.followings.splice(user.status.followings.indexOf(target.id), 1)
     target.status.followers.splice(target.status.followers.indexOf(user.id), 1)
   }
 
   target.status.follower_count = target.status.followers.length
-  user.status.following_count = user.status.following.length
+  user.status.following_count = user.status.followings.length
 }
 
 export function useErrorTitle(e?: any) {

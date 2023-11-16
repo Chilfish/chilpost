@@ -25,7 +25,7 @@ Create Table If Not Exists user_status (
   follower_count  Int  Not Null Default 0,
   following_count Int  Not Null Default 0,
   followers       Json Not Null DEFAULT (JSON_ARRAY()),
-  following       Json Not Null DEFAULT (JSON_ARRAY()),
+  followings      Json Not Null DEFAULT (JSON_ARRAY()),
 
   Foreign Key (user_id) References users (id)
 );

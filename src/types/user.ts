@@ -11,7 +11,7 @@ export interface UserStatus {
   post_count: number
 
   followers: uid[]
-  following: uid[]
+  followings: uid[]
 }
 
 export interface User {

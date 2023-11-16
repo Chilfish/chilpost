@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
   await toggleFollow(curUser, user)
 
   const [[row], [row1]] = await Promise.all([
-    db.query<ResultSetHeader>(setFollowing, { id: curUser.id, following: curUser.status.following, following_count: curUser.status.following_count }),
+    db.query<ResultSetHeader>(setFollowing, { id: curUser.id, followings: curUser.status.followings, following_count: curUser.status.following_count }),
     db.query<ResultSetHeader>(setFollowers, { id: user.id, followers: user.status.followers, follower_count: user.status.follower_count }),
   ])
 

@@ -12,7 +12,7 @@ export default <NitroErrorHandler> async function (error: MyError, event) {
   const { message, ...rest } = err
 
   if (err.statusCode >= 500)
-    consola.error({ ...err })
+    consola.error({ ...error })
 
   const res = event.node.res
   res.setHeader('Content-Type', 'application/json')

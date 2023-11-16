@@ -40,7 +40,7 @@ Where id = :id
 
 -- Query: setFollowing
 Update user_status
-Set following       = Json_Array(:following),
+Set followings       = Json_Array(:followings),
     following_count = :following_count
 Where user_id = :id;
 
