@@ -2,6 +2,10 @@ import db from '@db'
 import type { PostDB, PostDetail } from '~/types'
 import { getPostById } from '~~/database/queries'
 
+/**
+ * 获取帖子详情
+ * 包括帖子的点赞数、评论数、评论列表
+ */
 export default defineEventHandler(async (event) => {
   const { id } = getQuery(event) as { id: string }
 

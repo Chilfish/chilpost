@@ -23,13 +23,13 @@ export interface PostStatus {
   repost_count: number
 
   likes: string[] // due to mysql8.0, json array should be string type
-  comments: pid[]
-  reposts: pid[]
+  comments: string[]
+  reposts: string[]
 }
 
 export interface Post {
   id: pid
-  isBody: boolean
+  is_body: boolean
   content: string
   created_at: string
   owner_id: uid

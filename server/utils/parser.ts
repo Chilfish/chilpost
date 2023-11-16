@@ -15,14 +15,14 @@ export function toDetail(post: Post, owner: UserAuth): PostDetail {
 export function newPost(
   ownerId: uid,
   content: string,
-  isBody: boolean = true,
+  is_body: boolean = true,
 ): Post {
   const now = new Date().toISOString()
   return {
     id: 1,
     owner_id: ownerId,
     content,
-    isBody,
+    is_body,
     created_at: now,
     parent_id: -1,
     status: {

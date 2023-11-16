@@ -19,7 +19,7 @@ watch(data, () => {
   const post = data.value?.data
   if (post) {
     isLoading.value = false
-    if (post.isBody)
+    if (post.is_body)
       postStore.addPost(post)
     modalStore.close()
   }

@@ -16,7 +16,7 @@ const {
   data,
   pending,
   error,
-} = useMyFetch<{ posts: PostDetail[] }>('/post/all')
+} = useMyFetch<{ posts: PostDetail[] }>('/post/all', { server: false })
 
 watch(data, () => {
   if (data.value?.data)

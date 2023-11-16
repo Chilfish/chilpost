@@ -25,7 +25,7 @@ const {
 function onSuccess(data: UserWithToken) {
   isLoading.value = false
 
-  console.log(data, 'login')
+  // console.log(data, 'login')
   userStore.curUser = data.user
   modalStore.close()
 

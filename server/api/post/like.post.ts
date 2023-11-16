@@ -3,6 +3,10 @@ import type { PostDB, PostDetail } from '~/types'
 import db from '~~/database'
 import { getPostById, likePost, unlikePost } from '~~/database/queries'
 
+/**
+ * 点赞/取消点赞
+ * 检查是否已点赞，已点赞则取消，未点赞则点赞
+ */
 export default defineEventHandler(async (event) => {
   const { id } = await readBody(event) as { id: string }
   const { uid } = event.context

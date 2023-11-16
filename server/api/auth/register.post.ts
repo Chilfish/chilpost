@@ -1,9 +1,12 @@
 import type { ResultSetHeader } from 'mysql2'
 
-import { addUser, getUser } from '@db/queries'
+import { addUser, addUserStatus, getUser } from '@db/queries'
 import db from '@db'
 import type { UserDB, UserLogin } from '~/types'
 
+/**
+ * 注册用户，返回用户信息和 token
+ */
 export default defineEventHandler(async (event) => {
   const { email, password } = await readBody<UserLogin>(event)
 
@@ -12,13 +15,17 @@ export default defineEventHandler(async (event) => {
   const _user = newUser(email, password)
 
   const [res] = await db.query<ResultSetHeader>(addUser, { ..._user })
+  await db.query<ResultSetHeader>(addUserStatus, { id: res.insertId })
 
   if (!res.insertId)
     return newError('notfound_user')
 
   const [row] = await db.query<UserDB>(getUser, { id: res.insertId })
-  const user = row[0]
 
+  if (!row.length)
+    return newError('notfound_user')
+
+  const user = row[0]
   const userWithoutPass = withoutPass(user)
 
   event.context = {

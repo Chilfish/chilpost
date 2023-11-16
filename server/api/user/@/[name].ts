@@ -2,6 +2,9 @@ import db from '@db'
 import type { PostDB, User, UserDB } from '~/types'
 import { getPostByOwner, getUserByName } from '~~/database/queries'
 
+/**
+ * 根据用户名获取用户的详情信息和帖子列表
+ */
 export default defineEventHandler(async (event) => {
   const { name } = event.context.params as { name: string }
 

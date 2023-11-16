@@ -42,10 +42,10 @@ export default defineEventHandler(async (event) => {
 
   const { id } = await verifyToken(token)
   const [res] = await db.query<UserDB>(getUser, { id })
-  const user = withoutPass(res[0])
 
-  if (!user)
+  if (res.length === 0)
     return newError('unauthorized')
+  const user = withoutPass(res[0])
 
   if (isAdminRoute && user.level !== 'admin')
     return newError('not_admin')

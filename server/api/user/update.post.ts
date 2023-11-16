@@ -3,6 +3,9 @@ import db from '@db'
 import { upUser } from '@db/queries'
 import type { User } from '~/types'
 
+/**
+ * 更新用户信息
+ */
 export default defineEventHandler(async (event) => {
   const newUser = await readBody<User>(event)
 
