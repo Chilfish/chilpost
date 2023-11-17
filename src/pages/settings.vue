@@ -27,7 +27,7 @@ const rules: Rules = {
   ],
   nickname: [
     { required: true, message: 'Nickname is required' },
-    { min: 3, max: 20, message: 'Nickname must be between 3 and 20 characters' },
+    { min: 2, max: 20, message: 'Nickname must be between 2 and 20 characters' },
   ],
   email: [
     { required: true, message: 'Email is required' },
@@ -91,7 +91,10 @@ watch(data, async () => {
     </div>
 
     <div class="form-group">
-      <label for="username">Username</label>
+      <label for="username">
+        <span>Username</span>
+        <span class="text-3 ml-2 text-gray-5">(Relogin needed)</span>
+      </label>
       <input
         id="username"
         v-model="curUser.name"

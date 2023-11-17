@@ -61,7 +61,7 @@ watch(() => postData.value, () => {
     :is-loading="postPending"
   />
 
-  <main v-if="postData?.data.owner">
+  <main v-if="postData?.data?.owner">
     <div
       v-if="postData.data.parent_post"
       class="parent-post"
@@ -84,7 +84,10 @@ watch(() => postData.value, () => {
       :is-loading="commentPending"
     />
 
-    <PostComments v-if="commentData" :comments="commentData.data.comments" />
+    <PostComments
+      v-if="commentData?.data"
+      :comments="commentData.data.comments"
+    />
   </main>
 </template>
 

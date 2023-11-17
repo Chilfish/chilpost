@@ -54,7 +54,7 @@ export default defineEventHandler(async (event) => {
     })
 
     parentPost!.comment_count++
-    parentPost!.comments.push(post.id)
+    parentPost!.comments.push(post.id.toString())
   }
 
   await db.query<ResultSetHeader>(updateUserPostCount, {

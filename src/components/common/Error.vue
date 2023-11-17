@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ErrorType } from '../../../server/error'
+import type { ErrorType } from '~/types'
 
 const props = defineProps<{
   error: unknown
