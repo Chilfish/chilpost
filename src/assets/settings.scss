@@ -3,7 +3,8 @@
 form {
   display: flex;
   flex-direction: column;
-  align-items: center;
+
+  // align-items: center;
   justify-content: center;
   width: 100%;
   padding: 2rem;
@@ -12,9 +13,10 @@ form {
   .form-group {
     display: flex;
     flex-direction: column;
-    width: 100%; 
+    width: 70%; 
     padding: 0.5rem;
-    margin: 0 auto;
+
+    // margin: 0 auto;
     font-size: 1rem;
 
     label {
@@ -23,8 +25,8 @@ form {
       font-weight: bold;
     }
 
-    input {
-      width: 70%;
+    input, textarea {
+      width: 100%;
       padding: 1rem;
       border: 1px solid var(--gray);
       border-radius: 0.5rem;

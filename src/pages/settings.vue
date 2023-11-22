@@ -143,12 +143,20 @@ watch(data, async () => {
       </div>
     </div>
 
-    <CommonButton
-      :disabled="!pass"
-      text="Save"
-      :is-loading="isLoading"
-      @click="updateSettings"
-    />
+    <div class="flex gap-4">
+      <CommonButton
+        :disabled="!pass"
+        text="Save"
+        :is-loading="isLoading"
+        @click="updateSettings"
+      />
+
+      <CommonButton
+        text="Logout"
+        level="danger"
+        @click="userStore.logout"
+      />
+    </div>
   </form>
 </template>
 

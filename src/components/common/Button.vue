@@ -3,6 +3,7 @@ defineProps<{
   text: string
   type?: 'button' | 'submit' | 'reset'
   isLoading?: boolean
+  level?: 'primary' | 'secondary' | 'danger'
 }>()
 
 defineEmits(['click'])
@@ -13,6 +14,7 @@ defineEmits(['click'])
     :disabled="isLoading"
     :type="type || 'button'"
     class="btn-primary"
+    :class="level ? `btn-${level}` : ''"
     @click="$emit('click')"
   >
     <span
@@ -32,5 +34,10 @@ button {
   width: 7rem;
   max-width: 12rem;
   padding: 0.6rem 1rem;
+}
+
+.btn-danger {
+  color: var(--white);
+  background-color: var(--error);
 }
 </style>

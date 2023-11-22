@@ -1,12 +1,18 @@
 import { defineStore } from 'pinia'
+import Toast from '@cpa/Toast'
 import type { User } from '~/types'
 
 export const useUserStore = defineStore('user', () => {
   const curUser = ref<User | null>(null)
 
   async function logout() {
-    await useMyFetch('/auth/logout')
+    // only in nuxt SSR mode
+    if (!useRuntimeConfig().app.proxy)
+      await useMyFetch('/auth/logout')
     curUser.value = null
+    useCookie('token').value = ''
+
+    Toast({ message: 'Logout successfully.', type: 'success' })
   }
 
   async function fetchMe() {
