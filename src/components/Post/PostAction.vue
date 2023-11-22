@@ -1,9 +1,12 @@
 <script setup lang="ts">
+import { useClipboard } from '@vueuse/core'
+import Toast from '@cpa/Toast'
 import type { PostStatus } from '~/types'
 
 const props = defineProps<{
   status: PostStatus
   id: number
+  uName: string
 }>()
 
 const modalStore = useModalStore()
@@ -17,6 +20,7 @@ const likeStyle = computed(() =>
     ? { icon: 'is_like i-tabler-heart-filled', class: 'is_like' }
     : { icon: 'i-tabler-heart', class: '' },
 )
+const { copy, copied } = useClipboard()
 
 const {
   data: likes,
@@ -39,6 +43,16 @@ function sendComment() {
   }
 
   modalStore.open()
+}
+
+function copyLink() {
+  const [p, _, host] = window.location.href.split('/')
+  const url = `${p}//${host}/@${props.uName}/${props.id}`
+
+  copy(url).then(() => {
+    if (copied)
+      Toast({ type: 'success', message: 'copied' })
+  })
 }
 
 watchEffect(() => {
@@ -81,7 +95,10 @@ watchEffect(() => {
       <span class="count">{{ fmtNum(status.like_count) }}</span>
     </button>
 
-    <button class="share">
+    <button
+      class="share"
+      @click="copyLink"
+    >
       <span class="box">
         <span class="icon i-tabler-share" />
       </span>

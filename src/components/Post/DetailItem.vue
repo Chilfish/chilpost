@@ -40,7 +40,11 @@ defineProps<{
       {{ (new Date(post.created_at)).toLocaleString() }}
     </div>
 
-    <PostAction :id="post.id" :status="post.status" />
+    <PostAction
+      :id="post.id"
+      :u-name="owner.name"
+      :status="post.status"
+    />
   </div>
 </template>
 

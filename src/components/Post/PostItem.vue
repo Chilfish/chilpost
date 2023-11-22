@@ -65,6 +65,7 @@ defineProps<{
       <PostAction
         :id="post.id"
         :status="post.status"
+        :u-name="owner.name"
         @click.stop
       />
     </div>
