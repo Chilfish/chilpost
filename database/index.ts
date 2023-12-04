@@ -12,7 +12,7 @@ const sqlDir = resolve(resolve(), 'database/sql')
 const {
   MYSQL_PORT = 3306,
   MYSQL_USER = 'root',
-  MYSQL_PASS = '123456',
+  MYSQL_PASSWORD = '123456',
   MYSQL_HOST = 'localhost',
   MYSQL_DB = 'chilpost',
   MYSQL_SSL = 'false',
@@ -28,7 +28,7 @@ const ssl = MYSQL_SSL === 'true'
 export const db = createPool({
   host: MYSQL_HOST,
   user: MYSQL_USER,
-  password: MYSQL_PASS,
+  password: MYSQL_PASSWORD,
   database: MYSQL_DB,
   port: Number(MYSQL_PORT),
 

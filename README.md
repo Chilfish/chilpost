@@ -29,3 +29,13 @@ then rename the `.env.example` to `.env` and fill the environment variables in i
 In production mode, you need to set the environment variables in Vercel, see `.env.example` for reference. (at `https://vercel.com/${your_name}/todo-ender/settings/environment-variables`).
 
 Note that, you should generate the `PUBLIC_KEY` and `PRIVATE_KEY` by yourself (You can generate them at https://jwt.rocks/).
+
+### Docker support
+
+Now you can use docker to run the app🥳.
+
+```bash
+docker-compose up -d
+```
+
+Before accessing the client, please make sure to create the database first (I will fix this soon). The database is port forwarded to 4406, so you can use the MySQL client to connect to it at localhost:4406. Then, run the `database/sql/*.init.sql` files to create the necessary database and tables.

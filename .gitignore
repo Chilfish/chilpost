@@ -23,6 +23,8 @@ logs
 !.env.example
 
 database/queries
+database/password.txt
+
 *.pem
 
 .vercel
