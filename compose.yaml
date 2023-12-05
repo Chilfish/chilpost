@@ -10,7 +10,7 @@ services:
       MYSQL_USER: mysql
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_DB: chilpost
-      MYSQL_PORT: 3306
+      MYSQL_PORT: 4406
     ports:
       - 3003:3003
     depends_on:
@@ -21,6 +21,7 @@ services:
     image: mysql
     restart: always
     environment:
+      - MYSQL_TCP_PORT=4406
       - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db-password
       - MYSQL_DATABASE=chilpost
       - MYSQL_USER=mysql
@@ -29,10 +30,9 @@ services:
       - db-password
     volumes:
       - db-data:/var/lib/mysql
-    expose:
-      - 3306
+      # - ./databse/sql/init:/docker-entrypoint-initdb.d
     ports:
-      - 4406:3306
+      - 4406:4406
     healthcheck:
       test: [CMD, mysqladmin, ping, -h, localhost]
       interval: 10s

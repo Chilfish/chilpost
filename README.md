@@ -38,4 +38,3 @@ Now you can use docker to run the app🥳.
 docker-compose up -d
 ```
 
-Before accessing the client, please make sure to create the database first (I will fix this soon). The database is port forwarded to 4406, so you can use the MySQL client to connect to it at localhost:4406. Then, run the `database/sql/*.init.sql` files to create the necessary database and tables.
