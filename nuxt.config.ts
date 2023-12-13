@@ -6,6 +6,8 @@ const {
   API_PROXY = '/api',
 } = process.env
 
+console.log('API_PROXY', API_PROXY)
+
 function toAlias(name: string, path: string) {
   return {
     [name]: fileURLToPath(new URL(path, import.meta.url)),

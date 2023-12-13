@@ -6,7 +6,7 @@
 
 **/.classpath
 **/.dockerignore
-**/.env
+# **/.env
 **/.git
 **/.gitignore
 **/.project
@@ -15,9 +15,14 @@
 **/.vs
 **/.vscode
 **/.next
+**/.nuxt
+**/.yarn
+**/.output
 **/.cache
 **/*.*proj.user
 **/*.dbmdl
+**/.idea
+**/*.sln
 **/*.jfm
 **/charts
 **/docker-compose*

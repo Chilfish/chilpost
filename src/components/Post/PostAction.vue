@@ -11,8 +11,7 @@ const props = defineProps<{
 
 const modalStore = useModalStore()
 const postStore = usePostStore()
-const curUser = useUserStore().curUser
-const isLike = computed(() => curUser && props.status.likes.includes(curUser.id.toString()))
+const isLike = ref(false)
 
 const status = ref(props.status)
 const likeStyle = computed(() =>
@@ -56,6 +55,9 @@ function copyLink() {
 }
 
 watchEffect(() => {
+  const { curUser } = useUserStore()
+  if (curUser)
+    isLike.value = props.status.likes.includes(curUser.id.toString()) || false
   if (likes.value?.data)
     status.value.like_count += likes.value.data.count === 1 ? 1 : -1
 })
