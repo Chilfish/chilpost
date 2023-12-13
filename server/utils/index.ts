@@ -4,6 +4,8 @@ export * from '../error'
 
 export const isDev = process.env.NODE_ENV === 'development'
 
+export const rootDir = process.cwd()
+
 export function newReturn<T = any>(data: T, message = 'ok') {
   return {
     code: 'ok',

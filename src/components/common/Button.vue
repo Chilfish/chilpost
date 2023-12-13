@@ -37,7 +37,7 @@ button {
 }
 
 .btn-danger {
-  color: var(--white);
+  color: #fff;
   background-color: var(--error);
 }
 </style>

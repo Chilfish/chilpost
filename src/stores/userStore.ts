@@ -8,11 +8,12 @@ export const useUserStore = defineStore('user', () => {
   async function logout() {
     // only in nuxt SSR mode
     if (!useRuntimeConfig().app.proxy)
-      await useMyFetch('/auth/logout')
+      await useMyFetch('/auth/logout', { method: 'POST' })
+
     curUser.value = null
     useCookie('token').value = ''
-
     Toast({ message: 'Logout successfully.', type: 'success' })
+    navigateTo({ name: 'index' })
   }
 
   async function fetchMe() {

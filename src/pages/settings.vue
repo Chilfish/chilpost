@@ -12,7 +12,7 @@ definePageMeta({
 
 const userStore = useUserStore()
 const curUser = ref({ ...userStore.curUser } as User | null)
-const avatarBlob = ref<Blob | null>(null)
+const formData = ref<FormData | null>()
 
 const isLoading = ref(false)
 
@@ -54,18 +54,18 @@ const {
 
 const {
   execute: uploadAvatar,
-} = useMyFetch<boolean>('/user/update/avatar', {
+} = useMyFetch('/user/update/avatar', {
   method: 'post',
-  body: newFormData({ avatar: avatarBlob.value }),
+  body: formData,
   manual: true,
 })
 
-function updateSettings() {
+async function updateSettings() {
   if (!pass.value || !curUser.value)
     return
 
   isLoading.value = true
-  Promise.all([
+  await Promise.all([
     execute(),
     uploadAvatar(),
   ])
@@ -159,7 +159,7 @@ watch(data, async () => {
 
     <ProfileEditAvatar
       :avatar="curUser.avatar"
-      @edit="avatarBlob = $event"
+      @edit="formData = newFormData({ avatar: $event })"
     />
 
     <div class="flex gap-4 mt-4">

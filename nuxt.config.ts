@@ -70,7 +70,7 @@ export default defineNuxtConfig({
     routeRules: {
       '/': { redirect: '/explore' },
       '/api1/**': { proxy: `${API_PROXY}/**` },
-      '_ipx/_/placeholder.avatar.png': { redirect: '/placeholder.avatar.png' },
+      // '_ipx/_/placeholder.avatar.png': { redirect: '/placeholder.avatar.png' },
     },
   },
 

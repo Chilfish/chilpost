@@ -55,7 +55,7 @@ function editAvatar(file?: File) {
       <span class="icon i-tabler-pencil" />
       <span>Edit</span>
     </label>
-    <img :src="avatarRef" alt="avatar">
+    <img :src="avatarRef" alt="user's avatar">
   </div>
 </template>
 

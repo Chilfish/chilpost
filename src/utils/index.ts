@@ -92,5 +92,7 @@ export function newFormData(data: Record<string, any>) {
   for (const key in data)
     formData.append(key, data[key])
 
+  // console.log(formData)
+
   return formData
 }
