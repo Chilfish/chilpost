@@ -1,6 +1,7 @@
 @use "./variables"as *;
 
 form {
+  position: relative;
   display: flex;
   flex-direction: column;
 
@@ -13,7 +14,7 @@ form {
   .form-group {
     display: flex;
     flex-direction: column;
-    width: 70%; 
+    width: 62%; 
     padding: 0.5rem;
 
     // margin: 0 auto;

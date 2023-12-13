@@ -86,3 +86,11 @@ export function fmtNum(num: number) {
     return `${Math.floor(num / 1000)}k`
   return '100k+'
 }
+
+export function newFormData(data: Record<string, any>) {
+  const formData = new FormData()
+  for (const key in data)
+    formData.append(key, data[key])
+
+  return formData
+}

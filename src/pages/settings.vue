@@ -12,6 +12,8 @@ definePageMeta({
 
 const userStore = useUserStore()
 const curUser = ref({ ...userStore.curUser } as User | null)
+const avatarBlob = ref<Blob | null>(null)
+
 const isLoading = ref(false)
 
 const maxBio = 160
@@ -50,11 +52,23 @@ const {
   manual: true,
 })
 
+const {
+  execute: uploadAvatar,
+} = useMyFetch<boolean>('/user/update/avatar', {
+  method: 'post',
+  body: newFormData({ avatar: avatarBlob.value }),
+  manual: true,
+})
+
 function updateSettings() {
-  if (pass.value && curUser.value) {
-    isLoading.value = true
-    execute()
-  }
+  if (!pass.value || !curUser.value)
+    return
+
+  isLoading.value = true
+  Promise.all([
+    execute(),
+    uploadAvatar(),
+  ])
 }
 
 watch(data, async () => {
@@ -143,7 +157,12 @@ watch(data, async () => {
       </div>
     </div>
 
-    <div class="flex gap-4">
+    <ProfileEditAvatar
+      :avatar="curUser.avatar"
+      @edit="avatarBlob = $event"
+    />
+
+    <div class="flex gap-4 mt-4">
       <CommonButton
         :disabled="!pass"
         text="Save"

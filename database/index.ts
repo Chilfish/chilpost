@@ -14,7 +14,7 @@ const {
   MYSQL_USER = 'root',
   MYSQL_PASSWORD = '123456',
   MYSQL_HOST = 'localhost',
-  MYSQL_DB = 'chilpost',
+  MYSQL_DATABASE = 'chilpost',
   MYSQL_SSL = 'false',
 } = process.env
 
@@ -29,7 +29,7 @@ export const db = createPool({
   host: MYSQL_HOST,
   user: MYSQL_USER,
   password: MYSQL_PASSWORD,
-  database: MYSQL_DB,
+  database: MYSQL_DATABASE,
   port: Number(MYSQL_PORT),
 
   namedPlaceholders: true,
