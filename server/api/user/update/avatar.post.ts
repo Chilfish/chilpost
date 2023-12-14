@@ -4,7 +4,7 @@ import fs from 'fs-extra'
 import db from '@db'
 import type { ResultSetHeader } from 'mysql2'
 import type { UserAuth } from '~/types'
-import { rootDir } from '~~/server/utils'
+import { isDev, rootDir } from '~~/server/utils'
 
 export default defineEventHandler(async (event) => {
   const avatarBlob = (await readFormData(event)).get('avatar') as Blob
@@ -15,9 +15,9 @@ export default defineEventHandler(async (event) => {
   const user = event.context.user as UserAuth
   const url = `/avatars/${user.id}.png`
 
-  const avatarPath = join(rootDir, `src/public/${url}`)
+  const avatarPath = join(rootDir, isDev ? 'src/public' : '.output/public')
 
-  await fs.writeFile(avatarPath, Buffer.from(await avatarBlob.arrayBuffer()))
+  await fs.writeFile(`${avatarPath}${url}`, Buffer.from(await avatarBlob.arrayBuffer()))
 
   const [row] = await db.execute<ResultSetHeader>(
    `update users set avatar = :avatar where id = ${user.id}`,

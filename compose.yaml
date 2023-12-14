@@ -7,9 +7,9 @@ services:
       NODE_ENV: production
       PORT: 3003
       MYSQL_HOST: db
-      MYSQL_USER: mysql
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_DB: chilpost
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: chilpost
       MYSQL_PORT: 4406
     ports:
       - 3003:3003
@@ -24,7 +24,6 @@ services:
       - MYSQL_TCP_PORT=4406
       - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db-password
       - MYSQL_DATABASE=chilpost
-      - MYSQL_USER=mysql
       - MYSQL_PASSWORD_FILE=/run/secrets/db-password
     secrets:
       - db-password

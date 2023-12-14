@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useImage } from '@vueuse/core'
-
 const props = defineProps({
   src: {
     type: String,
@@ -17,13 +15,11 @@ const props = defineProps({
 })
 
 const src = computed(() => orOtherStatic(props.src))
-
-const { error } = useImage({ src: src.value })
 </script>
 
 <template>
   <NuxtImg
-    :src="error ? props.placeholder : src"
+    :src="src"
     :alt="props.alt"
     :width="props.width"
     :height="props.height"

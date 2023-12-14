@@ -40,9 +40,6 @@ FROM base as final
 # Use production node environment by default.
 ENV NODE_ENV production
 
-# Run the application as a non-root user.
-USER node
-
 # Copy package.json so that package manager commands can be used.
 COPY package.json .
 
@@ -52,6 +49,10 @@ COPY package.json .
 COPY --from=build /usr/app/.output ./.output
 COPY --from=build /usr/app/database ./database
 
+RUN chmod -R 777 /usr/app/.output/public
+
+# Run the application as a non-root user.
+USER node
 # Expose the port that the application listens on.
 EXPOSE 3000
 
