@@ -15,7 +15,7 @@ export default function useMyFetch<T = any>(
   const token = useCookie('token')
 
   let fetchOptions: UseFetchOptions<ApiReturn<T>> = {
-    baseURL: app.proxy ? '/api1' : '/api',
+    baseURL: app.proxy ? '/proxy/api' : '/api',
     headers: {
       Authorization: `Bearer ${token.value}`,
     },

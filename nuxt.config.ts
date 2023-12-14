@@ -69,8 +69,8 @@ export default defineNuxtConfig({
     errorHandler: '~/error/nitroErrorHandler.ts',
     routeRules: {
       '/': { redirect: '/explore' },
-      '/api1/**': { proxy: `${API_PROXY}/**` },
-      // '_ipx/_/placeholder.avatar.png': { redirect: '/placeholder.avatar.png' },
+      '/proxy/**': { proxy: `${API_PROXY}/**` },
+      '/_ipx/_/proxy/**': { proxy: `${API_PROXY}/**` },
     },
   },
 

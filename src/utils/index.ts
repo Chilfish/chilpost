@@ -92,7 +92,15 @@ export function newFormData(data: Record<string, any>) {
   for (const key in data)
     formData.append(key, data[key])
 
-  // console.log(formData)
-
   return formData
+}
+
+export function orOtherStatic(url: string) {
+  if (!url.startsWith('/'))
+    return url
+
+  const { app } = useRuntimeConfig()
+  if (app.proxy)
+    return `/proxy${url}`
+  return url
 }

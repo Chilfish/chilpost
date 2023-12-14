@@ -24,7 +24,6 @@ export interface User {
 
   /** path to avatar file */
   avatar: string
-  avatarBlob: Blob
 
   /** soft delete, default to false */
   deleted: boolean

@@ -25,18 +25,12 @@ export const useUserStore = defineStore('user', () => {
       if (!user?.data?.name)
         return
       curUser.value = user.data
-      setAvatarBlob(new Blob())
     })
-  }
-
-  function setAvatarBlob(blob: Blob) {
-    curUser.value!.avatarBlob = blob
   }
 
   return {
     curUser,
     fetchMe,
     logout,
-    setAvatarBlob,
   }
 })

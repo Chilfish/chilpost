@@ -16,12 +16,14 @@ const props = defineProps({
   },
 })
 
-const { error } = useImage({ src: props.src })
+const src = computed(() => orOtherStatic(props.src))
+
+const { error } = useImage({ src: src.value })
 </script>
 
 <template>
   <NuxtImg
-    :src="error ? props.placeholder : props.src"
+    :src="error ? props.placeholder : src"
     :alt="props.alt"
     :width="props.width"
     :height="props.height"

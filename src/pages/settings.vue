@@ -67,7 +67,7 @@ async function updateSettings() {
   isLoading.value = true
   await Promise.all([
     execute(),
-    uploadAvatar(),
+    formData.value?.get('avatar') && uploadAvatar(),
   ])
 }
 
