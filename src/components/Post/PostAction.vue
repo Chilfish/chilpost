@@ -5,17 +5,16 @@ import type { PostStatus } from '~/types'
 
 const props = defineProps<{
   status: PostStatus
-  id: number
+  id: string
   uName: string
 }>()
 
 const modalStore = useModalStore()
 const postStore = usePostStore()
-const isLike = ref(false)
 
 const status = ref(props.status)
 const likeStyle = computed(() =>
-  isLike.value
+  props.status.is_liked
     ? { icon: 'is_like i-tabler-heart-filled', class: 'is_like' }
     : { icon: 'i-tabler-heart', class: '' },
 )
@@ -55,11 +54,8 @@ function copyLink() {
 }
 
 watchEffect(() => {
-  const { curUser } = useUserStore()
-  if (curUser)
-    isLike.value = props.status.likes.includes(curUser.id.toString()) || false
   if (likes.value?.data)
-    status.value.like_count += likes.value.data.count === 1 ? 1 : -1
+    status.value.like_count = likes.value.data.count
 })
 </script>
 

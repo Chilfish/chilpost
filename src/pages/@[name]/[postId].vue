@@ -10,6 +10,7 @@ const {
 } = useMyFetch<PostDetail>('/post/get', {
   query: {
     id: postId.value,
+    uid: useUserStore().curUser?.id,
   },
   server: false,
 })

@@ -1,7 +1,27 @@
+<script setup lang="ts">
+const userStore = useUserStore()
+
+const isLoading = ref(true)
+
+onNuxtReady(async () => {
+  isLoading.value = true
+  // get user info from server, in SSR mode
+  if (!userStore.curUser?.name)
+    await userStore.fetchMe()
+
+  isLoading.value = false
+})
+</script>
+
 <template>
-  <NuxtLayout>
-    <!-- <ClientOnly> -->
+  <NuxtLayout v-if="!isLoading">
     <NuxtPage />
-    <!-- </ClientOnly> -->
   </NuxtLayout>
+
+  <div
+    v-else
+    class="center w-screen h-screen"
+  >
+    <CommonLoading :is-loading="isLoading" />
+  </div>
 </template>

@@ -1,13 +1,5 @@
 <script setup lang="ts">
 const modalStore = useModalStore()
-
-onNuxtReady(async () => {
-  const userStore = useUserStore()
-
-  // get user info from server, in SSR mode
-  if (!userStore.curUser?.name)
-    await userStore.fetchMe()
-})
 </script>
 
 <template>
@@ -19,7 +11,7 @@ onNuxtReady(async () => {
   <CommonNav />
 
   <aside>
-    <h2>WIP</h2>
+    <h2>Ad Space for Rent</h2>
   </aside>
 
   <CommonModal v-if="modalStore.showModal">

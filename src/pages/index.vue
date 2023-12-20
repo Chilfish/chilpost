@@ -16,7 +16,12 @@ const {
   data,
   pending,
   error,
-} = useMyFetch<{ posts: PostDetail[] }>('/post/all', { server: false })
+} = useMyFetch<{ posts: PostDetail[] }>('/post/all', {
+  query: {
+    uid: useUserStore().curUser?.id,
+  },
+  server: false,
+})
 
 watch(data, () => {
   if (data.value?.data)
@@ -43,6 +48,7 @@ watch(data, () => {
       <PostItem
         :post="item"
         :owner="item.owner"
+        :is-liked="item.is_liked"
       />
     </section>
   </main>

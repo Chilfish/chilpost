@@ -1,7 +1,7 @@
 import type { RowDataPacket } from 'mysql2'
 import type { User, uid } from '.'
 
-export type pid = number
+export type pid = string
 
 export type PostType = 'post' | 'comment' | 'repost'
 
@@ -18,11 +18,13 @@ export interface NewPostBody {
 }
 
 export interface PostStatus {
+  is_liked: boolean
   like_count: number
   comment_count: number
   repost_count: number
 
-  likes: string[] // due to mysql8.0, json array should be string type
+  // should not return real ids to client
+  // likes: string[] // due to mysql8.0, json array should be string type
   comments: string[]
   reposts: string[]
 }
@@ -33,6 +35,7 @@ export interface Post {
   content: string
   created_at: string
   owner_id: uid
+
   status: PostStatus
 
   parent_id: pid
