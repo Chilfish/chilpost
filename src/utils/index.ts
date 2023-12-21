@@ -29,25 +29,6 @@ export function randomPick<T>(arr: T[], exclude: T[] = [], count = 1) {
   return Array.from(picked)
 }
 
-export async function toggleFollow(user: User, target: User) {
-  const targetId = target.id.toString()
-  const userId = user.id.toString()
-
-  const isFollowing = user.status.followings.includes(targetId)
-
-  if (!isFollowing) {
-    user.status.followings.unshift(targetId)
-    target.status.followers.unshift(userId)
-  }
-  else {
-    user.status.followings.splice(user.status.followings.indexOf(targetId), 1)
-    target.status.followers.splice(target.status.followers.indexOf(userId), 1)
-  }
-
-  target.status.follower_count = target.status.followers.length
-  user.status.following_count = user.status.followings.length
-}
-
 export function useErrorTitle(e?: any) {
   if (e) {
     const err = e as ErrorType
@@ -103,4 +84,8 @@ export function orOtherStatic(url: string) {
   if (app.proxy)
     return `/proxy${url}`
   return url
+}
+
+export function isEqual(a: any, b: any) {
+  return JSON.stringify(a) === JSON.stringify(b)
 }

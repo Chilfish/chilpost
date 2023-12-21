@@ -35,7 +35,7 @@ function onSuccess(data: UserWithToken) {
   }, 0)
 }
 
-watch(data, async () => {
+watch(data, () => {
   if (!data.value)
     return
 
@@ -43,14 +43,15 @@ watch(data, async () => {
     return onSuccess(data.value.data!)
 
   if (!isConfirm.value && data.value.statusCode === 404) {
-    await delay(500)
     if (confirm('User not found, register?')) {
       isLoading.value = true
       url.value = '/auth/register'
       execute()
     }
-    return isConfirm.value = true
+    isConfirm.value = true
   }
+
+  isLoading.value = false
 })
 </script>
 

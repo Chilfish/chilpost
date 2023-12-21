@@ -11,7 +11,7 @@ definePageMeta({
 })
 
 const userStore = useUserStore()
-const curUser = ref({ ...userStore.curUser } as User | null)
+const curUser = shallowRef(structuredClone(toRaw(userStore.curUser)) as User)
 const formData = ref<FormData | null>()
 
 const isLoading = ref(false)
@@ -53,8 +53,9 @@ const {
 })
 
 const {
+  data: avatarUrl,
   execute: uploadAvatar,
-} = useMyFetch('/user/update/avatar', {
+} = useMyFetch<string>('/user/update/avatar', {
   method: 'post',
   body: formData,
   manual: true,
@@ -64,18 +65,25 @@ async function updateSettings() {
   if (!pass.value || !curUser.value)
     return
 
+  const isSame = isEqual(curUser.value, userStore.curUser)
+
   isLoading.value = true
   await Promise.all([
-    execute(),
+    !isSame && execute(),
     formData.value?.get('avatar') && uploadAvatar(),
   ])
+  isLoading.value = false
 }
 
-watch(data, async () => {
-  if (data.value?.data && curUser.value) {
+watch([data, avatarUrl], async () => {
+  if (data.value?.data) {
     userStore.curUser = curUser.value
-    isLoading.value = false
     Toast({ message: 'Settings updated!', type: 'success' })
+  }
+
+  if (avatarUrl.value?.data) {
+    userStore.curUser!.avatar = avatarUrl.value.data
+    Toast({ message: 'Avatar updated!', type: 'success' })
   }
 })
 </script>
