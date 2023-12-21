@@ -29,6 +29,9 @@ RUN --mount=type=bind,source=package.json,target=package.json \
     --mount=type=cache,target=/root/.local/share/pnpm/store \
     pnpm install --frozen-lockfile
 
+ARG API_PROXY="/api"
+ENV API_PROXY=${API_PROXY}
+
 # Run the build script.
 RUN pnpm build
 
