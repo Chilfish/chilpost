@@ -5,10 +5,11 @@ const isLoading = ref(true)
 
 onNuxtReady(async () => {
   isLoading.value = true
-  // get user info from server, in SSR mode
-  if (!userStore.curUser?.name)
+
+  if (!userStore.curUser?.name && !userStore.isFetched)
     await userStore.fetchMe()
 
+  userStore.isFetched = true
   isLoading.value = false
 })
 </script>

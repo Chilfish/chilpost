@@ -2,13 +2,9 @@
 import type { PostDetail } from '~/types'
 
 definePageMeta({
-  description: 'Explore Chilpost',
-  showFAB: true,
-  alias: '/explore',
-})
-
-useHead({
-  title: 'Explore Chilpost', // reset while route changed
+  title: 'Chilpost - home',
+  description: 'Chilpost - home',
+  middleware: ['user-only'],
 })
 
 const postStore = usePostStore()
@@ -16,7 +12,7 @@ const {
   data,
   pending,
   error,
-} = useMyFetch<{ posts: PostDetail[] }>('/post/all', {
+} = useMyFetch<{ posts: PostDetail[] }>('/post/feed', {
   query: {
     uid: useUserStore().curUser?.id,
   },

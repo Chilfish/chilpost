@@ -88,7 +88,7 @@ export default defineNuxtConfig({
     },
     errorHandler: '~/error/nitroErrorHandler.ts',
     routeRules: {
-      '/': { redirect: '/explore' },
+      '/': { redirect: '/home' },
       '/proxy/**': { proxy: `${API_PROXY}/**` },
       '/_ipx/_/proxy/**': { proxy: `${API_PROXY}/**` },
     },

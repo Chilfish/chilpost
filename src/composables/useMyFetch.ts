@@ -23,7 +23,7 @@ export default function useMyFetch<T = any>(
 
     onResponse({ response }) {
       const data = response._data as ApiReturn
-      if (data.statusCode === 200)
+      if (data.statusCode === 200 || toValue(url) === '/user/me')
         return
 
       if (data.statusCode === 401 && toValue(url) !== '/auth/login')

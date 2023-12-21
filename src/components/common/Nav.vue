@@ -17,12 +17,18 @@ function sendPost() {
 }
 
 // hidden while not logged in
-const hideBtn = computed(() => !userStore.curUser?.name)
+const isHide = computed(() => !userStore.curUser?.name)
 
 const routes = computed<NavItem[]>(() => [
   {
-    to: '/',
-    icon: 'i-tabler-home-2',
+    to: '/home',
+    icon: 'i-tabler-home',
+    text: 'Home',
+    hide: isHide.value,
+  },
+  {
+    to: '/explore',
+    icon: 'i-tabler-compass',
     text: 'Explore',
     hide: false,
   },
@@ -30,13 +36,13 @@ const routes = computed<NavItem[]>(() => [
     to: `/@${userStore.curUser?.name}`,
     icon: 'i-tabler-user',
     text: 'Profile',
-    hide: hideBtn.value,
+    hide: isHide.value,
   },
   {
     to: '/settings',
     icon: 'i-tabler-settings',
     text: 'Settings',
-    hide: hideBtn.value,
+    hide: isHide.value,
   },
 ])
 
@@ -81,7 +87,7 @@ watchEffect(() => {
     </template>
 
     <button
-      v-show="!hideBtn"
+      v-show="!isHide"
       :class="showFAB ? '' : 'hide'"
       class="fab"
       @click="sendPost"
@@ -91,7 +97,7 @@ watchEffect(() => {
     </button>
 
     <common-button
-      v-show="hideBtn"
+      v-show="isHide"
       text="Login"
       @click="modalStore.open('login')"
     />

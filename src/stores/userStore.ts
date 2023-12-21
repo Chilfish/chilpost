@@ -4,6 +4,7 @@ import type { User } from '~/types'
 
 export const useUserStore = defineStore('user', () => {
   const curUser = ref<User | null>(null)
+  const isFetched = ref(false)
 
   async function logout() {
     // only in nuxt SSR mode
@@ -13,7 +14,7 @@ export const useUserStore = defineStore('user', () => {
     curUser.value = null
     useCookie('token').value = ''
     Toast({ message: 'Logout successfully.', type: 'success' })
-    navigateTo({ name: 'index' })
+    navigateTo({ name: 'explore' })
   }
 
   async function fetchMe() {
@@ -31,6 +32,7 @@ export const useUserStore = defineStore('user', () => {
   return {
     curUser,
     fetchMe,
+    isFetched,
     logout,
   }
 })

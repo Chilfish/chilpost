@@ -40,8 +40,11 @@ watch(searchRes, (data) => {
 onMounted(() => {
   searchWord.value = route.query.q as string
 
-  if (route.path === '/search')
+  if (route.path === '/search') {
+    if (route.query.q === undefined)
+      router.replace('?q=""')
     execute()
+  }
 })
 </script>
 
