@@ -13,8 +13,10 @@ const modalStore = useModalStore()
 const postStore = usePostStore()
 
 const status = ref(props.status)
+const isLiked = ref(props.status.is_liked)
+
 const likeStyle = computed(() =>
-  props.status.is_liked
+  isLiked.value
     ? { icon: 'is_like i-tabler-heart-filled', class: 'is_like' }
     : { icon: 'i-tabler-heart', class: '' },
 )
@@ -53,9 +55,15 @@ function copyLink() {
   })
 }
 
+function repost() {
+  Toast({ type: 'warning', message: 'Not yet implemented 😹' })
+}
+
 watchEffect(() => {
-  if (likes.value?.data)
+  if (likes.value?.data) {
     status.value.like_count = likes.value.data.count
+    isLiked.value = !isLiked.value
+  }
 })
 </script>
 
@@ -63,7 +71,7 @@ watchEffect(() => {
   <div class="post-action">
     <button
       class="chat"
-      :title="`${status.comment_count}`"
+      :title="`${status.comment_count} comments`"
       @click="sendComment"
     >
       <span class="box">
@@ -74,7 +82,8 @@ watchEffect(() => {
 
     <button
       class="repost"
-      :title="`${status.repost_count}`"
+      :title="`${status.repost_count} reposts`"
+      @click="repost"
     >
       <span class="box">
         <span class="icon i-tabler-repeat" />
@@ -84,7 +93,7 @@ watchEffect(() => {
 
     <button
       :class="`like ${likeStyle.class}`"
-      :title="`${status.like_count}`"
+      :title="`${status.like_count} likes`"
       @click="toggleLike()"
     >
       <span class="box">
@@ -95,6 +104,7 @@ watchEffect(() => {
 
     <button
       class="share"
+      title="Share this post"
       @click="copyLink"
     >
       <span class="box">

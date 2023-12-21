@@ -24,7 +24,10 @@ defineProps<{
       </span>
     </NuxtLink>
 
-    <button class="menu">
+    <button
+      class="menu"
+      @click="showMenu"
+    >
       <span class="box">
         <span class="icon i-tabler-dots" />
       </span>

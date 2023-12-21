@@ -50,7 +50,7 @@ defineProps<{
 
         <button
           class="menu"
-          @click.stop
+          @click.stop="showMenu"
         >
           <span class="box">
             <span class="icon i-tabler-dots" />
