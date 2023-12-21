@@ -73,3 +73,9 @@ header {
     transform: translateY(0);
   }
 }
+
+@media (min-width: $lg) {
+  header {
+    margin-right: $aside-width;
+  }
+}

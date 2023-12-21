@@ -32,26 +32,15 @@ watch(data, () => {
 <template>
   <MainHeader />
 
-  <CommonLoading :error="error?.data" :is-loading="pending" />
+  <CommonLoading
+    :error="error?.data"
+    :is-loading="pending"
+  />
 
-  <main v-if="!pending">
-    <h3
-      v-if="postStore.posts.length === 0"
-      class="error"
-    >
-      No Post Yet
-    </h3>
-    <section
-      v-for="item in postStore.posts"
-      :key="item.id"
-    >
-      <PostItem
-        :post="item"
-        :owner="item.owner"
-        :is-liked="item.is_liked"
-      />
-    </section>
-  </main>
+  <PostList
+    v-if="!pending"
+    :posts="postStore.posts"
+  />
 </template>
 
 <style lang="scss" scoped>

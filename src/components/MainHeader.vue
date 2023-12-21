@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { PostDetail } from '~/types'
+
 const { y } = useWindowScroll()
 const isScrollingDown = ref(false)
 watch(
@@ -9,6 +11,38 @@ watch(
 )
 
 const darkStore = useDarkStore()
+const { searchWord, searchPosts } = storeToRefs(usePostStore())
+const router = useRouter()
+const route = useRoute()
+
+const {
+  data: searchRes,
+  execute,
+} = useMyFetch<{ posts: PostDetail[] }>('/post/search', {
+  query: {
+    q: searchWord,
+    uid: useUserStore().curUser?.id,
+  },
+  manual: true,
+})
+
+function search() {
+  execute().then(() => {
+    router.push(`/search?q=${searchWord.value}`)
+  })
+}
+
+watch(searchRes, (data) => {
+  if (data?.data)
+    searchPosts.value = data?.data.posts
+})
+
+onMounted(() => {
+  searchWord.value = route.query.q as string
+
+  if (route.path === '/search')
+    execute()
+})
 </script>
 
 <template>
@@ -19,8 +53,16 @@ const darkStore = useDarkStore()
     <h2>Explore</h2>
 
     <label>
-      <span class="i-tabler-search icon" />
-      <input type="search" placeholder="Search">
+      <span
+        class="i-tabler-search icon"
+        @click="search()"
+      />
+      <input
+        v-model="searchWord"
+        type="search"
+        placeholder="Search"
+        @keydown.enter="search()"
+      >
     </label>
 
     <div>

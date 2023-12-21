@@ -4,6 +4,9 @@ import type { NewPostBody, PostDetail, pid } from '~/types'
 export const usePostStore = defineStore('post', () => {
   const posts = ref([] as PostDetail[])
 
+  const searchPosts = ref([] as PostDetail[])
+  const searchWord = ref('')
+
   const newPostBody = ref<NewPostBody>({
     content: '',
     meta: {
@@ -21,6 +24,9 @@ export const usePostStore = defineStore('post', () => {
 
   return {
     posts,
+    searchPosts,
+
+    searchWord,
     newPostBody,
 
     addPost,
