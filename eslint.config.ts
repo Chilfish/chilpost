@@ -1,12 +1,7 @@
 import antfu from '@antfu/eslint-config'
+import unocss from '@unocss/eslint-plugin'
 
 export default antfu({
-  stylistic: true, // enable stylistic formatting rules
-  typescript: true,
-  vue: true,
-  jsonc: false,
-  yml: false,
-}, {
   rules: {
     'no-console': 'off',
     'no-alert': 'off',
@@ -22,4 +17,4 @@ export default antfu({
     '*ignore',
     '.vercel',
   ],
-})
+}, unocss.configs.flat)

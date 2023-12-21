@@ -20,7 +20,7 @@ onNuxtReady(async () => {
 
   <div
     v-else
-    class="center w-screen h-screen"
+    class="h-screen w-screen center"
   >
     <CommonLoading :is-loading="isLoading" />
   </div>

@@ -19,7 +19,7 @@ const darkStore = useDarkStore()
     <h2>Explore</h2>
 
     <label>
-      <span class="icon i-tabler-search" />
+      <span class="i-tabler-search icon" />
       <input type="search" placeholder="Search">
     </label>
 
@@ -29,7 +29,7 @@ const darkStore = useDarkStore()
         external
         target="_blank"
       >
-        <span class="icon i-tabler-brand-github" />
+        <span class="i-tabler-brand-github icon" />
       </NuxtLink>
 
       <span

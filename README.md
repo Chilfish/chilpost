@@ -1,12 +1,12 @@
 ### Chill Post App
 
-An https://x.com like app, it's very simple, but it's a good practice for me to learn the nuxt3 and mysql.
+An another https://x.com like app, it's very simple, but it's a good practice for me to learn the nuxt3 and mysql.
 
 Build with Nuxt3 + nodejs/MySql2 + jose/jws
 
 > I'm looking for the mysql hosting service, so the online preview is not fully available now.
 
-Also, I am trying to use kotlin + spring boot + exposed to build the another backend version. Kotlin is so cool!😍 It's still in development and closed source now.
+Also, I am trying to use kotlin + spring boot + exposed to build the another backend version. Kotlin is so cool!😍 It's still in development, but you can preview it at [chilpost-sb](https://github.com/Chilfish/chilpost-sb/). Then set the `API_PROXY` to `http://localhost:8080` in the `.env` file.
 
 ### Features
 
@@ -37,4 +37,3 @@ Now you can use docker to run the app🥳.
 ```bash
 docker-compose up -d
 ```
-

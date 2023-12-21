@@ -107,7 +107,7 @@ watch(data, async () => {
     <div class="form-group">
       <label for="username">
         <span>Username</span>
-        <span class="text-3 ml-2 text-gray-5">(Relogin needed)</span>
+        <span class="ml-2 text-3 text-gray-5">(Relogin needed)</span>
       </label>
       <input
         id="username"
@@ -162,7 +162,7 @@ watch(data, async () => {
       @edit="formData = newFormData({ avatar: $event })"
     />
 
-    <div class="flex gap-4 mt-4">
+    <div class="mt-4 flex gap-4">
       <CommonButton
         :disabled="!pass"
         text="Save"

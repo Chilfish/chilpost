@@ -59,7 +59,7 @@ watch(data, async () => {
     <h2>Log in your account</h2>
     <form>
       <label>
-        <span class="icon i-tabler-mail" />
+        <span class="i-tabler-mail icon" />
         <input
           v-model="inputs.email"
           type="email"
@@ -67,7 +67,7 @@ watch(data, async () => {
         >
       </label>
       <label>
-        <span class="icon i-tabler-lock" />
+        <span class="i-tabler-lock icon" />
         <input
           v-model="inputs.password"
           type="password"

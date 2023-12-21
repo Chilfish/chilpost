@@ -52,7 +52,7 @@ function editAvatar(file?: File) {
       for="avatar-input"
       class="edit"
     >
-      <span class="icon i-tabler-pencil" />
+      <span class="i-tabler-pencil icon" />
       <span>Edit</span>
     </label>
     <img

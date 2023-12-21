@@ -4,7 +4,7 @@ import type { ErrorType } from '~/types'
 const props = defineProps<{
   error: unknown
 }>()
-const err = (props.error as ErrorType)
+const err = props.error as ErrorType
 </script>
 
 <template>

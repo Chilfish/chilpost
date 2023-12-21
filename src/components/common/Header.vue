@@ -9,7 +9,7 @@
       @click="$router.back()"
     >
       <span class="box">
-        <span class="icon i-tabler-arrow-left" />
+        <span class="i-tabler-arrow-left icon" />
       </span>
     </button>
     <slot />

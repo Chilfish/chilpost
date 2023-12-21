@@ -48,7 +48,11 @@ const showFAB = ref(false) // from router meta
 watchEffect(() => {
   showFAB.value = !!(router.meta.showFAB as boolean)
 
-  const { username, postId } = router.params
+  const { username, postId } = router.params as Partial<{
+    username: string
+    postId: string
+  }>
+
   if (username === userStore.curUser?.name && !postId)
     showFAB.value = true
 })
@@ -57,7 +61,7 @@ watchEffect(() => {
 <template>
   <nav class="blur-bg">
     <nuxt-link class="logo" to="/">
-      <img src="/favicon.png">
+      <img src="/favicon-256x256.png">
       <h1>Chill Post</h1>
     </nuxt-link>
 
@@ -82,7 +86,7 @@ watchEffect(() => {
       class="fab"
       @click="sendPost"
     >
-      <span class="icon i-tabler-plus" />
+      <span class="i-tabler-plus icon" />
       <span class="text">Post</span>
     </button>
 

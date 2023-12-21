@@ -30,7 +30,7 @@ watch(data, () => {
   <div id="send-post">
     <div>
       <span
-        class="icon i-tabler-x"
+        class="i-tabler-x icon"
         @click="modalStore.open()"
       />
     </div>

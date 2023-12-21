@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
   const user = event.context.user as UserAuth
   const url = `/avatars/${user.id}.png`
 
-  const avatarPath = join(rootDir, isDev ? 'src/public' : '.output/public')
+  const avatarPath = join(rootDir, isDev ? 'public' : '.output/public')
 
   await fs.writeFile(`${avatarPath}${url}`, Buffer.from(await avatarBlob.arrayBuffer()))
 

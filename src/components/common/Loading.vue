@@ -7,7 +7,7 @@ defineProps<{
 
 <template>
   <div v-show="isLoading" class="loading-box">
-    <span class="icon loading" />
+    <span class="loading icon" />
   </div>
   <CommonError v-if="error" :error="error" />
 </template>

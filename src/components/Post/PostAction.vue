@@ -75,7 +75,7 @@ watchEffect(() => {
       @click="sendComment"
     >
       <span class="box">
-        <span class="icon i-tabler-message-circle" />
+        <span class="i-tabler-message-circle icon" />
       </span>
       <span class="count">{{ fmtNum(status.comment_count) }}</span>
     </button>
@@ -86,7 +86,7 @@ watchEffect(() => {
       @click="repost"
     >
       <span class="box">
-        <span class="icon i-tabler-repeat" />
+        <span class="i-tabler-repeat icon" />
       </span>
       <span class="count">{{ fmtNum(status.repost_count) }}</span>
     </button>
@@ -108,7 +108,7 @@ watchEffect(() => {
       @click="copyLink"
     >
       <span class="box">
-        <span class="icon i-tabler-share" />
+        <span class="i-tabler-share icon" />
       </span>
     </button>
   </div>

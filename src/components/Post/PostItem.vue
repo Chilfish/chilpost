@@ -53,7 +53,7 @@ defineProps<{
           @click.stop="showMenu"
         >
           <span class="box">
-            <span class="icon i-tabler-dots" />
+            <span class="i-tabler-dots icon" />
           </span>
         </button>
       </div>
