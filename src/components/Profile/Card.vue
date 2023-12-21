@@ -9,9 +9,10 @@ const props = defineProps<{
 const { curUser } = storeToRefs(useUserStore())
 
 const isHovered = ref(false)
-const isFollowing = ref(false)
 const isMe = ref(false)
 const isLoading = ref(false)
+const isFollowing = ref(props.user.status.is_following)
+const followerCount = ref(props.user.status.follower_count)
 
 const foBtnText = computed(() => {
   if (isMe.value)
@@ -30,7 +31,7 @@ const foBtnText = computed(() => {
 const {
   data,
   execute,
-} = useMyFetch<boolean>('/user/follow', {
+} = useMyFetch<{ count: number }>('/user/follow', {
   method: 'POST',
   body: {
     id: props.user.id,
@@ -39,15 +40,13 @@ const {
 })
 
 watchEffect(() => {
-  if (curUser.value?.name) {
-    isFollowing.value = curUser.value.status.followings.includes(props.user.id.toString())
+  if (curUser.value?.name)
     isMe.value = curUser.value.id === props.user.id
-  }
 
   if (data.value?.data) {
     isLoading.value = false
+    followerCount.value = data.value.data.count
     isFollowing.value = !isFollowing.value
-    curUser.value && toggleFollow(curUser.value, props.user)
   }
 })
 </script>
@@ -91,12 +90,12 @@ watchEffect(() => {
 
       <div class="meta">
         <span>
-          {{ user.status.follower_count }}
-          <span class="followers"> followers </span>
-        </span>
-        <span>
           {{ user.status.following_count }}
           <span class="followings"> followings </span>
+        </span>
+        <span>
+          {{ followerCount }}
+          <span class="followers"> followers </span>
         </span>
         <span>
           {{ user.status.post_count }}

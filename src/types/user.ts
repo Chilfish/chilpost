@@ -10,8 +10,9 @@ export interface UserStatus {
   following_count: number
   post_count: number
 
+  is_following: boolean
   followers: string[]
-  followings: string[]
+  // followings: string[]
 }
 
 export interface User {
