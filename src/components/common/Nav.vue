@@ -16,10 +16,12 @@ function sendPost() {
   modalStore.open('sendPost')
 }
 
+const router = useRoute()
+
 // hidden while not logged in
 const isHide = computed(() => !userStore.curUser?.name)
 
-const routes = computed<NavItem[]>(() => [
+const navItems = computed<NavItem[]>(() => [
   {
     to: '/home',
     icon: 'i-tabler-home',
@@ -46,8 +48,6 @@ const routes = computed<NavItem[]>(() => [
   },
 ])
 
-const router = useRoute()
-
 const showFAB = ref(false) // from router meta
 
 // only show FAB when on home page or current user's profile page
@@ -72,16 +72,16 @@ watchEffect(() => {
     </nuxt-link>
 
     <template
-      v-for="route in routes"
-      :key="route.to"
+      v-for="navItem in navItems"
+      :key="navItem.to"
     >
       <nuxt-link
-        v-show="!route.hide"
-        :to="route.to" class="nav-item"
+        v-show="!navItem.hide"
+        :to="navItem.to" class="nav-item"
       >
-        <span class="icon" :class="route.icon" />
+        <span class="icon" :class="navItem.icon" />
         <p class="text">
-          {{ route.text }}
+          {{ navItem.text }}
         </p>
       </nuxt-link>
     </template>

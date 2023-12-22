@@ -1,19 +1,10 @@
 <script setup lang="ts">
-import type { PostDetail } from '~/types'
-
-const { y } = useWindowScroll()
-const isScrollingDown = ref(false)
-watch(
-  () => y.value,
-  (newY, oldY) => {
-    isScrollingDown.value = newY > oldY
-  },
-)
-
 const darkStore = useDarkStore()
 const { searchWord } = storeToRefs(usePostStore())
 const router = useRouter()
 const route = useRoute()
+
+const title = computed(() => route.path.substring(1))
 
 function search() {
   router.push(`/search?q=${searchWord.value}`)
@@ -31,11 +22,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <header
-    :class="isScrollingDown ? 'scroll-up' : ''"
-    class="blur-bg"
-  >
-    <h2>Explore</h2>
+  <header>
+    <h2 class="capitalize">
+      {{ title }}
+    </h2>
 
     <label>
       <span

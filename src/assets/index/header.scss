@@ -68,11 +68,7 @@ header {
   }
 }
 
-@media (min-width: $sm) {
-  header.scroll-up {
-    transform: translateY(0);
-  }
-}
+ 
 
 @media (min-width: $lg) {
   header {

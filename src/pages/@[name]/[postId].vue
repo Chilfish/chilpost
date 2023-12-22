@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { PostDetail } from '~/types'
 
-const postId = computed(() => useRoute().params.postId as string)
+const postId = computed(() => (useRoute().params as { postId: string }).postId)
 
 const {
   data: postData,

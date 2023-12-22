@@ -1,8 +1,14 @@
 <script setup lang="ts">
+import { appName } from '~/constants'
+
 definePageMeta({
-  title: 'Chilpost - home',
-  description: 'Chilpost - home',
+  title: `${appName} - home`,
+  description: `${appName} - home`,
   middleware: ['user-only'],
+})
+
+useHead({
+  title: `${appName} - home`,
 })
 </script>
 

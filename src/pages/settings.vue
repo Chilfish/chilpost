@@ -3,11 +3,16 @@ import type { Rules } from 'async-validator'
 import { useAsyncValidator } from '@vueuse/integrations/useAsyncValidator'
 import { Toast } from '@cpa/Toast'
 import type { UpdatedUser, User } from '~/types/user'
+import { appName } from '~/constants'
 
 definePageMeta({
   title: 'Settings',
   description: 'Settings',
   middleware: ['user-only'],
+})
+
+useHead({
+  title: `${appName} Settings`,
 })
 
 const userStore = useUserStore()
