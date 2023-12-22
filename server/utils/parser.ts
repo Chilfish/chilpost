@@ -19,17 +19,18 @@ export function newPost(
 ): Post {
   const now = new Date().toISOString()
   return {
-    id: 1,
+    id: '1',
     owner_id: ownerId,
     content,
     is_body,
     created_at: now,
-    parent_id: -1,
+    parent_id: '-1',
     status: {
+      is_liked: false,
       like_count: 0,
       comment_count: 0,
       repost_count: 0,
-      likes: [],
+      // likes: [],
       comments: [],
       reposts: [],
     },
@@ -56,12 +57,12 @@ export function newUser(email: string, password: string, name?: string): UserAut
     updated_at: now,
 
     status: {
-
       post_count: 0,
       follower_count: 0,
       following_count: 0,
       followers: [],
-      followings: [],
+      // followings: [],
+      is_following: false,
     },
   }
   return user
