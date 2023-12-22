@@ -1,7 +1,6 @@
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
-
-// import sqlToTs from './server/utils/sqlToTs.server'
+import sqlToTs from './server/utils/sqlToTs'
 import { pwa } from './src/config/pwa'
 import { appDescription } from './src/constants/index'
 
@@ -78,7 +77,7 @@ export default defineNuxtConfig({
   },
 
   hooks: {
-    // 'nitro:init': sqlToTs,
+    'nitro:init': sqlToTs,
   },
 
   nitro: {
