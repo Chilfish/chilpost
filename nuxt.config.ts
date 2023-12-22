@@ -1,6 +1,7 @@
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
-import sqlToTs from './server/utils/sqlToTs.server'
+
+// import sqlToTs from './server/utils/sqlToTs.server'
 import { pwa } from './src/config/pwa'
 import { appDescription } from './src/constants/index'
 
@@ -77,7 +78,7 @@ export default defineNuxtConfig({
   },
 
   hooks: {
-    'nitro:init': sqlToTs,
+    // 'nitro:init': sqlToTs,
   },
 
   nitro: {
@@ -91,11 +92,6 @@ export default defineNuxtConfig({
       '/': { redirect: '/home' },
       '/proxy/**': { proxy: `${API_PROXY}/**` },
       '/_ipx/_/proxy/**': { proxy: `${API_PROXY}/**` },
-    },
-    prerender: {
-      crawlLinks: false,
-      routes: ['/'],
-      ignore: ['/settings'],
     },
   },
 

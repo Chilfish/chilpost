@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import type { PostDetail } from '~/types'
+import { appName } from '~/constants'
+import type { PostDetail, PostResponse } from '~/types'
 
 const postId = computed(() => (useRoute().params as { postId: string }).postId)
 
@@ -7,7 +8,7 @@ const {
   data: postData,
   pending: postPending,
   error: postError,
-} = useMyFetch<PostDetail>('/post/get', {
+} = useMyFetch<{ post: PostDetail }>('/post/get', {
   query: {
     id: postId.value,
     uid: useUserStore().curUser?.id,
@@ -15,40 +16,38 @@ const {
   server: false,
 })
 
-// const commentIds = computed(() => postData.value?.data?.status?.comments || [])
-
 const {
   data: commentData,
   pending: commentPending,
   error: commentError,
   execute: commentExecute,
-} = useMyFetch<{ comments: PostDetail[] }>('/post/comments', {
+} = useMyFetch<PostResponse>('/post/comments', {
   query: {
     id: postId,
+    uid: useUserStore().curUser?.id,
   },
   manual: true,
   server: false,
 })
 
+const post = computed(() => postData.value?.data?.post)
+
 watch(() => postData.value, () => {
-  if (postData.value?.data) {
-    const { owner, ...post } = postData.value?.data
-    if (!owner)
-      return
+  if (!post.value)
+    return
 
-    const title = `${owner.nickname}'s Post: ${post.content.substring(0, 50)}`
+  const title = `${appName} | ${post.value.owner.nickname}'s Post: ${post.value.content.substring(0, 50)}`
 
-    useHead({
-      title,
-    })
+  useHead({
+    title,
+  })
 
-    if (postData.value.data.status.comment_count > 0)
-      commentExecute()
-    else
-      commentPending.value = false
-  }
+  if (post.value.status.comment_count > 0)
+    commentExecute()
+  else
+    commentPending.value = false
 
-  useErrorTitle(postError.value?.data)
+  // useErrorTitle(postError.value?.data)
 }, { immediate: true })
 </script>
 
@@ -62,22 +61,22 @@ watch(() => postData.value, () => {
     :is-loading="postPending"
   />
 
-  <main v-if="postData?.data?.owner">
+  <main v-if="post?.owner">
     <div
-      v-if="postData.data.parent_post"
+      v-if="post.parent_post"
       class="parent-post"
     >
       <PostItem
-        :post="postData.data.parent_post"
-        :owner="postData.data.parent_post.owner"
+        :post="post.parent_post"
+        :owner="post.parent_post.owner"
       />
 
       <div class="vr" />
     </div>
 
     <PostDetailItem
-      :post="postData.data"
-      :owner="postData.data.owner"
+      :post="post"
+      :owner="post.owner"
     />
 
     <CommonLoading
@@ -87,7 +86,7 @@ watch(() => postData.value, () => {
 
     <PostComments
       v-if="commentData?.data"
-      :comments="commentData.data.comments"
+      :comments="commentData.data.posts"
     />
   </main>
 </template>
