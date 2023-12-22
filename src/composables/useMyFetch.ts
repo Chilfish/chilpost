@@ -26,11 +26,14 @@ export default function useMyFetch<T = any>(
       if (data.statusCode === 200 || toValue(url) === '/user/me')
         return
 
+      console.error('fetch error', data)
+
       if (data.statusCode === 401 && toValue(url) !== '/auth/login')
         return Toast({ message: 'Unauthorized, please login.', type: 'error' })
 
-      if (token.value?.trim() !== '')
-        return Toast({ message: data.message, type: 'error' })
+      const mes = data.message.trim()
+
+      return Toast({ message: mes || 'Server error', type: 'error' })
     },
 
     ...options,

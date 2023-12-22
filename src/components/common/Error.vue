@@ -1,14 +1,24 @@
 <script setup lang="ts">
-import type { ErrorType } from '~/types'
+import type { ErrorCode, ErrorType } from '~/types'
 
-const props = defineProps<{
+const {
+  error,
+  errorCode,
+} = defineProps<{
   error: unknown
+  errorCode?: ErrorCode
 }>()
-const err = props.error as ErrorType
+
+const err = computed(() => {
+  if (errorCode)
+    return newError(errorCode)
+  return error as ErrorType
+})
 </script>
 
 <template>
   <div class="error">
+    <!-- {{ err }} | {{ errorCode }} -->
     {{ `${err.statusCode} / ${err.message}` }}
   </div>
 </template>

@@ -15,7 +15,7 @@ useInfiniteScroll(infiniteScroll, async () => {
 }, {
   interval: 500,
   distance: 10,
-  canLoadMore: () => store.value.page < store.value.totalPages,
+  canLoadMore: () => store.value.page >= 0 && store.value.page < store.value.totalPages,
 })
 
 watch(() => route.query, async () => {
@@ -35,7 +35,7 @@ watch(() => route.query, async () => {
 <template>
   <div
     ref="infiniteScroll"
-    class="max-h-56rem overflow-y-scroll"
+    class="max-h-53rem overflow-y-scroll"
   >
     <PostList :posts="store.posts" />
     <CommonLoading

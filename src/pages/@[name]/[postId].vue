@@ -7,7 +7,6 @@ const postId = computed(() => (useRoute().params as { postId: string }).postId)
 const {
   data: postData,
   pending: postPending,
-  error: postError,
 } = useMyFetch<{ post: PostDetail }>('/post/get', {
   query: {
     id: postId.value,
@@ -19,7 +18,6 @@ const {
 const {
   data: commentData,
   pending: commentPending,
-  error: commentError,
   execute: commentExecute,
 } = useMyFetch<PostResponse>('/post/comments', {
   query: {
@@ -57,7 +55,7 @@ watch(() => postData.value, () => {
   </CommonHeader>
 
   <CommonLoading
-    :error="postError?.data"
+    :error="postData"
     :is-loading="postPending"
   />
 
@@ -80,7 +78,7 @@ watch(() => postData.value, () => {
     />
 
     <CommonLoading
-      :error="commentError?.data"
+      :error="commentData"
       :is-loading="commentPending"
     />
 

@@ -22,7 +22,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <header>
+  <header class="blur-bg">
     <h2 class="capitalize">
       {{ title }}
     </h2>

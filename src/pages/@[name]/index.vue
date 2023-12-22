@@ -6,7 +6,6 @@ const username = computed(() => (useRoute().params as { name: string }).name)
 const {
   data,
   pending,
-  error,
 } = useMyFetch<PostsWithOwner>(`/user/@/${username.value}`, {
   query: {
     uid: useUserStore().curUser?.id,
@@ -23,8 +22,6 @@ watchEffect(() => {
       title,
     })
   }
-
-  useErrorTitle(error.value?.data)
 })
 </script>
 
@@ -35,12 +32,12 @@ watchEffect(() => {
 
   <div class="banner" />
 
+  <CommonLoading :error="data" :is-loading="pending" />
+
   <main v-if="data?.data && owner">
     <ProfileCard :user="owner" />
 
     <div>
-      <CommonLoading :error="error?.data" :is-loading="pending" />
-
       <section
         v-for="post in data.data.posts"
         :key="post.id"

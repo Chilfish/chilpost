@@ -29,7 +29,7 @@ export const Errors = [
     statusCode: 401,
   },
   {
-    code: 'notfound_user',
+    code: 'NOT_FOUND_USER',
     message: 'User Not Found',
     statusCode: 404,
   },
@@ -50,7 +50,7 @@ export const Errors = [
     statusCode: 404,
   },
   {
-    code: 'notfound_post',
+    code: 'NOT_FOUND_POST',
     message: 'Post Not Found',
     statusCode: 404,
   },
