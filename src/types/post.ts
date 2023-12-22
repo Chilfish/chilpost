@@ -58,6 +58,11 @@ export interface PostsWithOwner {
 
 export interface PostResponse {
   posts: PostDetail[]
-  count: number
   pages: number
+}
+
+export interface PostStore {
+  posts: PostDetail[]
+  totalPages: number
+  page: number
 }

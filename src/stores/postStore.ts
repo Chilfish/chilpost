@@ -1,28 +1,41 @@
 import { defineStore } from 'pinia'
-import type { NewPostBody, PostDetail, pid } from '~/types'
+import type { NewPostBody, PostDetail, PostStore } from '~/types'
 
 export const usePostStore = defineStore('post', () => {
   /**
    * the All Posts, in /explore
    */
-  const posts = ref([] as PostDetail[])
+  const allPosts = shallowRef<PostStore>({
+    posts: [],
+    totalPages: 1,
+    page: 0,
+  })
   /**
    * the Feed Posts, in /home
    */
-  const feedPosts = ref([] as PostDetail[])
+  const feedPosts = shallowRef<PostStore>({
+    posts: [],
+    totalPages: 1,
+    page: 0,
+  })
   /**
    * the User Posts, in /user/:id
    */
-  const userPosts = ref([] as PostDetail[])
+  const userPosts = shallowRef<PostStore>({
+    posts: [],
+    totalPages: 1,
+    page: 0,
+  })
   /**
    * the Posts in search page
    */
-  const searchPosts = ref([] as PostDetail[])
+  const searchPosts = shallowRef<PostStore>({
+    posts: [],
+    totalPages: 1,
+    page: 0,
+  })
 
   const searchWord = ref('')
-
-  const page = ref(1)
-  const totalPages = ref(1)
 
   const newPostBody = ref<NewPostBody>({
     content: '',
@@ -36,22 +49,19 @@ export const usePostStore = defineStore('post', () => {
    * @param post the post to add
    */
   function addPost(post: PostDetail) {
-    posts.value.unshift(post)
-    feedPosts.value.unshift(post)
-    userPosts.value.unshift(post)
+    allPosts.value.posts.unshift(post)
+    feedPosts.value.posts.unshift(post)
+    userPosts.value.posts.unshift(post)
   }
 
   return {
-    posts,
+    allPosts,
     feedPosts,
     userPosts,
     searchPosts,
 
     searchWord,
     newPostBody,
-
-    page,
-    totalPages,
 
     addPost,
   }

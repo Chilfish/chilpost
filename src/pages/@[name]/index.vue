@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { PostsWithOwner } from '~/types'
 
-const username = computed(() => useRoute().params.name as string)
+const username = computed(() => (useRoute().params as { name: string }).name)
 
 const {
   data,

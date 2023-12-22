@@ -1,38 +1,68 @@
 import type { PostResponse } from '~/types'
 
-export const postType = {
-  explore: 'all',
-  home: 'feed',
+export const postRouterMap = {
+  explore: {
+    path: '/post/all',
+    store: 'allPosts',
+  },
+  home: {
+    path: '/post/feed',
+    store: 'feedPosts',
+  },
+  search: {
+    path: '/post/search',
+    store: 'searchPosts',
+  },
 } as const
 
-export type PostType = keyof typeof postType
+export type PostType = keyof typeof postRouterMap
 
 export function useLoadPosts(key: PostType) {
-  const { posts, page, totalPages } = storeToRefs(usePostStore())
+  const postStore = storeToRefs(usePostStore())
+  const store = shallowRef(postStore[postRouterMap[key].store])
+  const page = ref(store.value.page + 1)
+  const pending = ref(false)
+
   const {
     data: postData,
-    pending,
     error,
     execute: fetchPosts,
-  } = useMyFetch<PostResponse>(`/post/${postType[key]}`, {
+  } = useMyFetch<PostResponse>(postRouterMap[key].path, {
     query: {
       uid: useUserStore().curUser?.id,
+      q: key === 'search' ? postStore.searchWord : undefined,
       page,
     },
     server: false,
+    manual: true,
   })
 
   watch(postData, () => {
-    if (postData.value?.data) {
-      posts.value = posts.value.concat(postData.value.data.posts)
-      totalPages.value = postData.value.data.pages
+    if (!postData.value)
+      return
+
+    const { statusCode, data } = postData.value
+
+    if (statusCode !== 200) {
+      store.value.page--
+      page.value--
+    }
+
+    if (data) {
+      pending.value = false
+      store.value = {
+        posts: store.value.posts.concat(data.posts),
+        totalPages: data.pages,
+        page: store.value.page + 1,
+      }
+      page.value++
     }
   }, { immediate: true })
 
   return {
-    posts,
+    store,
     page,
-    totalPages,
+
     fetchPosts,
     pending,
     error,

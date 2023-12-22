@@ -6,22 +6,29 @@ const {
 }>()
 
 const infiniteScroll = ref<HTMLElement | null>(null)
+const { store, page, error, pending, fetchPosts } = useLoadPosts(postType)
+const route = useRoute()
 
-const { page, totalPages, posts, error, pending, fetchPosts } = useLoadPosts(postType)
-useInfiniteScroll(infiniteScroll, () => {
-  console.log('load more')
-  if (page.value >= totalPages.value)
-    return
-  page.value++
-  fetchPosts()
+useInfiniteScroll(infiniteScroll, async () => {
+  pending.value = true
+  await fetchPosts()
 }, {
-  interval: 100,
+  interval: 500,
   distance: 10,
-  canLoadMore: () => page.value < totalPages.value,
+  canLoadMore: () => store.value.page < store.value.totalPages,
 })
 
-onMounted(() => {
-  fetchPosts()
+watch(() => route.query, async () => {
+  if (postType === 'search') {
+    pending.value = true
+    store.value = {
+      posts: [],
+      page: 0,
+      totalPages: 1,
+    }
+    page.value = 1
+    await fetchPosts()
+  }
 })
 </script>
 
@@ -30,7 +37,7 @@ onMounted(() => {
     ref="infiniteScroll"
     class="h-53rem overflow-y-scroll"
   >
-    <PostList :posts="posts" />
+    <PostList :posts="store.posts" />
     <CommonLoading
       :error="error?.data"
       :is-loading="pending"

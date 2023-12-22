@@ -11,31 +11,13 @@ watch(
 )
 
 const darkStore = useDarkStore()
-const { searchWord, searchPosts } = storeToRefs(usePostStore())
+const { searchWord } = storeToRefs(usePostStore())
 const router = useRouter()
 const route = useRoute()
 
-const {
-  data: searchRes,
-  execute,
-} = useMyFetch<{ posts: PostDetail[] }>('/post/search', {
-  query: {
-    q: searchWord,
-    uid: useUserStore().curUser?.id,
-  },
-  manual: true,
-})
-
 function search() {
-  execute().then(() => {
-    router.push(`/search?q=${searchWord.value}`)
-  })
+  router.push(`/search?q=${searchWord.value}`)
 }
-
-watch(searchRes, (data) => {
-  if (data?.data)
-    searchPosts.value = data?.data.posts
-})
 
 onMounted(() => {
   searchWord.value = route.query.q as string
@@ -43,7 +25,7 @@ onMounted(() => {
   if (route.path === '/search') {
     if (route.query.q === undefined)
       router.replace('?q=""')
-    execute()
+    search()
   }
 })
 </script>
