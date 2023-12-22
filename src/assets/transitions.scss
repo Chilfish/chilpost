@@ -23,12 +23,12 @@
 
 .fade-enter-from,
 .fade-leave-to {
-  transform: translateX(12px);
+  transform: translateY(12px);
 }
 
 .fade-enter-to,
 .fade-leave-from {
-  transform: translateX(0);
+  transform: translateY(0);
 }
 
 .v-leave-active,

@@ -11,8 +11,6 @@ main {
   justify-content: center;
   padding-bottom: 1rem;
   color: var(--text-2);
-
-  @include border(bottom);
 }
 
 .user-box {

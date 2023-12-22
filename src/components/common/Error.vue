@@ -17,7 +17,10 @@ const err = computed(() => {
 </script>
 
 <template>
-  <div class="error">
+  <div
+    v-if="err.statusCode >= 400"
+    class="error"
+  >
     <!-- {{ err }} | {{ errorCode }} -->
     {{ `${err.statusCode} / ${err.message}` }}
   </div>

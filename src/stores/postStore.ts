@@ -5,7 +5,7 @@ export const usePostStore = defineStore('post', () => {
   /**
    * the All Posts, in /explore
    */
-  const allPosts = shallowRef<PostStore>({
+  const allPosts = ref<PostStore>({
     posts: [],
     totalPages: 1,
     page: 0,
@@ -13,7 +13,7 @@ export const usePostStore = defineStore('post', () => {
   /**
    * the Feed Posts, in /home
    */
-  const feedPosts = shallowRef<PostStore>({
+  const feedPosts = ref<PostStore>({
     posts: [],
     totalPages: 1,
     page: 0,
@@ -21,7 +21,7 @@ export const usePostStore = defineStore('post', () => {
   /**
    * the User Posts, in /user/:id
    */
-  const userPosts = shallowRef<PostStore>({
+  const userPosts = ref<PostStore>({
     posts: [],
     totalPages: 1,
     page: 0,
@@ -29,7 +29,7 @@ export const usePostStore = defineStore('post', () => {
   /**
    * the Posts in search page
    */
-  const searchPosts = shallowRef<PostStore>({
+  const searchPosts = ref<PostStore>({
     posts: [],
     totalPages: 1,
     page: 0,
@@ -54,6 +54,18 @@ export const usePostStore = defineStore('post', () => {
     userPosts.value.posts.unshift(post)
   }
 
+  function rmPost(id: string) {
+    allPosts.value.posts = allPosts.value.posts.filter(
+      post => post.id !== id,
+    )
+    feedPosts.value.posts = feedPosts.value.posts.filter(
+      post => post.id !== id,
+    )
+    userPosts.value.posts = userPosts.value.posts.filter(
+      post => post.id !== id,
+    )
+  }
+
   return {
     allPosts,
     feedPosts,
@@ -64,5 +76,6 @@ export const usePostStore = defineStore('post', () => {
     newPostBody,
 
     addPost,
+    rmPost,
   }
 })

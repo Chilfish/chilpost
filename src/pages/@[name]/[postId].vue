@@ -18,13 +18,12 @@ const {
 const {
   data: commentData,
   pending: commentPending,
-  execute: commentExecute,
 } = useMyFetch<PostResponse>('/post/comments', {
   query: {
     id: postId,
     uid: useUserStore().curUser?.id,
   },
-  manual: true,
+  // manual: true,
   server: false,
 })
 
@@ -40,11 +39,6 @@ watch(() => postData.value, () => {
     title,
   })
 
-  if (post.value.status.comment_count > 0)
-    commentExecute()
-  else
-    commentPending.value = false
-
   // useErrorTitle(postError.value?.data)
 }, { immediate: true })
 </script>
@@ -54,27 +48,33 @@ watch(() => postData.value, () => {
     <h3>Post Details</h3>
   </CommonHeader>
 
-  <CommonLoading
-    :error="postData"
-    :is-loading="postPending"
-  />
+  <CommonLoading :is-loading="postPending" />
 
-  <main v-if="post?.owner">
-    <div
-      v-if="post.parent_post"
-      class="parent-post"
-    >
-      <PostItem
-        :post="post.parent_post"
-        :owner="post.parent_post.owner"
+  <main>
+    <template v-if="post?.owner">
+      <div
+        v-if="post.parent_id"
+        class="parent-post"
+      >
+        <PostItem
+          v-if="post.parent_post"
+          :post="post.parent_post"
+          :owner="post.parent_post.owner"
+        />
+        <PostDeleted v-else />
+
+        <div class="vr" />
+      </div>
+
+      <PostDetailItem
+        :post="post"
+        :owner="post.owner"
       />
+    </template>
 
-      <div class="vr" />
-    </div>
-
-    <PostDetailItem
-      :post="post"
-      :owner="post.owner"
+    <PostDeleted
+      v-show="!postPending"
+      v-else
     />
 
     <CommonLoading
@@ -125,7 +125,7 @@ main {
 
 @media (min-width: $lg) {
  .parent-post .vr {
-    left: 2%;
+    left: 1.6%;
   }
 }
 </style>

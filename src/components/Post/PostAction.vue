@@ -10,6 +10,7 @@ const props = defineProps<{
 }>()
 
 const modalStore = useModalStore()
+const userStore = useUserStore()
 const postStore = usePostStore()
 
 const status = ref(props.status)
@@ -57,6 +58,11 @@ function copyLink() {
 
 function repost() {
   Toast({ type: 'warning', message: 'Not yet implemented 😹' })
+}
+
+function deletePost() {
+  if (confirm(`confirm to delete this post?`))
+    postDelete(props.id)
 }
 
 watchEffect(() => {
@@ -111,6 +117,17 @@ watchEffect(() => {
         <span class="i-tabler-share icon" />
       </span>
     </button>
+
+    <button
+      v-if="userStore.curUser?.name === uName"
+      class="delete"
+      title="Delete this post"
+      @click="deletePost"
+    >
+      <span class="box">
+        <span class="i-tabler-trash icon" />
+      </span>
+    </button>
   </div>
 </template>
 
@@ -121,6 +138,7 @@ watchEffect(() => {
 .post-action {
   display: flex;
   justify-content: flex-start;
+  margin-left: -3rem;
   color: #666;
   user-select: none;
 
@@ -131,6 +149,9 @@ watchEffect(() => {
 
 button {
   min-width: 6rem;
+  text-align: center;
+
+  --uno: center;
 
   &.is_like {
     color: map.get($color-map, '.like')

@@ -2,6 +2,7 @@
 import type { PostsWithOwner } from '~/types'
 
 const username = computed(() => (useRoute().params as { name: string }).name)
+const postStore = usePostStore()
 
 const {
   data,
@@ -21,6 +22,8 @@ watchEffect(() => {
     useHead({
       title,
     })
+
+    postStore.userPosts.posts = data.value.data.posts
   }
 })
 </script>
@@ -37,24 +40,7 @@ watchEffect(() => {
   <main v-if="data?.data && owner">
     <ProfileCard :user="owner" />
 
-    <div>
-      <section
-        v-for="post in data.data.posts"
-        :key="post.id"
-      >
-        <PostItem
-          :post="post"
-          :owner="owner"
-        />
-      </section>
-    </div>
-
-    <div
-      v-if="!data.data.posts.length"
-      class="no-data"
-    >
-      No posts yet
-    </div>
+    <PostList :posts="postStore.userPosts.posts" />
   </main>
 </template>
 

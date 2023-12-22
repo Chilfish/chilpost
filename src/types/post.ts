@@ -38,7 +38,7 @@ export interface Post {
 
   status: PostStatus
 
-  parent_id: pid
+  parent_id?: pid
   parent_post?: PostDetail
 }
 

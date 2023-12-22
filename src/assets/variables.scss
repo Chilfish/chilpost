@@ -7,8 +7,9 @@ $color-map: (
   ".repost": #00ba7c,
   ".like": #f91880,
   ".share": $theme-color,
+  ".delete": #f55,
   ".menu": $theme-color,
-  ".back": $theme-color
+  ".back": $theme-color,
 );
 $nav-aside-width: 15rem;
 $nav-footer-height: 3.5rem;

@@ -18,7 +18,12 @@ defineProps<{
 </template>
 
 <style lang="scss" scoped>
+@use "~/assets/variables" as *;
+
 section {
   padding: 1.5rem 1rem;
+  margin-top:1rem;
+
+  @include border(top);
 }
 </style>

@@ -19,7 +19,7 @@ export type PostType = keyof typeof postRouterMap
 
 export function useLoadPosts(key: PostType) {
   const postStore = storeToRefs(usePostStore())
-  const store = shallowRef(postStore[postRouterMap[key].store])
+  const store = postStore[postRouterMap[key].store]
   const page = ref(store.value.page + 1)
   const pending = ref(false)
 
