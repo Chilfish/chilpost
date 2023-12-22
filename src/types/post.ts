@@ -48,7 +48,16 @@ export type PostDetail = Post & {
 
 export type PostDB = PostDetail[] & RowDataPacket[]
 
+/**
+ * Posts with owner
+ */
 export interface PostsWithOwner {
-  posts: PostDetail[]
+  posts: PostDetail[] // !TODO should be Post[]
   owner: User
+}
+
+export interface PostResponse {
+  posts: PostDetail[]
+  count: number
+  pages: number
 }

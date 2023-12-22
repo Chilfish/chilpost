@@ -2,7 +2,7 @@
 import type { Rules } from 'async-validator'
 import { useAsyncValidator } from '@vueuse/integrations/useAsyncValidator'
 import { Toast } from '@cpa/Toast'
-import type { User } from '~/types/user'
+import type { UpdatedUser, User } from '~/types/user'
 
 definePageMeta({
   title: 'Settings',
@@ -41,6 +41,11 @@ const rules: Rules = {
   ],
 }
 
+const updatedUser = computed<UpdatedUser>(() => {
+  const { id, name, nickname, email, bio } = curUser.value
+  return { id, name, nickname, email, bio }
+})
+
 const { pass, errorFields } = useAsyncValidator(curUser, rules)
 const {
   data,
@@ -48,7 +53,7 @@ const {
   execute,
 } = useMyFetch<boolean>('/user/update', {
   method: 'post',
-  body: curUser,
+  body: updatedUser,
   manual: true,
 })
 

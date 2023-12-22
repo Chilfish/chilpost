@@ -41,6 +41,14 @@ export type UserDetail = Omit<User, 'email' | 'created_at'>
 
 export type UserDisplay = Pick<User, 'name' | 'nickname' | 'avatar'>
 
+export interface UpdatedUser {
+  id: uid
+  name: string
+  nickname: string
+  email: string
+  bio: string
+}
+
 export interface UserLogin {
   email: string
   password: string
