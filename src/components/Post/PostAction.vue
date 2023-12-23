@@ -139,7 +139,7 @@ watchEffect(() => {
 .post-action {
   display: flex;
   justify-content: flex-start;
-  margin-left: -3rem;
+  margin-left: -2rem;
   color: #666;
   user-select: none;
 
@@ -149,7 +149,7 @@ watchEffect(() => {
 }
 
 button {
-  min-width: 6rem;
+  min-width: 5rem;
   text-align: center;
 
   --uno: center;
@@ -160,6 +160,10 @@ button {
 }
 
 @media (min-width: $sm) {
+  .post-action {
+    margin-left: -3rem;
+  }
+
   button {
     min-width: 8rem;
   }
