@@ -25,7 +25,7 @@ export function useLoadPosts(key: PostType) {
   const userStore = useUserStore()
   const postStore = storeToRefs(usePostStore())
   const store = postStore[postRouterMap[key].store]
-  const page = ref(store.value.page + 1)
+  const page = ref(1)
   const pending = ref(false)
 
   const {
@@ -35,16 +35,15 @@ export function useLoadPosts(key: PostType) {
   } = useMyFetch<PostResponse>(postRouterMap[key].path, {
     query: {
       username: key === 'profile' ? userStore.homeProfile.name : undefined,
-      with_owner: key !== 'profile',
+      with_owner: key === 'profile' ? false : undefined,
       q: key === 'search' ? postStore.searchWord : undefined,
       page,
-      size: 4,
     },
     server: false,
     manual: true,
   })
 
-  watch(postData, () => {
+  watchImmediate(postData, () => {
     if (!postData.value)
       return
 
@@ -57,14 +56,14 @@ export function useLoadPosts(key: PostType) {
 
     if (data) {
       pending.value = false
+      page.value++
       store.value = {
         posts: store.value.posts.concat(data.posts),
         totalPages: data.pages,
         page: store.value.page + 1,
       }
-      page.value++
     }
-  }, { immediate: true })
+  })
 
   return {
     store,

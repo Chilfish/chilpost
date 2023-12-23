@@ -4,9 +4,10 @@ export default defineNuxtRouteMiddleware(async () => {
     return
 
   const userStore = useUserStore()
-
-  if (!userStore.isFetched)
+  if (!userStore.isFetched) {
+    console.log('fetch me middleware')
     await userStore.fetchMe()
+  }
 
   userStore.isFetched = true
 

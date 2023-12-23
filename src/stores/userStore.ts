@@ -17,7 +17,10 @@ export const useUserStore = defineStore('user', () => {
       await useMyFetch('/auth/logout', { method: 'POST' })
 
     curUser.value = null
-    useCookie('token').value = ''
+    // have to use setTimeout to avoid the token not being set
+    setTimeout(() => {
+      useCookie('token').value = '111'
+    }, 0)
     Toast({ message: 'Logout successfully.', type: 'success' })
     navigateTo({ name: 'explore' })
   }

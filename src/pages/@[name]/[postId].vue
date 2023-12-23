@@ -10,7 +10,6 @@ const {
 } = useMyFetch<{ post: PostDetail }>('/post/get', {
   query: {
     id: postId.value,
-    uid: useUserStore().curUser?.id,
   },
   server: false,
 })
@@ -21,7 +20,6 @@ const {
 } = useMyFetch<PostResponse>('/post/comments', {
   query: {
     id: postId,
-    uid: useUserStore().curUser?.id,
   },
   server: false,
 })

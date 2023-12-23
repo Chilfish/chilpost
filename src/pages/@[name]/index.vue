@@ -21,15 +21,16 @@ const userData = computed(() => data.value?.data)
 
 <template>
   <CommonHeader>
-    <h3> {{ homeProfile.nickname }}</h3>
+    <h3> {{ userData?.nickname }}</h3>
   </CommonHeader>
 
   <div class="banner" />
 
-  <main
-    v-if="userData"
-  >
-    <ProfileCard :user="userData" />
+  <main>
+    <ProfileCard
+      v-if="userData"
+      :user="userData"
+    />
 
     <PostInfinite
       :user="userData"

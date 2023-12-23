@@ -7,7 +7,7 @@ export const usePostStore = defineStore('post', () => {
    */
   const allPosts = ref<PostStore>({
     posts: [],
-    totalPages: 1,
+    totalPages: 0,
     page: 0,
   })
   /**
@@ -15,7 +15,7 @@ export const usePostStore = defineStore('post', () => {
    */
   const feedPosts = ref<PostStore>({
     posts: [],
-    totalPages: 1,
+    totalPages: 0,
     page: 0,
   })
   /**
@@ -23,7 +23,7 @@ export const usePostStore = defineStore('post', () => {
    */
   const userPosts = ref<PostStore>({
     posts: [],
-    totalPages: 1,
+    totalPages: 0,
     page: 0,
   })
   /**
@@ -31,7 +31,7 @@ export const usePostStore = defineStore('post', () => {
    */
   const searchPosts = ref<PostStore>({
     posts: [],
-    totalPages: 1,
+    totalPages: 0,
     page: 0,
   })
 

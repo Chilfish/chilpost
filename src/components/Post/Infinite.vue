@@ -57,11 +57,23 @@ watchImmediate(() => route.path, async () => {
 
 watchImmediate(canLoadMore, value => value && fetchPosts())
 
-onMounted(async () => {
-  await fetchPosts()
+onNuxtReady(async () => {
+  page.value = store.value.page + 1
+
+  if (route.path !== '/search' && store.value.posts.length === 0)
+    await fetchPosts()
+
+  if (page.value >= store.value.totalPages)
+    return
 
   // auto load more posts when the page is not full
-  if (postListRef.value!.scrollHeight < document.body.scrollHeight)
+  const height = postListRef.value!.scrollHeight
+  console.log(height)
+
+  if (height < 100)
+    return
+
+  if (height + 100 < document.body.scrollHeight)
     await fetchPosts()
 })
 </script>
