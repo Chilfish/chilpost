@@ -9,14 +9,14 @@ const isLoading = ref(false)
 const {
   data,
   execute: submit,
-} = useMyFetch<PostDetail>('/post/new', {
+} = useMyFetch<{ post: PostDetail }>('/post/new', {
   method: 'post',
   body: postStore.newPostBody,
   manual: true,
 })
 
 watch(data, () => {
-  const post = data.value?.data
+  const post = data.value?.data?.post
   if (post) {
     isLoading.value = false
     if (post.is_body)

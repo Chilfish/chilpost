@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { appName } from '~/constants'
 import type { NavItem } from '~/types'
 
 const modalStore = useModalStore()
@@ -74,7 +75,7 @@ watchEffect(() => {
   <nav class="blur-bg">
     <nuxt-link class="logo" to="/">
       <img src="/favicon-256x256.png">
-      <h1>Chill Post</h1>
+      <h1>{{ appName }}</h1>
     </nuxt-link>
 
     <template

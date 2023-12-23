@@ -36,7 +36,6 @@ export interface Post {
 
   content: string
   created_at: string
-  owner_id: uid
 
   status: PostStatus
 
