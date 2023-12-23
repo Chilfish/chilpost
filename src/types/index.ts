@@ -1,5 +1,10 @@
+import type { PostDetail } from './post'
+import type { UserDisplay } from './user'
+
 export * from './user'
 export * from './post'
+
+export type Owner<T> = T extends PostDetail ? undefined : UserDisplay
 
 export interface NavItem {
   to: string

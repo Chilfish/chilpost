@@ -13,11 +13,16 @@ export const postRouterMap = {
     path: '/post/search',
     store: 'searchPosts',
   },
+  profile: {
+    path: '/post/all',
+    store: 'userPosts',
+  },
 } as const
 
 export type PostType = keyof typeof postRouterMap
 
 export function useLoadPosts(key: PostType) {
+  const userStore = useUserStore()
   const postStore = storeToRefs(usePostStore())
   const store = postStore[postRouterMap[key].store]
   const page = ref(store.value.page + 1)
@@ -29,9 +34,11 @@ export function useLoadPosts(key: PostType) {
     execute: fetchPosts,
   } = useMyFetch<PostResponse>(postRouterMap[key].path, {
     query: {
-      uid: useUserStore().curUser?.id,
+      username: key === 'profile' ? userStore.homeProfile.name : undefined,
+      with_owner: key !== 'profile',
       q: key === 'search' ? postStore.searchWord : undefined,
       page,
+      size: 4,
     },
     server: false,
     manual: true,

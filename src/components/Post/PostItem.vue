@@ -1,13 +1,20 @@
 <script setup lang="ts">
-import type { PostDetail, UserDisplay } from '~/types'
+import type { Post, PostDetail, UserDisplay } from '~/types'
 
 const {
   post,
+  user,
 } = defineProps<{
-  post: PostDetail
+  post: PostDetail | Post
+  user?: UserDisplay
 }>()
 
-const owner = computed(() => post.owner)
+const owner = computed(() => {
+  if ('owner' in post)
+    return post.owner
+
+  return user!
+})
 </script>
 
 <template>

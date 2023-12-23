@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import type { PostDetail } from '~/types'
+import type { Post, PostDetail, UserDisplay } from '~/types'
 
 defineProps<{
-  posts: PostDetail[]
+  posts: PostDetail[] | Post[]
+  user?: UserDisplay
 }>()
 </script>
 
@@ -24,7 +25,7 @@ defineProps<{
         v-for="item in posts"
         :key="item.id"
       >
-        <PostItem :post="item" />
+        <PostItem :post="item" :user="user" />
       </section>
     </TransitionGroup>
   </main>

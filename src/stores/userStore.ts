@@ -5,6 +5,11 @@ import type { User } from '~/types'
 export const useUserStore = defineStore('user', () => {
   const curUser = ref<User | null>(null)
   const isFetched = ref(false)
+  const homeProfile = ref({
+    name: '',
+    nickname: '',
+    id: '',
+  })
 
   async function logout() {
     // only in nuxt SSR mode
@@ -28,8 +33,10 @@ export const useUserStore = defineStore('user', () => {
 
   return {
     curUser,
-    fetchMe,
     isFetched,
+    homeProfile,
+
+    fetchMe,
     logout,
   }
 })

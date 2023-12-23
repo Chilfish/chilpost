@@ -1,46 +1,40 @@
 <script setup lang="ts">
-import type { PostsWithOwner } from '~/types'
+import { appName } from '~/constants'
+import type { User } from '~/types'
 
-const username = computed(() => (useRoute().params as { name: string }).name)
-const postStore = usePostStore()
+const { homeProfile } = storeToRefs(useUserStore())
+const route = useRoute()
 
-const {
-  data,
-  pending,
-} = useMyFetch<PostsWithOwner>(`/user/@/${username.value}`, {
-  query: {
-    uid: useUserStore().curUser?.id,
-  },
+const name = computed(() => {
+  const { name } = route.params as { name: string }
+
+  homeProfile.value.name = name
+  useHead({
+    title: `${appName} | ${name}`,
+  })
+  return name
 })
 
-const owner = computed(() => data.value?.data?.owner)
-
-watchEffect(() => {
-  if (data.value?.data) {
-    const title = `${owner.value?.nickname}(@${username.value})`
-
-    useHead({
-      title,
-    })
-
-    postStore.userPosts.posts = data.value.data.posts
-  }
-})
+const { data } = useMyFetch<User>(`/user/profile/${name.value}`)
+const userData = computed(() => data.value?.data)
 </script>
 
 <template>
   <CommonHeader>
-    <h3> {{ owner?.nickname }}</h3>
+    <h3> {{ homeProfile.nickname }}</h3>
   </CommonHeader>
 
   <div class="banner" />
 
-  <CommonLoading :error="data" :is-loading="pending" />
+  <main
+    v-if="userData"
+  >
+    <ProfileCard :user="userData" />
 
-  <main v-if="data?.data && owner">
-    <ProfileCard :user="owner" />
-
-    <PostList :posts="postStore.userPosts.posts" />
+    <PostInfinite
+      :user="userData"
+      post-type="profile"
+    />
   </main>
 </template>
 

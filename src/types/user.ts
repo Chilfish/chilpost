@@ -6,40 +6,29 @@ export type uid = number
 export type Level = 'admin' | 'user'
 
 export interface UserStatus {
+  is_following: boolean
   follower_count: number
   following_count: number
   post_count: number
-
-  is_following: boolean
-  followers: string[]
-  // followings: string[]
 }
 
-export interface User {
+export interface UserDisplay {
   id: uid
-  email: string
   name: string
   nickname: string
-  bio: string
-  level: Level
-
+  email: string
   /** path to avatar file */
   avatar: string
+}
 
-  /** soft delete, default to false */
-  deleted: boolean
+export interface User extends UserDisplay {
+  bio: string
 
   // times are in ISO format, default to now
   created_at: string
-  updated_at: string
-  deleted_at: string
 
   status: UserStatus
 }
-
-export type UserDetail = Omit<User, 'email' | 'created_at'>
-
-export type UserDisplay = Pick<User, 'name' | 'nickname' | 'avatar'>
 
 export interface UpdatedUser {
   id: uid
