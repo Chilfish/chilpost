@@ -32,6 +32,8 @@ export interface PostStatus {
 export interface Post {
   id: pid
   is_body: boolean
+  is_long: boolean
+
   content: string
   created_at: string
   owner_id: uid

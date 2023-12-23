@@ -35,6 +35,12 @@ const navItems = computed<NavItem[]>(() => [
     hide: false,
   },
   {
+    to: '/search',
+    icon: 'i-tabler-search',
+    text: 'Search',
+    hide: false,
+  },
+  {
     to: `/@${userStore.curUser?.name}`,
     icon: 'i-tabler-user',
     text: 'Profile',

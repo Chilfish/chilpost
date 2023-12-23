@@ -30,6 +30,18 @@ div.content {
   p {
     word-break: break-all;
   }
+
+  span.load-more {
+    margin-left: 0.5rem;
+    font-size: 0.9rem;
+    color: $theme-color;
+    text-align: center;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 .post-meta {
@@ -91,6 +103,10 @@ div.content {
 
   a {
     color: $theme-color;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 

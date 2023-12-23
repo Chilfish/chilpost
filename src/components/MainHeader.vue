@@ -12,12 +12,6 @@ function search() {
 
 onMounted(() => {
   searchWord.value = route.query.q as string
-
-  if (route.path === '/search') {
-    if (route.query.q === undefined)
-      router.replace('?q=""')
-    search()
-  }
 })
 </script>
 

@@ -75,7 +75,15 @@ const owner = computed(() => post.owner)
       </div>
 
       <div class="content">
-        <p>{{ post.content }}</p>
+        <p>
+          <span>{{ post.content }}</span>
+          <span
+            v-if="post.is_long"
+            class="load-more"
+          >
+            Load more
+          </span>
+        </p>
       </div>
 
       <PostAction
