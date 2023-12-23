@@ -44,6 +44,11 @@ export interface Post {
 
 export type PostDetail = Post & {
   owner: User
+  reply_to?: {
+    id: string
+    uid: string
+    username: string
+  }
 }
 
 export type PostDB = PostDetail[] & RowDataPacket[]

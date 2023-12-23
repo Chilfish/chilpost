@@ -47,6 +47,7 @@ defineProps<{
       :id="post.id"
       :u-name="owner.name"
       :status="post.status"
+      :parent-id="post.parent_id"
     />
   </div>
 </template>

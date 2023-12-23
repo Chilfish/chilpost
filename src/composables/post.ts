@@ -1,8 +1,9 @@
-export async function postDelete(postId: string) {
+export async function postDelete(postId: string, parentId?: string) {
   const { data } = await useMyFetch<boolean>('/post/delete', {
     method: 'POST',
     body: {
       id: postId,
+      parent_id: parentId ?? null,
     },
   })
 

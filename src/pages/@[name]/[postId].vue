@@ -23,11 +23,21 @@ const {
     id: postId,
     uid: useUserStore().curUser?.id,
   },
-  // manual: true,
   server: false,
 })
 
 const post = computed(() => postData.value?.data?.post)
+const comments = computed(() => commentData.value?.data?.posts)
+
+// maybe useful
+// const deletedComments = computed(() => {
+//   if (!post.value || !comments.value)
+//     return 0
+
+//   const count = post.value.status.comment_count - comments.value.length
+
+//   return count < 0 ? 0 : count
+// })
 
 watch(() => postData.value, () => {
   if (!post.value)
@@ -61,7 +71,10 @@ watch(() => postData.value, () => {
           :post="post.parent_post"
           :owner="post.parent_post.owner"
         />
-        <PostDeleted v-else />
+        <CommonNullBar
+          v-else
+          message="This Post was deleted by the Post author."
+        />
 
         <div class="vr" />
       </div>
@@ -83,9 +96,14 @@ watch(() => postData.value, () => {
     />
 
     <PostComments
-      v-if="commentData?.data"
-      :comments="commentData.data.posts"
+      v-if="comments"
+      :comments="comments"
     />
+
+    <!-- <CommonNullBar
+      v-if="deletedComments > 0"
+      :message="`${deletedComments} comment(s) has been deleted`"
+    /> -->
   </main>
 </template>
 

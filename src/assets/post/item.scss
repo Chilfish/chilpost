@@ -79,6 +79,21 @@ div.content {
   }
 }
 
+.reply-to{
+  display: flex;
+  gap: 0.5rem;
+  margin: -0.4rem 0;
+  font-size: 0.9rem;
+
+  span {
+    color: var(--text-2)
+  }
+
+  a {
+    color: $theme-color;
+  }
+}
+
 @media (min-width: $sm) {
   .post-meta {
     span {

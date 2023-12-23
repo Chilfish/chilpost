@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import type { Post, UserDisplay } from '~/types'
+import type { PostDetail, UserDisplay } from '~/types'
 
-defineProps<{
-  post: Post
-  owner: UserDisplay
+const {
+  post,
+} = defineProps<{
+  post: PostDetail
 }>()
+
+const owner = computed(() => post.owner)
 </script>
 
 <template>
@@ -58,6 +61,19 @@ defineProps<{
         </button>
       </div>
 
+      <div
+        v-if="post.reply_to"
+        class="reply-to"
+      >
+        <span>Replying to</span>
+        <NuxtLink
+          :to="`/@${post.reply_to.username}`"
+          @click.stop
+        >
+          @{{ post.reply_to.username }}
+        </NuxtLink>
+      </div>
+
       <div class="content">
         <p>{{ post.content }}</p>
       </div>
@@ -66,6 +82,7 @@ defineProps<{
         :id="post.id"
         :status="post.status"
         :u-name="owner.name"
+        :parent-id="post.parent_id"
         @click.stop
       />
     </div>

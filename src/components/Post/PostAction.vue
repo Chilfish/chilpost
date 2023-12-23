@@ -7,6 +7,7 @@ const props = defineProps<{
   status: PostStatus
   id: string
   uName: string
+  parentId?: string
 }>()
 
 const modalStore = useModalStore()
@@ -62,7 +63,7 @@ function repost() {
 
 function deletePost() {
   if (confirm(`confirm to delete this post?`))
-    postDelete(props.id)
+    postDelete(props.id, props.parentId)
 }
 
 watchEffect(() => {

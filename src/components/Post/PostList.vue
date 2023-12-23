@@ -24,10 +24,7 @@ defineProps<{
         v-for="item in posts"
         :key="item.id"
       >
-        <PostItem
-          :post="item"
-          :owner="item.owner"
-        />
+        <PostItem :post="item" />
       </section>
     </TransitionGroup>
   </main>
