@@ -50,7 +50,7 @@ function editAvatar(file?: File) {
     <p>Public picture</p>
     <label
       for="avatar-input"
-      class="edit"
+      class="edit blur-bg text-light shadow-sm"
     >
       <span class="i-tabler-pencil icon" />
       <span>Edit</span>

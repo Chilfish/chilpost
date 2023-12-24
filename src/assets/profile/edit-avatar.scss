@@ -1,9 +1,11 @@
-$avatar-width: 14rem;
+@use "../variables" as *;
+
+$avatar-width: 10rem;
 
 .avatar-edit {
   position: absolute;
   top: 1rem;
-  right: 7rem;
+  right: 0.5rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -21,7 +23,7 @@ $avatar-width: 14rem;
 
   img {
     width: $avatar-width;
-    height: $avatar-width;
+    height: $avatar-width - 1rem;
     object-fit: cover;
     background-color: var(--gray-1);
     border-radius: 100%;
@@ -29,7 +31,7 @@ $avatar-width: 14rem;
 
   .edit {
     position: absolute;
-    bottom: 1rem;
+    bottom: 0.5rem;
     left: 1rem;
     display: flex;
     gap: 0.2rem;
@@ -38,10 +40,17 @@ $avatar-width: 14rem;
     padding: 0.4rem 0.5rem;
     font-size: 1rem;
     font-weight: bold;
-    color: var(--white);
     cursor: pointer;
-    background-color: var(--gray);
+
+    // background-color: var(--gray);
     border-radius: 8px;
+    
   }
 }
 
+
+@media (min-width: $sm) {
+  .avatar-edit {
+  right: 7rem;
+  }
+}
