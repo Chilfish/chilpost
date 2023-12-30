@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Rules } from 'async-validator'
 import { useAsyncValidator } from '@vueuse/integrations/useAsyncValidator'
-import { Toast } from '@cpa/Toast'
+import { Toast } from '~/components'
 import type { UpdatedUser, User } from '~/types/user'
 import { appName } from '~/constants'
 

@@ -1,4 +1,4 @@
-import Toast from '@cpa/Toast'
+import { Toast } from '~/components'
 import type { UseFetchOptions } from '#app'
 import type { ApiReturn } from '~/types'
 

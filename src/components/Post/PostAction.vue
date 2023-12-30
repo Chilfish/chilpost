@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useClipboard } from '@vueuse/core'
-import Toast from '@cpa/Toast'
+import { Toast } from '~/components'
 import type { PostStatus } from '~/types'
 
 const props = defineProps<{

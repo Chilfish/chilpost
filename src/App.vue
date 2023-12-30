@@ -15,6 +15,7 @@ onNuxtReady(async () => {
 </script>
 
 <template>
+  <VitePwaManifest />
   <NuxtLayout v-if="!isLoading">
     <NuxtPage />
   </NuxtLayout>

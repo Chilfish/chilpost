@@ -1,4 +1,4 @@
-import components from '@cpa'
+import { components } from '~/components'
 
 export default defineNuxtPlugin((nuxtApp) => {
   const installer = makeInstaller([...components])

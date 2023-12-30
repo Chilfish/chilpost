@@ -33,7 +33,6 @@ export default defineNuxtConfig({
   ],
 
   alias: {
-    ...toAlias('@cpa', './src/components_app'),
     ...toAlias('@db', './database'),
   },
 
@@ -43,6 +42,14 @@ export default defineNuxtConfig({
       'server/utils',
     ],
   },
+
+  components: [
+    {
+      path: '~/components',
+      ignore: ['Plugins/**/*'],
+      // pathPrefix: false,
+    },
+  ],
 
   experimental: {
     // when using generate, payload js assets included in sw precache manifest

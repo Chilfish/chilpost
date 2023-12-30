@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import Toast from '@cpa/Toast'
+import { Toast } from '~/components'
 import type { User } from '~/types'
 
 export const useUserStore = defineStore('user', () => {

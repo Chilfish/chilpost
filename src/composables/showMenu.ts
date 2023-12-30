@@ -1,4 +1,4 @@
-import Toast from '@cpa/Toast'
+import { Toast } from '~/components'
 
 // !TODO: Implement this function
 export function showMenu() {
